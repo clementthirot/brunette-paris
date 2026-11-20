@@ -1,0 +1,167 @@
+---
+/** 16.1 Fiche pièce. */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/ui/Photo.astro';
+import Viewer3D from '../../components/ui/Viewer3D.astro';
+import PieceCard from '../../components/creations/PieceCard.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { getPieces, getCreationsPage, getSettings, pieceUrl, type Piece } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const pieces = await getPieces();
+  return pieces.map((piece) => ({ params: { slug: piece.slug }, props: { piece, pieces } }));
+}
+const { piece, pieces } = Astro.props as { piece: Piece; pieces: Piece[] };
+const [page, settings] = await Promise.all([getCreationsPage(), getSettings()]);
+const { fiche, filtres } = page;
+const cuirLabel = (v: string) => (filtres.cuirs as Record<string, string>)[v] ?? v;
+const cuir = cuirLabel(piece.leather);
+const title = fiche.seoTitle.replace('{nom}', piece.title).replace('{cuir}', cuir.toLowerCase());
+const has3d = !!piece.model3d;
+const hasPhotos = (piece.photos ?? []).some((p) => p.image);
+// Visionneuse 3D si un modèle existe, sinon galerie photos ; onglets si les deux existent.
+const showTabs = has3d && hasPhotos;
+const similar = pieces.filter((p) => p.slug !== piece.slug && p.category === piece.category).slice(0, 3);
+const editionLabel = piece.edition === 'unique' ? settings.labels.unique : settings.labels.limitee;
+const priceFmt = typeof piece.price === 'number'
+  ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(piece.price)
+  : null;
+const firstImage = piece.photos?.find((p) => p.image)?.image ?? null;
+
+const productLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: piece.title,
+  description: piece.description,
+  image: (piece.photos ?? []).filter((p) => p.image).map((p) => new URL(p.image!, Astro.site).href),
+  material: `Cuir de ${cuir.toLowerCase()}`,
+  brand: { '@type': 'Brand', name: 'Brunette Paris' },
+  url: new URL(pieceUrl(piece.slug), Astro.site).href,
+  ...(priceFmt
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: piece.price,
+          priceCurrency: 'EUR',
+          availability: piece.availability === 'vendue' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+          url: piece.paymentLink || new URL(pieceUrl(piece.slug), Astro.site).href,
+        },
+      }
+    : {}),
+};
+const askHref = `/contact?piece=${encodeURIComponent(piece.title)}`;
+---
+<Base title={title} description={piece.description.slice(0, 155)} hero="light" jsonLd={[productLd]} image={firstImage}>
+  <section class="fiche bg-light">
+    <div class="container">
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: page.h1, href: '/creations' }, { label: piece.title }]} />
+      <div class="fiche__grid">
+        <!-- Gauche (60 %) : visionneuse 3D ou galerie photos -->
+        <div class="fiche__media" data-fiche-media>
+          {showTabs && (
+            <div class="fiche__tabs" role="tablist">
+              <button role="tab" id="tab-3d" aria-controls="panel-3d" aria-selected="true" class="fiche__tab is-active">{fiche.tab3d}</button>
+              <button role="tab" id="tab-photos" aria-controls="panel-photos" aria-selected="false" class="fiche__tab">{fiche.tabPhotos}</button>
+            </div>
+          )}
+          {has3d && (
+            <div id="panel-3d" role={showTabs ? 'tabpanel' : undefined} aria-labelledby={showTabs ? 'tab-3d' : undefined}>
+              <Viewer3D model={piece.model3d} shape={piece.placeholderShape} class="fiche__viewer" />
+            </div>
+          )}
+          {(!has3d || showTabs) && (
+            <div id="panel-photos" role={showTabs ? 'tabpanel' : undefined} aria-labelledby={showTabs ? 'tab-photos' : undefined} hidden={showTabs}>
+              <ul role="list" class="fiche__photos">
+                {(piece.photos ?? []).map((p, i) => (
+                  <li><Photo photo={p} ratio="4 / 5" loading={i === 0 ? 'eager' : 'lazy'} /></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <!-- Droite : colonne collante -->
+        <div class="fiche__info">
+          <div class="fiche__sticky">
+            <p class="eyebrow fiche__edition">{editionLabel}{piece.availability !== 'none' && <> · {piece.availability === 'disponible' ? settings.labels.disponible : settings.labels.vendue}</>}</p>
+            <h1 class="fiche__title">{piece.title}</h1>
+            <p class="fiche__leather">{fiche.leatherPrefix} {cuir.toLowerCase()}</p>
+            <dl class="fiche__specs">
+              <div><dt>{fiche.dimensions}</dt><dd>{piece.dimensions}</dd></div>
+              {priceFmt && <div><dt>{fiche.price}</dt><dd>{priceFmt}</dd></div>}
+            </dl>
+            <p class="fiche__desc">{piece.description}</p>
+            {piece.paymentLink ? (
+              <a href={piece.paymentLink} class="btn fiche__cta" rel="noopener">{fiche.buy}</a>
+            ) : (
+              <a href={askHref} class="btn fiche__cta">{fiche.ask}</a>
+            )}
+            <details class="fiche__care">
+              <summary>{fiche.entretienTitle}<span aria-hidden="true">+</span></summary>
+              <p>{fiche.entretienText}</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {similar.length > 0 && (
+    <section class="similar bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{fiche.similarTitle}</h2>
+        <div class="similar__grid" data-reveal-group="0.1">
+          {similar.map((p) => (
+            <div data-reveal><PieceCard piece={p} labels={settings.labels} cuirLabel={cuirLabel(p.leather)} /></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .fiche { padding-block: calc(var(--header-h) + var(--space-6)) var(--space-8); }
+  .fiche__grid { display: grid; gap: var(--space-7); margin-top: var(--space-6); }
+  .fiche__tabs { display: flex; gap: var(--space-5); margin-bottom: var(--space-4); }
+  .fiche__tab { padding-block: var(--space-2); font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; border-bottom: 1px solid transparent; color: var(--fg-on-light-muted); }
+  .fiche__tab.is-active { color: var(--fg-on-light); border-color: var(--sable-500); }
+  .fiche__media :global(.fiche__viewer) { background: radial-gradient(circle at 50% 45%, var(--ink-100), var(--cream-50) 70%); }
+  .fiche__photos { display: grid; gap: var(--space-3); }
+  .fiche__sticky { display: grid; gap: var(--space-4); justify-items: start; }
+  .fiche__edition { color: var(--accent-on-light); }
+  .fiche__title { font-size: var(--text-3xl); }
+  .fiche__leather { font-size: var(--text-lg); color: var(--fg-on-light-muted); }
+  .fiche__specs { display: grid; gap: var(--space-2); width: 100%; padding-block: var(--space-4); border-block: 1px solid var(--ink-200); }
+  .fiche__specs div { display: flex; justify-content: space-between; gap: var(--space-4); }
+  .fiche__specs dt { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-light-muted); }
+  .fiche__desc { color: var(--fg-on-light-muted); }
+  .fiche__cta { margin-top: var(--space-3); }
+  .fiche__care { width: 100%; margin-top: var(--space-4); border-top: 1px solid var(--ink-200); }
+  .fiche__care summary { display: flex; justify-content: space-between; padding-block: var(--space-4); cursor: pointer; list-style: none; font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; }
+  .fiche__care summary::-webkit-details-marker { display: none; }
+  .fiche__care[open] summary span { transform: rotate(45deg); }
+  .fiche__care summary span { transition: transform var(--dur-base) var(--ease-out); color: var(--accent-on-light); }
+  .fiche__care p { padding-bottom: var(--space-4); color: var(--fg-on-light-muted); font-size: var(--text-sm); }
+  .similar { padding-top: var(--space-6); }
+  .similar__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); }
+  @media (min-width: 56em) {
+    .fiche__grid { grid-template-columns: 3fr 2fr; gap: var(--space-9); align-items: start; }
+    .fiche__photos { grid-template-columns: 1fr 1fr; }
+    .fiche__photos li:first-child { grid-column: 1 / -1; }
+    .fiche__sticky { position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+  }
+</style>
+
+<script>
+  // Onglets « 3D » / « Photos » (présents seulement si la pièce a les deux)
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.fiche__tab');
+  tabs.forEach((tab) => tab.addEventListener('click', () => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', String(on));
+      document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+    });
+  }));
+</script>

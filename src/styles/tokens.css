@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Brunette Paris — tokens de design
+   Charte : céladon #7e9994 · sable #e1be80 · reine #293860 · Josefin Sans.
+   Chaque couleur de la charte est déclinée en nuancier de 10 niveaux (50 → 900),
+   le niveau 500 étant la couleur exacte de la charte.
+   ========================================================================== */
+
+/* --- Typographies -------------------------------------------------------- */
+/* Josefin Sans (charte) pour le texte courant et l'interface. */
+@import '@fontsource/josefin-sans/300.css';
+@import '@fontsource/josefin-sans/400.css';
+@import '@fontsource/josefin-sans/400-italic.css';
+@import '@fontsource/josefin-sans/600.css';
+
+/* Serif des grands titres — trois options proposées (une seule active) :
+   1. Cormorant Garamond (par défaut) : classique, très fine, élégance « maison ».
+   2. Bodoni Moda : contraste fort, plus mode et éditorial.
+   3. Playfair Display : plus ronde et chaleureuse, très lisible en grand.
+   Pour changer : commenter les imports actifs, décommenter ceux de l'option
+   choisie et modifier --font-serif plus bas. */
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+@import '@fontsource/cormorant-garamond/500.css';
+/* @import '@fontsource/bodoni-moda/400.css';
+   @import '@fontsource/bodoni-moda/400-italic.css'; */
+/* @import '@fontsource/playfair-display/400.css';
+   @import '@fontsource/playfair-display/400-italic.css'; */
+
+:root {
+  /* --- Nuanciers de la charte ------------------------------------------- */
+  --celadon-50: #eeeee9;
+  --celadon-100: #e0e3dd;
+  --celadon-200: #c9d2cc;
+  --celadon-300: #b0bfba;
+  --celadon-400: #97aca7;
+  --celadon-500: #7e9994; /* charte */
+  --celadon-600: #687d7a;
+  --celadon-700: #51615f;
+  --celadon-800: #3b4545;
+  --celadon-900: #272c2d;
+
+  --sable-50: #f8f2e7;
+  --sable-100: #f5ebd9;
+  --sable-200: #f1e1c4;
+  --sable-300: #ebd5ae;
+  --sable-400: #e6ca97;
+  --sable-500: #e1be80; /* charte */
+  --sable-600: #b79b6a;
+  --sable-700: #8d7753;
+  --sable-800: #62543d;
+  --sable-900: #3c3429;
+
+  --reine-50: #e6e5e3;
+  --reine-100: #cdced2;
+  --reine-200: #a7abb8;
+  --reine-300: #7d859a;
+  --reine-400: #535e7d;
+  --reine-500: #293860; /* charte */
+  --reine-600: #242f50;
+  --reine-700: #1e2740;
+  --reine-800: #191e30;
+  --reine-900: #141622;
+
+  /* --- Neutres chauds (base quasi noir et blanc) ------------------------ */
+  --ink-950: #151311; /* noir chaud : « fond sombre » */
+  --ink-900: #1d1a17;
+  --ink-800: #2a2622;
+  --ink-700: #3d3832;
+  --ink-600: #5a534b;
+  --ink-500: #7a7268;
+  --ink-400: #9e968b;
+  --ink-300: #c4bcb0;
+  --ink-200: #ddd6ca;
+  --ink-100: #ebe5d9;
+  --cream-50: #f6f1e7; /* blanc cassé crème : « fond clair » */
+  --cream-0: #fbf8f2;
+
+  /* --- Rôles ------------------------------------------------------------ */
+  --bg-dark: var(--ink-950);
+  --bg-light: var(--cream-50);
+  --fg-on-dark: var(--cream-50);
+  --fg-on-dark-muted: var(--ink-300);
+  --fg-on-light: var(--ink-950);
+  --fg-on-light-muted: var(--ink-600);
+  --accent: var(--sable-500); /* accent principal */
+  --accent-on-light: var(--sable-700); /* sable lisible sur fond clair */
+  --accent-2: var(--celadon-500); /* accent secondaire */
+  --accent-3: var(--reine-500); /* accent secondaire (rideau de transition) */
+  --placeholder-bg: var(--ink-200);
+  --placeholder-bg-dark: var(--ink-800);
+
+  /* Dégradé « feuille d'or » de la dorure à chaud */
+  --gold-gradient: linear-gradient(
+    100deg,
+    var(--sable-700) 0%,
+    var(--sable-400) 28%,
+    var(--sable-200) 46%,
+    var(--sable-500) 62%,
+    var(--sable-700) 100%
+  );
+
+  /* --- Typographie ------------------------------------------------------ */
+  --font-sans: 'Josefin Sans', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  /* --font-serif: 'Bodoni Moda', 'Times New Roman', serif; */
+  /* --font-serif: 'Playfair Display', 'Times New Roman', serif; */
+
+  /* Échelle fluide (mobile → desktop) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --text-xl: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.45rem + 1.5vw, 2.75rem);
+  --text-3xl: clamp(2.25rem, 1.7rem + 2.6vw, 4rem);
+  --text-4xl: clamp(2.6rem, 1.8rem + 4vw, 5.5rem);
+  --text-display: clamp(2.2rem, 1.4rem + 4.2vw, 5.75rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --tracking-ui: 0.14em; /* capitales espacées des éléments d'interface */
+
+  /* --- Espacements (base 4 px) ----------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-y: clamp(4.5rem, 3rem + 7vw, 10rem);
+  --gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
+  --container: 82rem;
+  --container-narrow: 46rem;
+
+  /* --- Divers ----------------------------------------------------------- */
+  --radius: 2px;
+  --header-h: 4.75rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-slow: 1.2s;
+  --dur-base: 0.6s;
+  --dur-fast: 0.3s;
+  --grain-opacity: 0.05; /* 4 à 6 % selon la charte du brief */
+  --z-header: 50;
+  --z-menu: 60;
+  --z-grain: 90;
+  --z-curtain: 100;
+  --z-cursor: 110;
+}

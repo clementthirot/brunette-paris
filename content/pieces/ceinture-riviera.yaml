@@ -1,0 +1,16 @@
+title: Ceinture Riviera
+date: '2026-03-08'
+category: ceintures
+leather: python
+description: >-
+  Une ceinture en python naturel, au motif d’écailles régulier, boucle laiton brossé. Pièce unique.
+dimensions: Largeur 3 cm
+edition: unique
+availability: vendue
+
+photos:
+  - alt: Ceinture Riviera, vue principale
+    placeholder: Ceinture Riviera en python, enroulée (4:5)
+  - alt: Ceinture Riviera, détail
+    placeholder: Gros plan écailles et boucle
+placeholderShape: torus

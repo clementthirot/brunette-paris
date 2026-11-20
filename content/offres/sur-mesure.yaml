@@ -1,0 +1,98 @@
+title: Sur-mesure pour les marques
+order: 2
+seo:
+  title: Maroquinerie sur mesure pour marques et maisons de luxe | Brunette Paris
+  description: Cadeaux d'entreprise en cuir, accessoires de marque et pièces sur mesure, fabriqués à la main en Île-de-France.
+card:
+  phrase: Cadeaux d’entreprise et pièces pour maisons de luxe, conçus à quatre mains avec votre marque.
+  photo:
+    alt: Pièce en cuir marquée au logo d’une marque
+    placeholder: Pièce en cuir avec logo marqué à chaud, ambiance studio (vertical)
+hero:
+  h1: Le cuir à l'image de votre marque
+  accroche: Des pièces pensées pour vos équipes, vos clients et vos produits.
+  photo:
+    alt: Prototypes en cuir sur l’établi
+    placeholder: Plein cadre, prototypes et gabarits sur l’établi
+intro:
+  h2: Du prototype à la petite série
+  paragraph1: >-
+    Chaque collaboration commence par une conversation. Nous concevons vos pièces à quatre mains avec votre
+    équipe : vos valeurs, vos codes, l’usage attendu, puis les matières et les finitions qui leur
+    ressemblent. De ce dialogue naissent des cadeaux d’entreprise en cuir qui ont du sens, des accessoires
+    pour vos boutiques ou des pièces destinées à accompagner vos propres produits. La maroquinerie sur mesure
+    permet d’aller au bout d’une idée, sans compromis imposés par un catalogue.
+  paragraph2: >-
+    Après validation d’un prototype, l’atelier réalise des séries limitées, numérotées si vous le souhaitez,
+    toujours cousues à la main. Votre logo est marqué à chaud ou en dorure, jamais imprimé : une signature
+    discrète, durable, qui s’inscrit dans la matière. Cette fabrication française, en Île-de-France, garantit
+    un suivi de près à chaque étape et une qualité constante d’une pièce à l’autre, de la première à la
+    dernière.
+  photo:
+    alt: Dorure à chaud d’un logo
+    placeholder: Vertical, dorure à chaud d’un logo sur cuir
+pointsCles:
+  title: Ce que nous proposons
+  items:
+    - title: Cadeaux d'entreprise
+      text: Pour vos collaborateurs, vos partenaires ou vos clients, des pièces utiles et durables.
+      photo:
+        alt: Cadeaux d’entreprise en cuir
+        placeholder: Carré, coffret de cadeaux d’entreprise en cuir
+    - title: Accessoires pour maisons de luxe (ex. protège-caméras)
+      text: Des accessoires discrets et précis, réalisés au millimètre pour vos univers.
+      photo:
+        alt: Protège-caméra en cuir
+        placeholder: Carré, protège-caméra en cuir pour maison de luxe
+    - title: Couvertures de CD et vinyles
+      text: Des éditions spéciales habillées de cuir pour les labels et les artistes.
+      photo:
+        alt: Couverture de vinyle en cuir
+        placeholder: Carré, couverture de vinyle en cuir marquée à chaud
+    - title: Accessoires de voyage
+      text: "Étiquettes, porte-passeports, trousses : des compagnons de route à vos couleurs."
+      photo:
+        alt: Accessoires de voyage en cuir
+        placeholder: Carré, accessoires de voyage en cuir
+    - title: Marquage de logo
+      text: Rivet gravé, dorure ou marquage à chaud, pour signer chaque pièce sans couleur ajoutée.
+      photo:
+        alt: Marquage de logo dans le cuir
+        placeholder: Carré, macro logo marqué dans le cuir
+etapes:
+  title: Comment ça se passe
+  items:
+    - title: Brief et intentions
+      text: Nous échangeons sur votre marque, vos destinataires, vos quantités et vos délais.
+    - title: Échantillons et prototype
+      text: Choix des cuirs et des finitions, puis réalisation d’un prototype à valider.
+    - title: Fabrication
+      text: Les pièces sont coupées, cousues et marquées à la main à l’atelier.
+    - title: Livraison
+      text: Contrôle pièce par pièce, emballage soigné et livraison à l’adresse de votre choix.
+galerie:
+  title: Galerie
+  photos:
+    - alt: Prototype sur l’établi
+      placeholder: Prototype et gabarit papier sur l’établi
+    - alt: Logo doré
+      placeholder: Macro logo en dorure à chaud
+    - alt: Série limitée
+      placeholder: Série limitée de pièces alignées
+    - alt: Protège-caméra
+      placeholder: Protège-caméra en situation
+    - alt: Couverture vinyle
+      placeholder: Couverture de vinyle en cuir
+    - alt: Emballage
+      placeholder: Pièces emballées prêtes à la livraison
+faq:
+  title: Questions fréquentes
+  items:
+    - question: Quelle quantité minimum ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Quel délai ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Peut-on choisir le cuir ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Comment est marqué le logo ?
+      answer: TODO — réponse à rédiger avec la cliente.

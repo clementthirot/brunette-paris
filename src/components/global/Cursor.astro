@@ -1,0 +1,64 @@
+---
+/** Curseur personnalisé, desktop uniquement : petit cercle sable qui grossit sur les éléments cliquables. */
+---
+<div class="cursor" aria-hidden="true" data-cursor></div>
+<style>
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-cursor);
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 50%;
+    background: var(--sable-500);
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      width var(--dur-fast) var(--ease-out),
+      height var(--dur-fast) var(--ease-out),
+      margin var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      opacity var(--dur-fast);
+  }
+  .cursor.is-visible {
+    opacity: 1;
+  }
+  .cursor.is-hover {
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    background: color-mix(in srgb, var(--sable-500) 35%, transparent);
+    border: 1px solid var(--sable-500);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :global(html.has-cursor),
+    :global(html.has-cursor a),
+    :global(html.has-cursor button),
+    :global(html.has-cursor [role='button']),
+    :global(html.has-cursor label) {
+      cursor: none;
+    }
+  }
+</style>
+<script>
+  import { gsap, finePointer, reducedMotion } from '../../scripts/motion';
+  const el = document.querySelector<HTMLElement>('[data-cursor]');
+  if (el && finePointer()) {
+    document.documentElement.classList.add('has-cursor');
+    const dur = reducedMotion() ? 0 : 0.35;
+    const xTo = gsap.quickTo(el, 'x', { duration: dur, ease: 'power3.out' });
+    const yTo = gsap.quickTo(el, 'y', { duration: dur, ease: 'power3.out' });
+    const CLICKABLE = 'a, button, [role="button"], label, select, summary, input[type="submit"], [data-cursor-hover]';
+    window.addEventListener('pointermove', (e) => {
+      el.classList.add('is-visible');
+      xTo(e.clientX);
+      yTo(e.clientY);
+      el.classList.toggle('is-hover', !!(e.target as Element).closest?.(CLICKABLE));
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => el.classList.remove('is-visible'));
+  } else {
+    el?.remove();
+  }
+</script>

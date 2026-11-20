@@ -1,0 +1,106 @@
+---
+import Logo from '../ui/Logo.astro';
+import { offreUrl, type Offre } from '../../lib/content';
+interface Props {
+  settings: Awaited<ReturnType<typeof import('../../lib/content').getSettings>>;
+  offres: Offre[];
+}
+const { settings, offres } = Astro.props;
+const { nav, footer, reseaux } = settings;
+---
+<footer class="site-footer bg-dark">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <Logo variant="secondaire" class="site-footer__logo" />
+      <p class="site-footer__tagline">{footer.tagline}</p>
+    </div>
+    <nav aria-label="Pied de page" class="site-footer__nav">
+      <div>
+        <p class="eyebrow">{nav.entreprises}</p>
+        <ul role="list">
+          {offres.map((o) => <li><a href={offreUrl(o.slug)}>{o.title}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Brunette Paris</p>
+        <ul role="list">
+          <li><a href="/creations">{nav.creations}</a></li>
+          <li><a href="/atelier">{nav.atelier}</a></li>
+          <li><a href="/contact">{nav.contact}</a></li>
+          {reseaux.instagramUrl && (
+            <li><a href={reseaux.instagramUrl} target="_blank" rel="noopener">Instagram {reseaux.instagramHandle}</a></li>
+          )}
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="container site-footer__bottom">
+    <p>{footer.copyright}</p>
+    <a href="/mentions-legales">{footer.legalLabel}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-9) var(--space-6);
+    position: relative;
+  }
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+  .site-footer__brand {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+  .site-footer__brand :global(.site-footer__logo) {
+    width: 7.5rem;
+    color: var(--sable-500);
+  }
+  .site-footer__tagline {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    max-width: 20ch;
+    line-height: var(--leading-snug);
+  }
+  .site-footer__nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-6);
+  }
+  .site-footer__nav .eyebrow {
+    color: var(--sable-500);
+    margin-bottom: var(--space-4);
+  }
+  .site-footer__nav ul {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .site-footer__nav a,
+  .site-footer__bottom a {
+    color: var(--fg-on-dark-muted);
+    transition: color var(--dur-fast);
+  }
+  .site-footer__nav a:hover,
+  .site-footer__bottom a:hover {
+    color: var(--sable-500);
+  }
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--ink-800);
+    font-size: var(--text-sm);
+    color: var(--ink-400);
+  }
+  @media (min-width: 48em) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1.4fr;
+      align-items: start;
+    }
+  }
+</style>

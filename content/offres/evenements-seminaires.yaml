@@ -1,0 +1,104 @@
+title: Événements et séminaires
+order: 1
+seo:
+  title: Atelier cuir pour séminaires et événements d'entreprise à Paris | Brunette Paris
+  description: Bar à ceintures et ateliers de personnalisation cuir pour vos séminaires, salons et soirées d'entreprise en Île-de-France.
+card:
+  phrase: Bar à ceintures et ateliers de personnalisation, installés au cœur de vos séminaires.
+  photo:
+    alt: Bar à ceintures installé lors d’un séminaire
+    placeholder: Bar à ceintures en événement, cuirs et boucles présentés sur table (vertical)
+hero:
+  h1: Ateliers cuir pour vos événements
+  accroche: Vos invités repartent avec une pièce qu'ils ont personnalisée eux-mêmes.
+  photo:
+    alt: Invités personnalisant leur ceinture en cuir
+    placeholder: Plein cadre, invités autour de l’atelier nomade pendant une soirée d’entreprise
+intro:
+  h2: Une animation qui laisse une trace
+  paragraph1: >-
+    Pour vos séminaires, salons et soirées, Brunette Paris installe un atelier de maroquinerie nomade au cœur
+    de votre événement. L’artisane arrive avec son établi, ses outils, ses peaux et ses boucles : en quelques
+    minutes, un coin de salle devient un véritable atelier. Chaque participant choisit son cuir, sa boucle,
+    puis grave lui-même son prénom ou ses initiales. Une animation séminaire qui ne ressemble à aucune autre,
+    où l’on apprend un geste plutôt que de regarder un écran.
+  paragraph2: >-
+    Pensé comme un atelier team building ou comme une animation libre au fil de la soirée, le format s’adapte
+    à votre nombre d’invités et à votre lieu. Chacun repart avec un cadeau d’entreprise personnalisé, fabriqué
+    sous ses yeux et un peu de ses mains : une ceinture, un porte-clés ou une étiquette de bagage qu’il gardera
+    longtemps. Pour vos équipes comme pour vos clients, c’est un souvenir concret de votre événement, et une
+    façon élégante d’associer votre entreprise à un savoir-faire artisanal d’Île-de-France.
+  photo:
+    alt: Artisane gravant des initiales sur une ceinture
+    placeholder: Vertical, artisane gravant des initiales au poste de marquage
+pointsCles:
+  title: Ce que nous proposons
+  items:
+    - title: Bar à ceintures
+      text: Vos invités composent leur ceinture, du cuir à la boucle, et la voient prendre forme en direct.
+      photo:
+        alt: Bar à ceintures
+        placeholder: Carré, présentoir de ceintures et boucles
+    - title: Porte-clés personnalisés
+      text: Une petite pièce rapide à réaliser, idéale pour les grands groupes et les salons.
+      photo:
+        alt: Porte-clés en cuir personnalisés
+        placeholder: Carré, porte-clés en cuir alignés avec initiales
+    - title: Étiquettes de bagage
+      text: Un objet de voyage utile et durable, gravé au nom de chaque participant.
+      photo:
+        alt: Étiquettes de bagage en cuir
+        placeholder: Carré, étiquettes de bagage en cuir avec sangles
+    - title: Marquage de prénoms et initiales
+      text: Marquage à chaud ou dorure, réalisé sur place sur la pièce de votre choix.
+      photo:
+        alt: Marquage d’initiales à chaud
+        placeholder: Carré, gros plan fer à marquer sur cuir
+    - title: Atelier découverte du cuir
+      text: "Une initiation en petit groupe aux gestes du maroquinier : coupe, couture, finitions."
+      photo:
+        alt: Atelier découverte du cuir
+        placeholder: Carré, participants apprenant la couture main
+etapes:
+  title: Comment ça se passe
+  items:
+    - title: Échange sur votre événement
+      text: "Date, lieu, nombre d’invités, intentions : nous construisons ensemble le format."
+    - title: Choix des cuirs et des pièces
+      text: Nous vous proposons une sélection de cuirs, de boucles et de pièces adaptées.
+    - title: Installation de l'atelier sur place
+      text: L’artisane installe son poste de travail, prêt à accueillir vos invités.
+    - title: Vos invités repartent avec leur pièce
+      text: Chaque participant emporte une pièce personnalisée, finie à la main.
+galerie:
+  title: Galerie
+  photos:
+    - alt: Atelier nomade en soirée
+      placeholder: Atelier nomade en soirée d’entreprise
+    - alt: Boucles de ceinture
+      placeholder: Gros plan boucles de ceinture laiton
+    - alt: Invitée gravant ses initiales
+      placeholder: Invitée gravant ses initiales
+    - alt: Ceintures terminées
+      placeholder: Ceintures terminées alignées sur l’établi
+    - alt: Atelier en salon professionnel
+      placeholder: Stand atelier en salon professionnel
+    - alt: Mains et outils
+      placeholder: Mains et outils sur l’établi nomade
+    - alt: Porte-clés gravés
+      placeholder: Porte-clés gravés posés dans une coupelle
+faq:
+  title: Questions fréquentes
+  items:
+    - question: Combien de participants ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Quelle durée ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Quel espace prévoir ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Peut-on ajouter le logo de l'entreprise ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Intervenez-vous hors Île-de-France ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Quel délai pour réserver ?
+      answer: TODO — réponse à rédiger avec la cliente.

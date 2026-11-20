@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import Header from '../components/global/Header.astro';
+import Footer from '../components/global/Footer.astro';
+import Cursor from '../components/global/Cursor.astro';
+import Curtain from '../components/global/Curtain.astro';
+import { getSettings, getOffres } from '../lib/content';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Thème du haut de page : 'dark' = hero sombre (header transparent, texte clair). */
+  hero?: 'dark' | 'light';
+  jsonLd?: Record<string, unknown>[];
+  image?: string | null;
+  noindex?: boolean;
+}
+const { title, description = '', hero = 'light', jsonLd = [], image, noindex = false } = Astro.props;
+const settings = await getSettings();
+const offres = await getOffres();
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site).href : undefined;
+
+// Données structurées LocalBusiness, présentes sur toutes les pages.
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': new URL('/#atelier', Astro.site).href,
+  name: 'Brunette Paris',
+  description: 'Maroquinerie artisanale faite main en Île-de-France',
+  url: Astro.site?.href,
+  email: settings.coordonnees.email || undefined,
+  telephone: settings.coordonnees.phone || undefined,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: settings.coordonnees.city,
+    addressRegion: settings.coordonnees.region,
+    addressCountry: 'FR',
+  },
+  areaServed: settings.coordonnees.region,
+  sameAs: [settings.reseaux.instagramUrl, settings.reseaux.etsyUrl].filter(Boolean),
+};
+const ld = [localBusiness, ...jsonLd];
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Brunette Paris" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#151311" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body data-hero={hero}>
+    <a class="skip-link" href="#contenu">{settings.nav.skip}</a>
+    <Header settings={settings} offres={offres} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer settings={settings} offres={offres} />
+    <div class="grain" aria-hidden="true"></div>
+    <Cursor />
+    <Curtain />
+    <script>
+      import { initReveals } from '../scripts/motion';
+      // Les composants de page ajoutent leurs propres animations ; les révélations génériques sont lancées ici, une seule fois.
+      initReveals();
+    </script>
+  </body>
+</html>

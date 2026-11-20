@@ -1,0 +1,16 @@
+title: Ceinture Héritage
+date: '2026-09-18'
+category: ceintures
+leather: vache
+description: >-
+  Une ceinture d’une seule bande de cuir de vache tannée végétal, boucle en laiton massif. Coupée à votre taille, elle se transmet plus qu’elle ne s’use.
+dimensions: Largeur 3,5 cm, longueur sur mesure
+edition: limitee
+availability: disponible
+price: 180
+photos:
+  - alt: Ceinture Héritage, vue principale
+    placeholder: Ceinture Héritage enroulée, boucle laiton (4:5)
+  - alt: Ceinture Héritage, détail
+    placeholder: Gros plan boucle laiton et passant cousu main
+placeholderShape: torus

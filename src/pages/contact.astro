@@ -1,0 +1,212 @@
+---
+/** 18. Contact et devis. */
+import Base from '../layouts/Base.astro';
+import { getContact, getSettings } from '../lib/content';
+const [page, settings] = await Promise.all([getContact(), getSettings()]);
+const { champs } = page;
+const { coordonnees, reseaux } = settings;
+// TODO : renseigner l'adresse Formspree (ou d'une fonction serverless) dans Keystatic › Réglages globaux.
+const endpoint = settings.formEndpoint || '';
+---
+<Base title={page.seo.title} description={page.seo.description} hero="light">
+  <section class="contact bg-light">
+    <div class="container contact__grid">
+      <div class="contact__main">
+        <h1 data-reveal>{page.h1}</h1>
+
+        <form class="form" data-contact-form action={endpoint || undefined} method="POST" novalidate={false}
+          data-confirmation={page.confirmation} data-error={page.erreur} data-sending={champs.sending}>
+          <!-- Sélecteur en tête de formulaire -->
+          <fieldset class="form__switch" data-reveal>
+            <legend class="visually-hidden">{page.selecteur.legend}</legend>
+            <label class="switch">
+              <input type="radio" name="profil" value="entreprise" checked data-profile />
+              <span>{page.selecteur.entreprise}</span>
+            </label>
+            <label class="switch">
+              <input type="radio" name="profil" value="particulier" data-profile />
+              <span>{page.selecteur.particulier}</span>
+            </label>
+          </fieldset>
+
+          <div class="form__fields" data-reveal>
+            <div class="field">
+              <label for="f-nom">{champs.nom} <span class="req">({champs.requis})</span></label>
+              <input id="f-nom" name="nom" type="text" autocomplete="name" required />
+            </div>
+            <div class="field" data-only="entreprise">
+              <label for="f-societe">{champs.societe}</label>
+              <input id="f-societe" name="societe" type="text" autocomplete="organization" />
+            </div>
+            <div class="field">
+              <label for="f-email">{champs.email} <span class="req">({champs.requis})</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field" data-only="entreprise">
+              <label for="f-tel">{champs.telephone}</label>
+              <input id="f-tel" name="telephone" type="tel" autocomplete="tel" />
+            </div>
+            <div class="field field--full" data-only="entreprise">
+              <label for="f-type">{champs.typeProjet}</label>
+              <select id="f-type" name="type_projet">
+                {champs.typesProjet.map((t) => <option value={t}>{t}</option>)}
+              </select>
+            </div>
+            <div class="field" data-only="entreprise">
+              <label for="f-date">{champs.date}</label>
+              <input id="f-date" name="date" type="date" />
+            </div>
+            <div class="field" data-only="entreprise">
+              <label for="f-qte">{champs.quantite}</label>
+              <input id="f-qte" name="quantite" type="number" min="1" inputmode="numeric" />
+            </div>
+            <div class="field field--full" data-only="particulier" hidden>
+              <label for="f-piece">{champs.piece}</label>
+              <input id="f-piece" name="piece" type="text" data-piece-input />
+            </div>
+            <div class="field field--full">
+              <label for="f-message">{champs.message} <span class="req">({champs.requis})</span></label>
+              <textarea id="f-message" name="message" rows="6" required></textarea>
+            </div>
+          </div>
+          <!-- Champ piège anti-spam (Formspree) -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+          <div class="form__actions" data-reveal>
+            <button type="submit" class="btn" data-submit>{champs.submit}</button>
+          </div>
+          <p class="form__status" role="status" aria-live="polite" data-status></p>
+        </form>
+      </div>
+
+      <!-- Colonne latérale -->
+      <aside class="contact__aside" data-reveal>
+        <dl>
+          {coordonnees.email && (
+            <div><dt class="eyebrow">{page.aside.emailLabel}</dt><dd><a href={`mailto:${coordonnees.email}`}>{coordonnees.email}</a></dd></div>
+          )}
+          {reseaux.instagramUrl && (
+            <div><dt class="eyebrow">{page.aside.instagramLabel}</dt><dd><a href={reseaux.instagramUrl} target="_blank" rel="noopener">{reseaux.instagramHandle}</a></dd></div>
+          )}
+          <div><dt class="eyebrow">{page.aside.zoneLabel}</dt><dd>{coordonnees.zone}</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { padding-block: calc(var(--header-h) + var(--space-8)) var(--section-y); }
+  .contact__grid { display: grid; gap: var(--space-8); }
+  .contact h1 { margin-bottom: var(--space-7); }
+  .form { display: grid; gap: var(--space-6); }
+  .form__switch { display: flex; flex-wrap: wrap; gap: var(--space-2); border: 0; padding: 0; margin: 0; }
+  .switch { position: relative; }
+  .switch input { position: absolute; opacity: 0; inset: 0; }
+  .switch span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.7rem 1.2rem 0.55rem;
+    border: 1px solid var(--ink-200);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    transition: background-color var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+  }
+  .switch input:checked + span { background: var(--ink-950); border-color: var(--ink-950); color: var(--cream-50); }
+  .switch input:focus-visible + span { outline: 1px solid var(--accent-on-light); outline-offset: 3px; }
+  .form__fields { display: grid; gap: var(--space-5) var(--space-5); }
+  .field { display: grid; gap: var(--space-2); }
+  .field[hidden] { display: none; }
+  .field label { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-light-muted); }
+  .req { text-transform: none; letter-spacing: 0; opacity: 0.7; }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 0.8rem 0 0.6rem;
+    border: 0;
+    border-bottom: 1px solid var(--ink-300);
+    background: transparent;
+    font-size: var(--text-base);
+    border-radius: 0;
+    transition: border-color var(--dur-fast);
+  }
+  .field textarea { resize: vertical; border: 1px solid var(--ink-300); padding: var(--space-3); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus { outline: none; border-color: var(--sable-600); }
+  .form__status { min-height: 1.5em; font-family: var(--font-serif); font-size: var(--text-xl); }
+  .form__status.is-error { color: #8a3b2a; font-family: var(--font-sans); font-size: var(--text-sm); }
+  .form.is-sent .form__fields,
+  .form.is-sent .form__switch,
+  .form.is-sent .form__actions { display: none; }
+
+  .contact__aside dl { display: grid; gap: var(--space-6); padding: var(--space-6); border: 1px solid var(--ink-200); }
+  .contact__aside dt { color: var(--accent-on-light); margin-bottom: var(--space-2); }
+  .contact__aside a { border-bottom: 1px solid var(--ink-300); transition: border-color var(--dur-fast); }
+  .contact__aside a:hover { border-color: var(--sable-500); }
+
+  @media (min-width: 40em) {
+    .form__fields { grid-template-columns: 1fr 1fr; }
+    .field--full { grid-column: 1 / -1; }
+  }
+  @media (min-width: 64em) {
+    .contact__grid { grid-template-columns: 1fr 20rem; gap: var(--space-10); align-items: start; }
+    .contact__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); margin-top: calc(var(--text-4xl) * 1.1 + var(--space-7)); }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+  const status = form.querySelector<HTMLElement>('[data-status]')!;
+  const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const pieceInput = form.querySelector<HTMLInputElement>('[data-piece-input]')!;
+
+  // Bascule entreprise / particulier : affiche les champs correspondants.
+  function setProfile(profile: string) {
+    form.querySelectorAll<HTMLElement>('[data-only]').forEach((f) => {
+      const on = f.dataset.only === profile;
+      f.hidden = !on;
+      f.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select').forEach((i) => (i.disabled = !on));
+    });
+  }
+  form.querySelectorAll<HTMLInputElement>('[data-profile]').forEach((r) => r.addEventListener('change', () => setProfile(r.value)));
+
+  // Pièce préremplie si l'on vient d'une fiche (/contact?piece=…) : profil particulier présélectionné.
+  const piece = new URLSearchParams(location.search).get('piece');
+  if (piece) {
+    pieceInput.value = piece;
+    form.querySelector<HTMLInputElement>('[data-profile][value="particulier"]')!.checked = true;
+    setProfile('particulier');
+  } else {
+    setProfile('entreprise');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    status.classList.remove('is-error');
+    const label = submit.textContent;
+    submit.disabled = true;
+    submit.textContent = form.dataset.sending!;
+    try {
+      if (!form.action || form.getAttribute('action') === null) {
+        // TODO : aucun service d'envoi configuré (Keystatic › Réglages globaux › Adresse d'envoi du formulaire).
+        console.warn('[contact] Formulaire non configuré : message non envoyé.');
+        throw new Error('no-endpoint');
+      }
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.classList.add('is-sent');
+      status.textContent = form.dataset.confirmation!;
+    } catch {
+      status.classList.add('is-error');
+      status.textContent = form.dataset.error!;
+    } finally {
+      submit.disabled = false;
+      submit.textContent = label;
+    }
+  });
+</script>

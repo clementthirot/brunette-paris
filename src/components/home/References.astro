@@ -1,0 +1,34 @@
+---
+/** 11.7 Références — bandeau de logos en niveaux de gris, défilement lent et continu. Masqué sans référence autorisée. */
+import { getAuthorizedReferences } from '../../lib/content';
+interface Props { label: string }
+const { label } = Astro.props;
+const refs = await getAuthorizedReferences();
+---
+{refs.length > 0 && (
+  <section class="refs bg-light" aria-label={label}>
+    <div class="refs__marquee">
+      {[0, 1].map((copy) => (
+        <ul role="list" class="refs__track" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {refs.map((r) => (
+            <li class="refs__item"><img src={r.logo!} alt={copy === 0 ? r.name : ''} loading="lazy" /></li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </section>
+)}
+<style>
+  .refs { padding-block: var(--space-8); overflow: hidden; border-top: 1px solid var(--ink-100); }
+  .refs__marquee { display: flex; width: max-content; }
+  .refs__track { display: flex; align-items: center; gap: var(--space-9); padding-right: var(--space-9); animation: marquee 45s linear infinite; }
+  .refs__marquee:hover .refs__track { animation-play-state: paused; }
+  .refs__item img { height: 2.75rem; width: auto; max-width: 10rem; object-fit: contain; filter: grayscale(1); opacity: 0.7; transition: filter var(--dur-base), opacity var(--dur-base); }
+  .refs__item img:hover { filter: none; opacity: 1; }
+  @keyframes marquee { to { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .refs__marquee { width: auto; flex-wrap: wrap; justify-content: center; }
+    .refs__track { animation: none; flex-wrap: wrap; justify-content: center; }
+    .refs__track[aria-hidden] { display: none; }
+  }
+</style>

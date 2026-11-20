@@ -1,0 +1,39 @@
+seo:
+  title: Sacs, ceintures et accessoires en cuir faits main | Brunette Paris
+  description: Pièces uniques et séries limitées en cuir de vache, python et crocodile, cousues main en Île-de-France.
+h1: Créations
+phrase: Chaque pièce est unique, ou presque.
+filtres:
+  type: Type
+  cuir: Cuir
+  tous: Tous
+  vide: Aucune pièce ne correspond à ces filtres pour le moment.
+  categories:
+    sacs: Sacs
+    ceintures: Ceintures
+    petite-maroquinerie: Petite maroquinerie
+    golf: Golf
+    musique: Musique
+  cuirs:
+    vache: Vache
+    python: Python
+    crocodile: Crocodile
+encart:
+  text: Une envie particulière ? L'atelier réalise aussi des commandes sur mesure.
+  button: Parlons de votre projet
+fiche:
+  seoTitle: '{nom} en cuir de {cuir} | Brunette Paris'
+  leatherPrefix: Cuir de
+  dimensions: Dimensions
+  price: Prix
+  tab3d: 3D
+  tabPhotos: Photos
+  buy: Acquérir cette pièce
+  ask: Demander cette pièce
+  entretienTitle: Entretien du cuir
+  entretienText: >-
+    Le cuir est une matière vivante. Dépoussiérez-le avec un chiffon doux et sec, nourrissez-le une à deux
+    fois par an avec une crème incolore adaptée, et tenez-le à l’écart des sources de chaleur directe. En cas
+    de pluie, laissez-le sécher naturellement à l’air libre. Pour le python et le crocodile, l’atelier vous
+    conseille personnellement : écrivez-nous. (TODO : conseils à valider avec la cliente.)
+  similarTitle: Vous aimerez aussi

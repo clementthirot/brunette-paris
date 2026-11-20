@@ -1,0 +1,25 @@
+---
+/**
+ * Photo éditable dans Keystatic. Tant que l'image n'est pas fournie, affiche un
+ * placeholder neutre au bon ratio, avec le libellé de la photo attendue.
+ */
+import type { Photo as PhotoT } from '../../lib/content';
+interface Props {
+  photo?: Partial<PhotoT> | null;
+  ratio?: string; // ex. '4 / 5', '1', '16 / 9'
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  [key: `data-${string}`]: unknown;
+}
+const { photo, ratio = '4 / 5', class: cls = '', loading = 'lazy', sizes, ...rest } = Astro.props;
+const src = photo?.image || null;
+const label = photo?.placeholder || photo?.alt || 'Photo à fournir';
+---
+<div class:list={['ph', cls]} style={`--ratio:${ratio}`} {...rest}>
+  {src ? (
+    <img src={src} alt={photo?.alt ?? ''} loading={loading} decoding="async" sizes={sizes} />
+  ) : (
+    <div class="ph__label" role="img" aria-label={photo?.alt || label}><span>{label}</span></div>
+  )}
+</div>

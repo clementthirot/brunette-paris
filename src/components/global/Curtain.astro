@@ -1,0 +1,71 @@
+---
+/** Transition entre pages : rideau couleur reine qui glisse de bas en haut, 0,6 s. */
+---
+<div class="curtain" aria-hidden="true" data-curtain></div>
+<style>
+  .curtain {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-curtain);
+    background: var(--reine-500);
+    pointer-events: none;
+    transform: translateY(100%);
+  }
+  /* Arrivée sur une page après une transition : le rideau couvre l'écran puis sort par le haut. */
+  :global(html.is-arriving) .curtain {
+    transform: translateY(0);
+  }
+</style>
+<script is:inline>
+  try {
+    if (sessionStorage.getItem('bp-curtain') === '1' && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('is-arriving');
+    }
+    sessionStorage.removeItem('bp-curtain');
+  } catch (e) {}
+</script>
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+  const curtain = document.querySelector<HTMLElement>('[data-curtain]')!;
+  const DURATION = 0.6;
+  const arriving = document.documentElement.classList.contains('is-arriving');
+  // GSAP prend la main sur la transformation (y en px remis à 0, position en yPercent).
+  gsap.set(curtain, { y: 0, yPercent: arriving ? 0 : 100 });
+
+  // Sortie du rideau à l'arrivée
+  if (arriving) {
+    gsap.fromTo(curtain, { yPercent: 0 }, {
+      yPercent: -100,
+      duration: DURATION,
+      ease: 'power3.inOut',
+      delay: 0.05,
+      onComplete: () => {
+        document.documentElement.classList.remove('is-arriving');
+        gsap.set(curtain, { yPercent: 100 });
+      },
+    });
+  }
+
+  // Entrée du rideau au clic sur un lien interne
+  document.addEventListener('click', (e) => {
+    if (reducedMotion() || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = (e.target as Element).closest?.('a');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.pathname.startsWith('/keystatic')) return;
+    if (url.pathname === location.pathname && url.search === location.search) return; // ancre sur la même page
+    e.preventDefault();
+    try { sessionStorage.setItem('bp-curtain', '1'); } catch {}
+    gsap.fromTo(curtain, { yPercent: 100 }, {
+      yPercent: 0,
+      duration: DURATION,
+      ease: 'power3.inOut',
+      onComplete: () => { location.href = url.href; },
+    });
+  });
+
+  // Retour arrière (bfcache) : on s'assure que le rideau est rangé.
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) gsap.set(curtain, { yPercent: 100 });
+  });
+</script>

@@ -1,0 +1,20 @@
+---
+/** Logos vectoriels extraits de la charte. Le « B » seul ne doit jamais être utilisé seul. */
+import principal from '../../assets/logos/logo-principal.svg?raw';
+import secondaire from '../../assets/logos/logo-secondaire.svg?raw';
+interface Props {
+  variant?: 'principal' | 'secondaire';
+  class?: string;
+  label?: string;
+}
+const { variant = 'principal', class: cls = '', label = 'Brunette Paris' } = Astro.props;
+const svg = (variant === 'principal' ? principal : secondaire).replace(
+  '<svg ',
+  `<svg role="img" aria-label="${label}" `
+);
+---
+<span class:list={['logo', `logo--${variant}`, cls]} set:html={svg} />
+<style>
+  .logo { display: inline-block; line-height: 0; }
+  .logo :global(svg) { width: 100%; height: auto; }
+</style>

@@ -1,0 +1,54 @@
+---
+/** Logo principal « pressé dans la matière » (animation signature, 1,6 s). */
+import logoUrl from '../../assets/logos/logo-principal.svg?url';
+interface Props { class?: string; label?: string; duration?: number; delay?: number }
+const { class: cls = '', label = 'Brunette Paris', duration = 1.6, delay = 0.3 } = Astro.props;
+---
+<div class:list={['stamp-logo', cls]} role="img" aria-label={label}
+  style={`--logo-mask:url("${logoUrl}")`} data-stamp data-stamp-duration={duration} data-stamp-delay={delay}>
+  <span class="stamp-logo__shadow" data-stamp-deboss><span class="stamp-logo__mask stamp-logo__deboss"></span></span>
+  <span class="stamp-logo__mask stamp-logo__gold" data-stamp-gold></span>
+  <span class="stamp-logo__mask stamp-logo__sheen" data-stamp-sheen></span>
+</div>
+<style>
+  .stamp-logo {
+    position: relative;
+    display: grid;
+    width: 100%;
+    aspect-ratio: 258.54 / 92.97;
+  }
+  .stamp-logo > * { grid-area: 1 / 1; }
+  .stamp-logo__mask {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -webkit-mask: var(--logo-mask) center / contain no-repeat;
+    mask: var(--logo-mask) center / contain no-repeat;
+  }
+  /* 1. Dépression : forme plus sombre que la matière, arête claire en bas, ombre en haut */
+  .stamp-logo__shadow {
+    display: block;
+    filter: drop-shadow(0 -1px 0 rgb(0 0 0 / 0.85)) drop-shadow(0 1px 0 rgb(255 236 205 / 0.16));
+  }
+  .stamp-logo__deboss { background: #0b0a09; }
+  /* 2. Dorure sable */
+  .stamp-logo__gold {
+    background: var(--gold-gradient);
+    background-size: 200% 100%;
+    background-position: 30% 0;
+  }
+  /* 3. Reflet */
+  .stamp-logo__sheen {
+    background: linear-gradient(105deg, transparent 42%, rgb(255 250 236 / 0.95) 50%, transparent 58%);
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+  :global(html.js) [data-stamp] .stamp-logo__shadow,
+  :global(html.js) [data-stamp] .stamp-logo__gold { opacity: 0; }
+</style>
+<script>
+  import { initHotStamps } from '../../scripts/hotstamp';
+  initHotStamps();
+</script>

@@ -1,0 +1,73 @@
+---
+/** 11.2 Double entrée — fond clair. Bloc entreprises 60 %, bloc particuliers 40 %. */
+import Photo from '../ui/Photo.astro';
+import type { Photo as PhotoT } from '../../lib/content';
+interface Bloc { title: string; text: string; button: string; photo: PhotoT }
+interface Props { entreprises: Bloc; particuliers: Bloc; entreprisesHref: string }
+const { entreprises, particuliers, entreprisesHref } = Astro.props;
+const blocs = [
+  { ...entreprises, href: entreprisesHref, mod: 'pro' },
+  { ...particuliers, href: '/creations', mod: 'perso' },
+];
+---
+<section class="entree bg-light" id="double-entree">
+  <div class="container entree__grid" data-reveal-group="0.15">
+    {blocs.map((b) => (
+      <a href={b.href} class={`entree__bloc entree__bloc--${b.mod}`} data-reveal>
+        <div class="entree__media">
+          <Photo photo={b.photo} ratio={b.mod === 'pro' ? '4 / 3' : '4 / 5'} class="entree__photo" />
+        </div>
+        <div class="entree__body">
+          <h2 class="entree__title">{b.title}</h2>
+          <p class="entree__text">{b.text}</p>
+          <span class="btn btn--dark">{b.button}</span>
+        </div>
+        <svg class="entree__trace" aria-hidden="true" preserveAspectRatio="none">
+          <rect x="0" y="0" width="100%" height="100%" pathLength="1" />
+        </svg>
+      </a>
+    ))}
+  </div>
+</section>
+<style>
+  .entree { padding-block: var(--space-8) var(--section-y); }
+  .entree__grid { display: grid; gap: var(--space-6); }
+  .entree__bloc {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-5);
+    padding: var(--space-4);
+  }
+  .entree__media { overflow: hidden; }
+  .entree__media :global(.entree__photo) { transition: transform 1.2s var(--ease-out); }
+  .entree__bloc:hover .entree__media :global(.entree__photo),
+  .entree__bloc:focus-visible .entree__media :global(.entree__photo) { transform: scale(1.05); }
+  .entree__body { display: grid; gap: var(--space-4); justify-items: start; padding: var(--space-2) var(--space-2) var(--space-4); }
+  .entree__title { font-size: var(--text-3xl); }
+  .entree__text { color: var(--fg-on-light-muted); max-width: 40ch; }
+  .entree__bloc--pro .entree__title { font-size: var(--text-4xl); }
+  /* Filet sable qui se trace autour du bloc au survol */
+  .entree__trace {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .entree__trace rect {
+    fill: none;
+    stroke: var(--sable-500);
+    stroke-width: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    vector-effect: non-scaling-stroke;
+    transition: stroke-dashoffset 1.2s var(--ease-out);
+  }
+  .entree__bloc:hover .entree__trace rect,
+  .entree__bloc:focus-visible .entree__trace rect { stroke-dashoffset: 0; }
+  @media (min-width: 48em) {
+    .entree__grid { grid-template-columns: 3fr 2fr; align-items: stretch; }
+  }
+</style>

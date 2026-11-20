@@ -1,0 +1,196 @@
+---
+/**
+ * Gabarit commun des pages d'offre (section 12 du brief), dans cet ordre :
+ * 1. Hero demi-écran · 2. Introduction · 3. Ce que nous proposons · 4. Comment ça se passe
+ * 5. Galerie · 6. Questions fréquentes · 7. Appel à l'action final.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/ui/Photo.astro';
+import HotStampText from '../../components/ui/HotStampText.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import StitchSteps from '../../components/ui/StitchSteps.astro';
+import Gallery from '../../components/offre/Gallery.astro';
+import CtaFinal from '../../components/ui/CtaFinal.astro';
+import { getOffres, getSettings, type Offre } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const offres = await getOffres();
+  return offres.map((offre) => ({ params: { slug: offre.slug }, props: { offre } }));
+}
+const { offre } = Astro.props as { offre: Offre };
+const settings = await getSettings();
+
+const faqLd = offre.faq.items.length
+  ? [{
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: offre.faq.items.map((q) => ({
+        '@type': 'Question',
+        name: q.question,
+        acceptedAnswer: { '@type': 'Answer', text: q.answer },
+      })),
+    }]
+  : [];
+---
+<Base title={offre.seo.title} description={offre.seo.description} hero="dark" jsonLd={faqLd} image={offre.hero.photo.image}>
+  <!-- 1. Hero demi-écran, fond sombre -->
+  <section class="o-hero bg-dark">
+    <div class="o-hero__media" aria-hidden="true">
+      <Photo photo={offre.hero.photo} ratio="auto" class="o-hero__photo" loading="eager" />
+      <div class="o-hero__shade"></div>
+    </div>
+    <div class="container o-hero__content">
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: offre.title }]} />
+      <HotStampText text={offre.hero.h1} class="o-hero__title" />
+      <p class="o-hero__accroche">{offre.hero.accroche}</p>
+      <a href="/contact" class="btn">{settings.nav.devis}</a>
+    </div>
+  </section>
+
+  <!-- 2. Introduction, fond clair : texte SEO + photo verticale en parallaxe -->
+  <section class="o-intro bg-light section">
+    <div class="container o-intro__grid">
+      <div class="o-intro__text">
+        <h2 data-reveal>{offre.intro.h2}</h2>
+        <p data-reveal>{offre.intro.paragraph1}</p>
+        <p data-reveal>{offre.intro.paragraph2}</p>
+      </div>
+      <div class="o-intro__media">
+        <div data-parallax><Photo photo={offre.intro.photo} ratio="3 / 4" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Ce que nous proposons : cartes en cascade (0,1 s d'écart) -->
+  <section class="o-cards bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{offre.pointsCles.title}</h2>
+      <ul role="list" class="o-cards__grid" data-reveal-group="0.1">
+        {offre.pointsCles.items.map((c) => (
+          <li class="o-card" data-reveal>
+            <Photo photo={c.photo} ratio="1" />
+            <h3 class="o-card__title">{c.title}</h3>
+            <p class="o-card__text">{c.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Comment ça se passe : 4 étapes verticales reliées par la ligne de couture -->
+  <section class="o-steps bg-light section">
+    <div class="container o-steps__grid">
+      <h2 class="section-title" data-reveal>{offre.etapes.title}</h2>
+      <StitchSteps steps={offre.etapes.items} variant="vertical" />
+    </div>
+  </section>
+
+  <!-- 5. Galerie masonry + visionneuse plein écran -->
+  <section class="o-gallery bg-light section">
+    <div class="container">
+      <Gallery photos={offre.galerie.photos} title={offre.galerie.title} />
+    </div>
+  </section>
+
+  <!-- 6. Questions fréquentes (données structurées FAQPage) -->
+  {offre.faq.items.length > 0 && (
+    <section class="o-faq bg-light section">
+      <div class="container container--narrow">
+        <h2 class="section-title" data-reveal>{offre.faq.title}</h2>
+        <div class="faq">
+          {offre.faq.items.map((q) => (
+            <details class="faq__item" data-reveal>
+              <summary class="faq__q">
+                <span>{q.question}</span>
+                <span class="faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq__a"><p>{q.answer}</p></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 7. Appel à l'action final -->
+  <CtaFinal />
+</Base>
+
+<style>
+  .o-hero {
+    position: relative;
+    min-height: 62vh;
+    min-height: 62svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8);
+  }
+  .o-hero__media,
+  .o-hero__shade { position: absolute; inset: 0; }
+  .o-hero__media :global(.o-hero__photo) { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
+  .o-hero__media :global(.ph__label) { place-items: start end; padding-top: calc(var(--header-h) + 1rem); }
+  .o-hero__shade { background: linear-gradient(180deg, rgb(12 10 8 / 0.55), rgb(12 10 8 / 0.78)); }
+  .o-hero__content { position: relative; display: grid; gap: var(--space-5); justify-items: start; }
+  .o-hero__content :global(.o-hero__title) { font-size: var(--text-4xl); max-width: 18ch; }
+  .o-hero__accroche { max-width: 44ch; font-size: var(--text-lg); color: var(--fg-on-dark-muted); }
+
+  .o-intro__grid { display: grid; gap: var(--space-8); align-items: center; }
+  .o-intro__text { display: grid; gap: var(--space-5); }
+  .o-intro__text h2 { margin-bottom: var(--space-3); max-width: 16ch; }
+  .o-intro__text p { color: var(--fg-on-light-muted); max-width: 60ch; }
+  .o-intro__media { overflow: hidden; }
+  .o-intro__media [data-parallax] { scale: 1.12; }
+
+  .o-cards { padding-top: 0; }
+  .o-cards__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+  .o-card { display: grid; gap: var(--space-3); align-content: start; }
+  .o-card__title { font-size: var(--text-xl); margin-top: var(--space-2); }
+  .o-card__text { color: var(--fg-on-light-muted); font-size: var(--text-sm); }
+
+  .o-steps { padding-top: 0; }
+  .o-steps__grid { display: grid; gap: var(--space-5); }
+
+  .o-gallery { padding-top: 0; }
+  .o-faq { padding-top: 0; }
+  .faq { border-top: 1px solid var(--ink-200); }
+  .faq__item { border-bottom: 1px solid var(--ink-200); }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-5);
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__icon { position: relative; flex: none; width: 14px; height: 14px; }
+  .faq__icon::before,
+  .faq__icon::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--accent-on-light); transition: transform var(--dur-base) var(--ease-out); }
+  .faq__icon::after { transform: rotate(90deg); }
+  .faq__item[open] .faq__icon::after { transform: rotate(0); }
+  .faq__a { padding-bottom: var(--space-5); color: var(--fg-on-light-muted); max-width: 60ch; }
+
+  @media (min-width: 56em) {
+    .o-intro__grid { grid-template-columns: 1.15fr 1fr; gap: var(--space-10); }
+    .o-intro__media { max-width: 30rem; justify-self: end; width: 100%; }
+    .o-steps__grid { grid-template-columns: 1fr 1.4fr; gap: var(--space-9); align-items: start; }
+    .o-cards__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+  // Parallaxe légère de la photo d'introduction : déplacement de 10 % au scroll.
+  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+    if (reducedMotion()) return;
+    gsap.fromTo(el, { yPercent: -5 }, {
+      yPercent: 5,
+      ease: 'none',
+      scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  });
+</script>

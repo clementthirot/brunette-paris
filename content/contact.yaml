@@ -1,0 +1,33 @@
+seo:
+  title: Contact et devis | Brunette Paris
+  description: Un événement, une commande sur mesure pour votre marque ou une pièce de la collection ? Écrivez à l’atelier Brunette Paris, maroquinerie artisanale en Île-de-France.
+h1: Parlons de votre projet
+selecteur:
+  entreprise: Je suis une entreprise
+  particulier: Je suis un particulier
+  legend: Vous êtes
+champs:
+  nom: Nom
+  societe: Société
+  email: Email
+  telephone: Téléphone
+  typeProjet: Type de projet
+  typesProjet:
+    - Événement
+    - Sur-mesure marque
+    - Hôtellerie-restauration
+    - Golf
+    - Autre
+  date: Date envisagée
+  quantite: Nombre de personnes ou de pièces
+  piece: Pièce concernée
+  message: Message
+  requis: obligatoire
+  submit: Envoyer
+  sending: Envoi en cours…
+confirmation: Merci. L'atelier vous répond sous 48 heures.
+erreur: L’envoi n’a pas abouti. Vous pouvez réessayer ou écrire directement à l’atelier par email.
+aside:
+  emailLabel: Email
+  instagramLabel: Instagram
+  zoneLabel: Zone d’intervention

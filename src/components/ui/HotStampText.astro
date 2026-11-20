@@ -1,0 +1,41 @@
+---
+/** Titre qui « s'imprime dans la matière » : effet de marquage à chaud, version courte (0,8 s). */
+interface Props { text: string; as?: 'h1' | 'h2' | 'p'; class?: string; duration?: number; delay?: number }
+const { text, as: Tag = 'h1', class: cls = '', duration = 0.8, delay = 0.35 } = Astro.props;
+---
+<Tag class:list={['stamp-text', cls]} data-stamp data-stamp-duration={duration} data-stamp-delay={delay}>
+  <span class="stamp-text__base" data-stamp-deboss>{text}</span>
+  <span class="stamp-text__gold" data-stamp-gold aria-hidden="true">{text}</span>
+  <span class="stamp-text__sheen" data-stamp-sheen aria-hidden="true">{text}</span>
+</Tag>
+<style>
+  .stamp-text { display: grid; }
+  .stamp-text > span { grid-area: 1 / 1; }
+  .stamp-text__base {
+    color: rgb(8 7 6 / 0.55);
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 0.7), 0 1px 0 rgb(255 236 205 / 0.18);
+  }
+  .stamp-text__gold,
+  .stamp-text__sheen {
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .stamp-text__gold {
+    background-image: var(--gold-gradient);
+    background-size: 200% 100%;
+    background-position: 30% 0;
+  }
+  .stamp-text__sheen {
+    background-image: linear-gradient(105deg, transparent 42%, rgb(255 250 236 / 0.95) 50%, transparent 58%);
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    opacity: 0;
+  }
+  :global(html.js) [data-stamp] .stamp-text__base,
+  :global(html.js) [data-stamp] .stamp-text__gold { opacity: 0; }
+</style>
+<script>
+  import { initHotStamps } from '../../scripts/hotstamp';
+  initHotStamps();
+</script>

@@ -1,0 +1,96 @@
+---
+/** 11.3 Manifeste — fond sombre. Les mots passent un par un de gris foncé à blanc cassé (scrub). */
+interface Chiffre { value?: number | null; suffix?: string; label: string }
+interface Props { phrase: string; chiffres: readonly Chiffre[] }
+const { phrase, chiffres } = Astro.props;
+const words = phrase.split(/\s+/);
+---
+<section class="manifeste bg-dark section" data-manifeste>
+  <div class="container container--narrow">
+    <p class="manifeste__phrase serif" aria-label={phrase}>
+      {words.map((w) => <span class="manifeste__word" aria-hidden="true">{w} </span>)}
+    </p>
+    <ul role="list" class="manifeste__chiffres">
+      {chiffres.map((c) => (
+        <li class="chiffre" data-reveal>
+          {typeof c.value === 'number' ? (
+            <span class="chiffre__value"><span data-count={c.value}>{c.value}</span>{c.suffix}</span>
+          ) : null}
+          <span class:list={['chiffre__label', { 'chiffre__label--big': typeof c.value !== 'number' }]}>{c.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .manifeste__phrase {
+    font-size: var(--text-4xl);
+    line-height: 1.12;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .manifeste__word { color: var(--fg-on-dark); }
+  :global(html.js) .manifeste__word { color: var(--ink-700); }
+  .manifeste__chiffres {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-9);
+    text-align: center;
+  }
+  .chiffre { display: grid; gap: var(--space-2); justify-items: center; align-content: end; }
+  .chiffre__value {
+    font-family: var(--font-sans);
+    font-size: var(--text-3xl);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--sable-500);
+    font-variant-numeric: tabular-nums;
+  }
+  .chiffre__label {
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    color: var(--fg-on-dark-muted);
+  }
+  .chiffre__label--big {
+    font-size: var(--text-xl);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--sable-500);
+    line-height: 1.2;
+  }
+  @media (min-width: 40em) {
+    .manifeste__chiffres { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+  const section = document.querySelector<HTMLElement>('[data-manifeste]');
+  if (section) {
+    const words = section.querySelectorAll<HTMLElement>('.manifeste__word');
+    const counters = section.querySelectorAll<HTMLElement>('[data-count]');
+    if (reducedMotion()) {
+      gsap.set(words, { color: '#f6f1e7' });
+    } else {
+      gsap.to(words, {
+        color: '#f6f1e7',
+        stagger: 0.12,
+        ease: 'none',
+        scrollTrigger: { trigger: section.querySelector('.manifeste__phrase'), start: 'top 80%', end: 'bottom 40%', scrub: true },
+      });
+      // Chiffres comptés de 0 à leur valeur à l'apparition
+      counters.forEach((el) => {
+        const target = Number(el.dataset.count);
+        const obj = { v: 0 };
+        el.textContent = '0';
+        gsap.to(obj, {
+          v: target,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          onUpdate: () => { el.textContent = String(Math.round(obj.v)); },
+        });
+      });
+    }
+  }
+</script>

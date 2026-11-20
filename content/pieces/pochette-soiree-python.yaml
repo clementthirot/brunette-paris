@@ -1,0 +1,16 @@
+title: Pochette de soirée Ondine
+date: '2026-07-11'
+category: sacs
+leather: python
+description: >-
+  Une pochette de soirée en python, au relief d’écailles saisissant. Doublure en cuir d’agneau, fermeture aimantée invisible. Pièce unique.
+dimensions: 24 × 14 cm
+edition: unique
+availability: vendue
+
+photos:
+  - alt: Pochette de soirée Ondine, vue principale
+    placeholder: Pochette Ondine en python, fond sombre (4:5)
+  - alt: Pochette de soirée Ondine, détail
+    placeholder: Gros plan écailles du python à la lumière rasante
+placeholderShape: cube

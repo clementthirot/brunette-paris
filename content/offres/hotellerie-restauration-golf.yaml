@@ -1,0 +1,92 @@
+title: Hôtellerie, restauration et golf
+order: 3
+seo:
+  title: Protège-menus en cuir et accessoires sur mesure pour restaurants et golfs | Brunette Paris
+  description: Protège-menus, porte-additions, pochettes et accessoires de golf en cuir, faits main pour les établissements haut de gamme.
+card:
+  phrase: Protège-menus, porte-additions et accessoires de golf pour les établissements d’exception.
+  photo:
+    alt: Protège-menu en cuir sur une table dressée
+    placeholder: Protège-menu en cuir sur table de restaurant dressée (vertical)
+hero:
+  h1: Le détail qui fait l'expérience
+  accroche: Des accessoires en cuir pour les établissements qui soignent chaque geste.
+  photo:
+    alt: Salle de restaurant avec protège-menus en cuir
+    placeholder: Plein cadre, table de restaurant gastronomique avec protège-menu en cuir
+intro:
+  h2: L'art de recevoir, jusqu'au menu
+  paragraph1: >-
+    Dans un hôtel, un restaurant ou un club, l’expérience se joue dans les détails que l’on touche. Un
+    protège-menu cuir qui tombe juste dans la main, un porte-addition cuir qui se referme avec souplesse, une
+    pochette qui accueille la clé d’une chambre : ces objets parlent de votre maison avant même le premier
+    mot. Brunette Paris les conçoit sur mesure, au format de vos cartes, dans les cuirs et les teintes qui
+    prolongent votre décor.
+  paragraph2: >-
+    Pour les golfs, l’atelier réalise des accessoires golf cuir pensés pour durer : protège-clubs,
+    portefeuilles et étuis de carte de score, marqués au nom du club ou du parcours. Chaque pièce est coupée
+    et cousue à la main en Île-de-France, avec des cuirs choisis pour résister à un usage quotidien et se
+    patiner avec élégance. Le nom de votre établissement peut être gravé à chaud ou doré, pour une signature
+    sobre qui traverse les saisons.
+  photo:
+    alt: Porte-addition en cuir
+    placeholder: Vertical, porte-addition en cuir tenu en main par un serveur
+pointsCles:
+  title: Ce que nous proposons
+  items:
+    - title: Protège-menus
+      text: Au format exact de vos cartes, avec ou sans système d’attache intérieur.
+      photo:
+        alt: Protège-menus en cuir
+        placeholder: Carré, protège-menus en cuir empilés
+    - title: Pochettes et porte-additions
+      text: Pour présenter l’addition, une clé ou un mot d’accueil avec élégance.
+      photo:
+        alt: Porte-additions en cuir
+        placeholder: Carré, porte-addition en cuir ouvert
+    - title: Protège-clubs de golf
+      text: Des protège-clubs cousus main, marqués au nom de votre club ou de vos joueurs.
+      photo:
+        alt: Protège-clubs de golf en cuir
+        placeholder: Carré, protège-clubs en cuir sur un sac de golf
+    - title: Portefeuilles et étuis golf
+      text: Étuis de carte de score et portefeuilles pensés pour le parcours.
+      photo:
+        alt: Étui de carte de score en cuir
+        placeholder: Carré, étui de carte de score en cuir sur le green
+etapes:
+  title: Comment ça se passe
+  items:
+    - title: Brief et intentions
+      text: Nous échangeons sur votre établissement, vos usages, vos quantités et vos délais.
+    - title: Échantillons et prototype
+      text: Choix des cuirs et des finitions, puis réalisation d’un prototype à valider.
+    - title: Fabrication
+      text: Les pièces sont coupées, cousues et marquées à la main à l’atelier.
+    - title: Livraison
+      text: Contrôle pièce par pièce, emballage soigné et livraison dans votre établissement.
+galerie:
+  title: Galerie
+  photos:
+    - alt: Table dressée
+      placeholder: Table dressée avec protège-menu
+    - alt: Porte-addition
+      placeholder: Porte-addition posé sur nappe blanche
+    - alt: Protège-clubs
+      placeholder: Protège-clubs en cuir alignés
+    - alt: Étui golf
+      placeholder: Étui golf posé sur le green
+    - alt: Nom gravé
+      placeholder: Macro nom d’établissement gravé à chaud
+    - alt: Pochette clé d’hôtel
+      placeholder: Pochette en cuir pour clé d’hôtel
+faq:
+  title: Questions fréquentes
+  # TODO : le gabarit prévoit 4 à 6 questions, le brief n'en donne que 3 pour cette page — à compléter avec la cliente.
+  items:
+    - question: Les pièces résistent-elles à un usage quotidien ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Peut-on graver le nom de l'établissement ?
+      answer: TODO — réponse à rédiger avec la cliente.
+    - question: Comment entretenir le cuir ?
+      answer: TODO — réponse à rédiger avec la cliente.

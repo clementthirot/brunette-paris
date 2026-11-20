@@ -1,0 +1,171 @@
+---
+/** 17. L'atelier. */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/ui/Photo.astro';
+import { getAtelier } from '../lib/content';
+const page = await getAtelier();
+---
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}>
+  <!-- Hero fond sombre : portrait d'Armonie -->
+  <section class="a-hero bg-dark">
+    <div class="a-hero__media" aria-hidden="true">
+      <Photo photo={page.hero.photo} ratio="auto" class="a-hero__photo" loading="eager" />
+      <div class="a-hero__shade"></div>
+    </div>
+    <div class="container a-hero__content">
+      <h1 data-reveal>{page.hero.h1}</h1>
+    </div>
+  </section>
+
+  <!-- Histoire, fond clair : texte au « je » + citation en exergue -->
+  <section class="a-story bg-light section">
+    <div class="container a-story__grid">
+      <div class="a-story__text">
+        <h2 data-reveal>{page.histoire.title}</h2>
+        {page.histoire.paragraphs.map((p) => <p data-reveal>{p}</p>)}
+      </div>
+      <blockquote class="a-story__quote serif" data-reveal>
+        <p>« {page.histoire.citation} »</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Les matières : halo de lumière rasante qui suit le curseur et révèle le relief -->
+  <section class="a-matieres bg-dark section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.matieres.title}</h2>
+      <p class="a-matieres__hint" data-reveal>{page.matieres.hint}</p>
+      <ul role="list" class="a-matieres__grid" data-reveal-group="0.12">
+        {page.matieres.items.map((m, i) => (
+          <li class="matiere" data-reveal>
+            <div class={`matiere__surface matiere__surface--${i}`} data-halo data-cursor-hover>
+              <Photo photo={m.photo} ratio="4 / 5" />
+              <span class="matiere__relief" aria-hidden="true"></span>
+              <span class="matiere__light" aria-hidden="true"></span>
+            </div>
+            <h3 class="matiere__name">{m.name}</h3>
+            <p class="matiere__text">{m.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Les finitions : les trois techniques de la charte -->
+  <section class="a-finitions bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.finitions.title}</h2>
+      <ul role="list" class="a-finitions__grid" data-reveal-group="0.12">
+        {page.finitions.items.map((f) => (
+          <li class="finition" data-reveal>
+            <Photo photo={f.photo} ratio="1" />
+            <h3 class="finition__name">{f.name}</h3>
+            <p class="finition__phrase">{f.phrase}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Galerie atelier : 6 photos -->
+  <section class="a-galerie bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.galerie.title}</h2>
+      <ul role="list" class="a-galerie__grid" data-reveal-group="0.08">
+        {page.galerie.photos.map((p, i) => (
+          <li data-reveal class={`a-galerie__item a-galerie__item--${i}`}><Photo photo={p} ratio={i % 3 === 0 ? '4 / 5' : '1'} /></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .a-hero {
+    position: relative;
+    min-height: 80vh;
+    min-height: 80svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8);
+  }
+  .a-hero__media, .a-hero__shade { position: absolute; inset: 0; }
+  .a-hero__media :global(.a-hero__photo) { position: absolute; inset: 0; height: 100%; }
+  .a-hero__media :global(.ph__label) { place-items: start end; padding-top: calc(var(--header-h) + 1rem); }
+  .a-hero__shade { background: linear-gradient(180deg, rgb(12 10 8 / 0.3), rgb(12 10 8 / 0.75)); }
+  .a-hero__content { position: relative; }
+  .a-hero h1 { font-size: var(--text-display); }
+
+  .a-story__grid { display: grid; gap: var(--space-8); }
+  .a-story__text { display: grid; gap: var(--space-5); max-width: 62ch; }
+  .a-story__text h2 { margin-bottom: var(--space-3); }
+  .a-story__text p { color: var(--fg-on-light-muted); }
+  .a-story__quote { font-size: var(--text-2xl); line-height: 1.15; color: var(--fg-on-light); border-left: 1px solid var(--sable-500); padding-left: var(--space-6); align-self: center; }
+
+  .a-matieres__hint { margin-top: calc(-1 * var(--space-5)); margin-bottom: var(--space-7); color: var(--fg-on-dark-muted); font-size: var(--text-sm); }
+  .a-matieres__grid { display: grid; gap: var(--space-7) var(--space-5); }
+  .matiere { display: grid; gap: var(--space-3); align-content: start; }
+  .matiere__surface { position: relative; overflow: hidden; --x: 50%; --y: 50%; --on: 0; touch-action: pan-y; }
+  /* Relief : texture embossée révélée seulement sous le halo (CSS mask) */
+  .matiere__relief,
+  .matiere__light { position: absolute; inset: 0; pointer-events: none; }
+  .matiere__relief {
+    background-image: var(--relief);
+    background-size: var(--relief-size, 22px 22px);
+    mix-blend-mode: overlay;
+    -webkit-mask: radial-gradient(circle 9rem at var(--x) var(--y), #000 0%, transparent 100%);
+    mask: radial-gradient(circle 9rem at var(--x) var(--y), #000 0%, transparent 100%);
+    opacity: var(--on);
+    transition: opacity 0.6s var(--ease-out);
+  }
+  /* Halo de lumière rasante qui suit le curseur */
+  .matiere__light {
+    background: radial-gradient(circle 11rem at var(--x) var(--y), rgb(255 238 210 / 0.38), rgb(255 238 210 / 0.08) 45%, transparent 70%);
+    mix-blend-mode: soft-light;
+    opacity: var(--on);
+    transition: opacity 0.6s var(--ease-out);
+  }
+  /* Textures provisoires de relief, à remplacer automatiquement par la vraie photo (le halo s'applique aussi sur la photo) */
+  .matiere__surface--0 { --relief: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.5) 0 1px, transparent 2px), radial-gradient(circle at 70% 60%, rgb(0 0 0 / 0.6) 0 1.5px, transparent 2.5px); --relief-size: 9px 9px; }
+  .matiere__surface--1 { --relief: radial-gradient(ellipse 50% 40% at 50% 50%, rgb(255 255 255 / 0.35), rgb(0 0 0 / 0.55) 70%, rgb(0 0 0 / 0.8) 74%, transparent 76%); --relief-size: 26px 18px; }
+  .matiere__surface--2 { --relief: linear-gradient(90deg, rgb(0 0 0 / 0.75) 0 2px, transparent 2px), linear-gradient(0deg, rgb(0 0 0 / 0.75) 0 2px, rgb(255 255 255 / 0.25) 2px 5px, transparent 5px); --relief-size: 34px 26px; }
+  .matiere__name { font-size: var(--text-2xl); margin-top: var(--space-3); }
+  .matiere__text { color: var(--fg-on-dark-muted); max-width: 36ch; }
+
+  .a-finitions__grid { display: grid; gap: var(--space-7) var(--space-5); }
+  .finition { display: grid; gap: var(--space-3); align-content: start; }
+  .finition__name { font-size: var(--text-xl); margin-top: var(--space-3); }
+  .finition__phrase { color: var(--fg-on-light-muted); max-width: 36ch; }
+
+  .a-galerie { padding-top: 0; }
+  .a-galerie__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+
+  @media (min-width: 48em) {
+    .a-matieres__grid, .a-finitions__grid { grid-template-columns: repeat(3, 1fr); }
+    .a-galerie__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-5); align-items: start; }
+    .a-galerie__item--1, .a-galerie__item--4 { margin-top: var(--space-8); }
+  }
+  @media (min-width: 56em) {
+    .a-story__grid { grid-template-columns: 1.3fr 1fr; gap: var(--space-10); }
+  }
+</style>
+
+<script>
+  import { reducedMotion } from '../scripts/motion';
+  // Halo de lumière : suit le curseur (souris) ou le doigt (toucher).
+  document.querySelectorAll<HTMLElement>('[data-halo]').forEach((el) => {
+    const move = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--x', `${e.clientX - r.left}px`);
+      el.style.setProperty('--y', `${e.clientY - r.top}px`);
+      el.style.setProperty('--on', '1');
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerdown', move);
+    el.addEventListener('pointerleave', () => el.style.setProperty('--on', '0'));
+    el.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') el.style.setProperty('--on', '0'); });
+    // Équivalent statique (prefers-reduced-motion) : halo fixe au centre, relief visible.
+    if (reducedMotion()) el.style.setProperty('--on', '0.6');
+  });
+</script>

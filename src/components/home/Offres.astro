@@ -1,0 +1,83 @@
+---
+/** 11.4 Offres professionnelles — fond clair. Scroll horizontal épinglé sur desktop, cartes empilées sur mobile. */
+import Photo from '../ui/Photo.astro';
+import { offreUrl, type Offre } from '../../lib/content';
+interface Props { title: string; offres: Offre[]; learnMore: string }
+const { title, offres, learnMore } = Astro.props;
+---
+<section class="offres bg-light" id="offres" data-offres>
+  <div class="offres__pin">
+    <div class="container offres__head">
+      <h2 class="offres__title" data-reveal>{title}</h2>
+    </div>
+    <div class="offres__viewport">
+      <ul role="list" class="offres__track" data-offres-track>
+        {offres.map((o, i) => (
+          <li class="offre-card" data-reveal>
+            <a href={offreUrl(o.slug)} class="offre-card__link">
+              <div class="offre-card__media"><Photo photo={o.card.photo} ratio="3 / 4" /></div>
+              <div class="offre-card__body">
+                <span class="offre-card__num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="offre-card__title">{o.title}</h3>
+                <p class="offre-card__text">{o.card.phrase}</p>
+                <span class="link-underline">{learnMore}</span>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+<style>
+  .offres { padding-block: var(--section-y); overflow: hidden; }
+  .offres__title { max-width: 16ch; margin-bottom: var(--space-7); }
+  .offres__track { display: grid; gap: var(--space-8); padding-inline: var(--gutter); }
+  .offre-card__link { display: grid; gap: var(--space-5); }
+  .offre-card__media { overflow: hidden; }
+  .offre-card__media :global(.ph) { transition: transform 1.2s var(--ease-out); }
+  .offre-card__link:hover .offre-card__media :global(.ph) { transform: scale(1.04); }
+  .offre-card__body { display: grid; gap: var(--space-3); justify-items: start; }
+  .offre-card__num { font-size: var(--text-2xl); font-family: var(--font-serif); color: var(--accent-on-light); line-height: 1; }
+  .offre-card__title { font-size: var(--text-2xl); }
+  .offre-card__text { color: var(--fg-on-light-muted); max-width: 38ch; margin-bottom: var(--space-2); }
+
+  /* Desktop : cartes horizontales (photo verticale + texte côte à côte) */
+  @media (min-width: 64em) {
+    .offres { padding-block: 0; }
+    .offres__pin { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-block: var(--space-9) var(--space-8); }
+    .offres__viewport { overflow: visible; }
+    .offres__track {
+      display: flex;
+      gap: var(--space-8);
+      width: max-content;
+      padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+      padding-right: var(--gutter);
+    }
+    .offre-card { width: min(62vw, 54rem); }
+    .offre-card__link { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); align-items: end; gap: var(--space-7); }
+  }
+</style>
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+  const section = document.querySelector<HTMLElement>('[data-offres]');
+  const track = section?.querySelector<HTMLElement>('[data-offres-track]');
+  if (section && track && !reducedMotion()) {
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 64em)', () => {
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      gsap.to(track, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+  }
+</script>

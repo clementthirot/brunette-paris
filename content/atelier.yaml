@@ -1,0 +1,76 @@
+seo:
+  title: L'atelier Brunette Paris — maroquinière artisanale en Île-de-France
+  description: Armonie, fondatrice de Brunette Paris, façonne à la main sacs, ceintures et pièces sur mesure dans son atelier de maroquinerie en Île-de-France.
+hero:
+  h1: L'atelier
+  photo:
+    alt: Portrait d’Armonie à l’atelier
+    placeholder: Portrait d’Armonie à son établi, lumière de fenêtre
+histoire:
+  title: Une histoire de mains
+  paragraphs:
+    - >-
+      Avant le cuir, il y a eu un autre métier, d’autres rythmes. J’ai toujours eu besoin de fabriquer, de
+      comprendre comment les choses tiennent ensemble. Un jour, j’ai poussé la porte d’un atelier de
+      maroquinerie, et je n’en suis jamais vraiment ressortie. (TODO : parcours d’Armonie à rédiger avec elle.)
+    - >-
+      Ce qui m’a saisie, c’est l’odeur, puis le poids d’une peau dans les mains. Le cuir résiste, il se
+      souvient de chaque geste. J’ai appris la coupe au tranchet, la couture sellier à deux aiguilles, la
+      patience des tranches que l’on lisse encore et encore.
+    - >-
+      Aujourd’hui, chez Brunette Paris, je fabrique chaque pièce entièrement à la main, en Île-de-France.
+      Je préfère la pièce unique ou la petite série à la production : un objet pensé pour quelqu’un, qui
+      vieillira avec lui et portera, longtemps, la trace de la main qui l’a façonné.
+  citation: Le cuir se souvient de chaque geste. C’est pour cela que je ne le presse jamais.
+matieres:
+  title: Les matières
+  hint: Survolez ou touchez la matière pour en révéler le relief.
+  items:
+    - name: Vache
+      text: Notre cuir de prédilection. Pleine fleur, tanné végétal, il gagne en caractère au fil des années.
+      photo:
+        alt: Texture de cuir de vache
+        placeholder: Macro texture cuir de vache pleine fleur
+    - name: Python
+      text: Un relief d’écailles unique, réservé aux pièces d’exception et aux petites séries.
+      photo:
+        alt: Texture de cuir de python
+        placeholder: Macro écailles de python, lumière rasante
+    - name: Crocodile
+      text: Utilisé avec parcimonie, pour quelques pièces rares au toucher incomparable.
+      photo:
+        alt: Texture de cuir de crocodile
+        placeholder: Macro écailles de crocodile
+finitions:
+  title: Les finitions
+  items:
+    - name: Rivet gravé
+      phrase: Un rivet en laiton gravé au monogramme de la maison, qui ferme et signe la pièce.
+      photo:
+        alt: Rivet gravé en laiton
+        placeholder: Macro rivet laiton gravé du logo secondaire
+    - name: Dorure à chaud
+      phrase: Une feuille d’or pressée à chaud dans le cuir, pour une signature lumineuse et durable.
+      photo:
+        alt: Dorure à chaud sur cuir noir
+        placeholder: Macro dorure à chaud du logo sur cuir noir
+    - name: Marquage à chaud
+      phrase: Le fer chauffé imprime le logo dans la matière, sans aucune couleur ajoutée.
+      photo:
+        alt: Marquage à chaud sur cuir naturel
+        placeholder: Macro marquage à chaud du logo sur cuir naturel
+galerie:
+  title: L’atelier en images
+  photos:
+    - alt: Outils de maroquinerie
+      placeholder: Outils alignés (tranchet, alênes, griffes)
+    - alt: Établi
+      placeholder: Vue d’ensemble de l’établi
+    - alt: Mains au travail
+      placeholder: Mains au travail, couture sellier
+    - alt: Peaux de cuir
+      placeholder: Peaux suspendues ou roulées
+    - alt: Fil et aiguilles
+      placeholder: Gros plan fil de lin ciré et aiguilles
+    - alt: Fer à marquer
+      placeholder: Fer à marquer et presse

@@ -1,0 +1,73 @@
+seo:
+  title: Brunette Paris — Maroquinerie artisanale sur mesure à Paris
+  description: Atelier de maroquinerie artisanale en Île-de-France. Ateliers cuir pour séminaires et événements, cadeaux d'entreprise et pièces uniques faites main.
+hero:
+  h1: Maroquinerie artisanale, faite main à Paris
+  subtitle: Pièces uniques et ateliers sur mesure pour les entreprises et les particuliers.
+  photo:
+    alt: Mains d’Armonie travaillant le cuir à l’établi
+    placeholder: Plein cadre, mains travaillant le cuir à l’établi (photo ou vidéo)
+entree:
+  entreprises:
+    title: Pour les entreprises
+    text: Ateliers de personnalisation, cadeaux d'entreprise, pièces sur mesure pour votre marque.
+    button: Découvrir nos offres
+    photo:
+      alt: Atelier de personnalisation cuir lors d’un séminaire
+      placeholder: Atelier de personnalisation en événement, invités autour du poste de travail
+  particuliers:
+    title: Pour vous
+    text: Des pièces uniques, pensées et cousues à la main.
+    button: Voir les créations
+    photo:
+      alt: Sac en cuir fait main posé sur l’établi
+      placeholder: Sac en cuir fini, lumière naturelle, fond d’atelier
+manifeste:
+  phrase: Chaque pièce porte la trace de la main qui l'a façonnée.
+  chiffres:
+    - value: 100
+      suffix: ' %'
+      label: fait main
+    - suffix: ''
+      label: Île-de-France
+    - suffix: ''
+      label: Pièces uniques
+offres:
+  title: Le cuir au service de votre entreprise
+  items:
+    - evenements-seminaires
+    - sur-mesure
+    - hotellerie-restauration-golf
+vedette:
+  title: Créations récentes
+  pieces:
+    - sac-besace-camille
+    - ceinture-heritage
+    - etui-golf-albatros
+    - porte-cles-pivoine
+  button: Toutes les créations
+savoirFaire:
+  title: Du cuir brut à la pièce finie
+  etapes:
+    - title: Le choix du cuir
+      text: Des peaux sélectionnées une à une, pour leur grain, leur tenue et leur façon de vieillir.
+      photo:
+        alt: Peaux de cuir sélectionnées
+        placeholder: Peaux de cuir empilées, main qui en éprouve le grain
+    - title: La coupe
+      text: Chaque pièce est tracée puis découpée à la main, au tranchet, au plus près du gabarit.
+      photo:
+        alt: Découpe du cuir au tranchet
+        placeholder: Gros plan tranchet découpant le cuir sur gabarit
+    - title: La couture main
+      text: "Le point sellier, deux aiguilles et un fil ciré : une couture qui ne se défait pas."
+      photo:
+        alt: Couture au point sellier
+        placeholder: Gros plan mains + couture sellier
+    - title: Le marquage
+      text: Rivet gravé, dorure ou marquage à chaud signent la pièce, sans jamais de couleur ajoutée.
+      photo:
+        alt: Marquage à chaud du logo dans le cuir
+        placeholder: Macro marquage à chaud du logo dans le cuir
+references:
+  label: Ils nous ont fait confiance

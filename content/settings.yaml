@@ -1,0 +1,45 @@
+coordonnees:
+  email: contact@brunette-paris.fr # TODO : email définitif à confirmer
+  phone: '' # TODO : téléphone à confirmer
+  city: Paris
+  region: Île-de-France
+  zone: Paris et toute l’Île-de-France, déplacements possibles en France sur demande
+reseaux:
+  instagramHandle: '@_brunette_paris'
+  instagramUrl: https://www.instagram.com/_brunette_paris/
+  etsyUrl: https://www.etsy.com/shop/BrunetteParis
+nav:
+  entreprises: Entreprises
+  creations: Créations
+  atelier: L’atelier
+  contact: Contact
+  devis: Demander un devis
+  menuOpen: Menu
+  menuClose: Fermer
+  home: Accueil
+  skip: Aller au contenu
+footer:
+  tagline: Maroquinerie artisanale, faite main en Île-de-France
+  legalLabel: Mentions légales
+  copyright: © Brunette Paris — Maroquinerie artisanale
+ctaFinal:
+  title: Un projet, un événement, une idée ?
+  text: Parlons-en autour d'un échantillon de cuir.
+  button: Demander un devis
+  secondary: Écrire à l'atelier
+labels:
+  learnMore: En savoir plus
+  unique: Pièce unique
+  limitee: Série limitée
+  disponible: Disponible
+  vendue: Vendue
+  scroll: Faire défiler
+  close: Fermer
+  previous: Précédent
+  next: Suivant
+  viewer3d: Vue 3D de la pièce, faites glisser pour la tourner
+notFound:
+  seoTitle: Page introuvable | Brunette Paris
+  phrase: Cette page s'est égarée à l'atelier.
+  link: Revenir à l’accueil
+formEndpoint: ''

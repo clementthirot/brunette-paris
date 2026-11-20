@@ -1,0 +1,16 @@
+title: Portefeuille Saint-Germain
+date: '2026-06-24'
+category: petite-maroquinerie
+leather: crocodile
+description: >-
+  Un portefeuille compact en crocodile, six emplacements pour cartes et une poche à billets. Tranches lissées à la main, couture sellier au fil de lin ciré.
+dimensions: 11 × 9 cm fermé
+edition: unique
+availability: disponible
+
+photos:
+  - alt: Portefeuille Saint-Germain, vue principale
+    placeholder: Portefeuille Saint-Germain en crocodile, fermé (4:5)
+  - alt: Portefeuille Saint-Germain, détail
+    placeholder: Portefeuille ouvert, détail des poches cousues main
+placeholderShape: cube

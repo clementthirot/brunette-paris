@@ -1,0 +1,110 @@
+---
+/** 11.1 Hero — fond sombre, plein écran. */
+import HotStampLogo from '../ui/HotStampLogo.astro';
+import type { Photo } from '../../lib/content';
+interface Props { h1: string; subtitle: string; photo: Photo; video?: string | null; scrollLabel: string }
+const { h1, subtitle, photo, video, scrollLabel } = Astro.props;
+---
+<section class="hero bg-dark">
+  <div class="hero__media" aria-hidden="true">
+    {video ? (
+      <video src={video} autoplay muted loop playsinline poster={photo.image ?? undefined}></video>
+    ) : photo.image ? (
+      <img src={photo.image} alt="" fetchpriority="high" />
+    ) : (
+      <div class="hero__ph"><span>{photo.placeholder}</span></div>
+    )}
+    <div class="hero__shade"></div>
+    <div class="hero__grain"></div>
+  </div>
+  <div class="hero__content container">
+    <HotStampLogo class="hero__logo" />
+    <h1 class="hero__title">{h1}</h1>
+    <p class="hero__subtitle">{subtitle}</p>
+  </div>
+  <a href="#double-entree" class="hero__scroll" aria-label={scrollLabel}><span></span></a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding-block: calc(var(--header-h) + var(--space-6)) var(--space-9);
+  }
+  .hero__media,
+  .hero__media > *,
+  .hero__shade,
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__media img,
+  .hero__media video { width: 100%; height: 100%; object-fit: cover; }
+  .hero__ph {
+    display: grid;
+    place-items: start end;
+    padding: calc(var(--header-h) + 1rem) var(--gutter);
+    background:
+      radial-gradient(ellipse at 50% 40%, var(--ink-700), var(--ink-900) 70%);
+    color: var(--ink-400);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+  }
+  .hero__ph span { border: 1px dashed currentColor; padding: var(--space-2) var(--space-3); opacity: 0.8; }
+  /* Assombrie à 60 % */
+  .hero__shade { background: rgb(12 10 8 / 0.6); }
+  /* Grain léger animé */
+  .hero__grain {
+    inset: -100%;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 0.9s steps(6) infinite;
+  }
+  @keyframes grain {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-4%, 3%); }
+    40% { transform: translate(3%, -5%); }
+    60% { transform: translate(-6%, -2%); }
+    80% { transform: translate(5%, 4%); }
+    100% { transform: translate(0, 0); }
+  }
+  .hero__content {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-5);
+  }
+  .hero__content :global(.hero__logo) { width: min(78vw, 30rem); margin-bottom: var(--space-5); }
+  .hero__title { font-size: var(--text-display); max-width: 16ch; }
+  .hero__subtitle { max-width: 38ch; color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
+  /* Indicateur de scroll : fine ligne sable qui descend en boucle */
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-5);
+    width: 1px;
+    height: 4.5rem;
+    overflow: hidden;
+    transform: translateX(-50%);
+    background: rgb(225 190 128 / 0.2);
+  }
+  .hero__scroll span {
+    position: absolute;
+    inset: 0;
+    background: var(--sable-500);
+    animation: scroll-line 2.2s var(--ease-in-out) infinite;
+  }
+  @keyframes scroll-line {
+    0% { transform: translateY(-100%); }
+    60%, 100% { transform: translateY(100%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__grain { animation: none; }
+    .hero__scroll span { animation: none; transform: none; }
+  }
+</style>

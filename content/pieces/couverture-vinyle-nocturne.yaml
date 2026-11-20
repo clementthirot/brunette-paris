@@ -1,0 +1,15 @@
+title: Couverture vinyle Nocturne
+date: '2026-05-30'
+category: musique
+leather: vache
+description: >-
+  Une couverture de vinyle en cuir de vache, au format 33 tours, signée d’une dorure à chaud. Réalisée en série limitée pour une édition spéciale.
+dimensions: 31,5 × 31,5 cm
+edition: limitee
+availability: none
+photos:
+  - alt: Couverture vinyle Nocturne, vue principale
+    placeholder: Couverture vinyle Nocturne, dorure à chaud (4:5)
+  - alt: Couverture vinyle Nocturne, détail
+    placeholder: Disque glissé dans la couverture en cuir
+placeholderShape: cube

@@ -1,0 +1,298 @@
+---
+import Logo from '../ui/Logo.astro';
+import { offreUrl, type Offre } from '../../lib/content';
+interface Props {
+  settings: Awaited<ReturnType<typeof import('../../lib/content').getSettings>>;
+  offres: Offre[];
+}
+const { settings, offres } = Astro.props;
+const { nav } = settings;
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+<header class="site-header" data-header>
+  <div class="site-header__inner container">
+    <a href="/" class="site-header__logo" aria-label="Brunette Paris — accueil">
+      <Logo variant="principal" />
+    </a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+      <ul role="list" class="site-nav__list">
+        <li class="site-nav__item has-sub">
+          <button class="site-nav__link" aria-expanded="false" aria-controls="sub-entreprises" data-sub-toggle>
+            {nav.entreprises}
+            <svg width="9" height="6" viewBox="0 0 9 6" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" /></svg>
+          </button>
+          <ul role="list" class="site-nav__sub" id="sub-entreprises">
+            {offres.map((o) => (
+              <li><a href={offreUrl(o.slug)} aria-current={isActive(offreUrl(o.slug)) ? 'page' : undefined}>{o.title}</a></li>
+            ))}
+          </ul>
+        </li>
+        <li class="site-nav__item"><a class="site-nav__link" href="/creations" aria-current={isActive('/creations') ? 'page' : undefined}>{nav.creations}</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="/atelier" aria-current={isActive('/atelier') ? 'page' : undefined}>{nav.atelier}</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="/contact" aria-current={isActive('/contact') ? 'page' : undefined}>{nav.contact}</a></li>
+      </ul>
+    </nav>
+
+    <a href="/contact" class="btn site-header__cta">{nav.devis}</a>
+
+    <button class="burger" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+      <span class="burger__label" data-open-label={nav.menuOpen} data-close-label={nav.menuClose}>{nav.menuOpen}</span>
+      <span class="burger__lines" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile plein écran : les liens apparaissent un par un -->
+  <div class="mobile-menu bg-dark" id="mobile-menu" hidden data-mobile-menu>
+    <ul role="list" class="mobile-menu__list container">
+      <li class="mobile-menu__group" data-mm-item>
+        <span class="eyebrow">{nav.entreprises}</span>
+        <ul role="list">
+          {offres.map((o) => <li><a href={offreUrl(o.slug)}>{o.title}</a></li>)}
+        </ul>
+      </li>
+      <li data-mm-item><a class="mobile-menu__big" href="/creations">{nav.creations}</a></li>
+      <li data-mm-item><a class="mobile-menu__big" href="/atelier">{nav.atelier}</a></li>
+      <li data-mm-item><a class="mobile-menu__big" href="/contact">{nav.contact}</a></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: var(--z-header);
+    color: var(--fg-on-light);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+  /* Header transparent sur les heros sombres */
+  :global(body[data-hero='dark']) .site-header:not(.is-scrolled) {
+    color: var(--fg-on-dark);
+  }
+  /* Fond blanc cassé dès qu'on scrolle */
+  .site-header.is-scrolled {
+    background: var(--cream-50);
+    color: var(--fg-on-light);
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--ink-950) 8%, transparent);
+  }
+  :global(body.menu-open) .site-header {
+    color: var(--fg-on-dark);
+    background: transparent;
+    box-shadow: none;
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    height: var(--header-h);
+    position: relative;
+    z-index: 2;
+  }
+  .site-header__logo {
+    width: 8.5rem;
+    flex-shrink: 0;
+    margin-right: auto;
+  }
+  .site-nav {
+    display: none;
+  }
+  .site-header__cta {
+    display: none;
+    min-height: 2.6rem;
+    padding: 0.8rem 1.2rem 0.65rem;
+  }
+  .burger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+  }
+  .burger__lines {
+    display: grid;
+    gap: 6px;
+    width: 26px;
+  }
+  .burger__lines span {
+    height: 1px;
+    background: currentColor;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .burger[aria-expanded='true'] .burger__lines span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+  .burger[aria-expanded='true'] .burger__lines span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    padding-top: calc(var(--header-h) + var(--space-6));
+    overflow-y: auto;
+  }
+  .mobile-menu__list {
+    display: grid;
+    gap: var(--space-6);
+  }
+  .mobile-menu__group ul {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+  }
+  .mobile-menu__group .eyebrow {
+    color: var(--sable-500);
+  }
+  .mobile-menu__big {
+    font-family: var(--font-serif);
+    font-size: var(--text-3xl);
+    line-height: 1;
+  }
+
+  @media (min-width: 64em) {
+    .burger,
+    .mobile-menu {
+      display: none !important;
+    }
+    .site-header__cta {
+      display: inline-flex;
+    }
+    .site-header__logo {
+      width: 10rem;
+      margin-right: 0;
+    }
+    .site-nav {
+      display: block;
+      margin-inline: auto;
+    }
+    .site-nav__list {
+      display: flex;
+      gap: var(--space-6);
+    }
+    .site-nav__item {
+      position: relative;
+    }
+    .site-nav__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding-block: var(--space-3);
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-ui);
+      text-transform: uppercase;
+      position: relative;
+    }
+    .site-nav__link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0.35rem;
+      height: 1px;
+      background: var(--sable-500);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur-base) var(--ease-out);
+    }
+    .site-nav__link:hover::after,
+    .site-nav__link[aria-current='page']::after {
+      transform: scaleX(1);
+    }
+    .site-nav__sub {
+      position: absolute;
+      top: 100%;
+      left: -1.25rem;
+      min-width: 17rem;
+      padding: var(--space-4) 1.25rem;
+      background: var(--cream-50);
+      color: var(--fg-on-light);
+      box-shadow: 0 12px 40px -18px rgb(0 0 0 / 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition:
+        opacity var(--dur-fast) var(--ease-out),
+        transform var(--dur-fast) var(--ease-out),
+        visibility 0s linear var(--dur-fast);
+    }
+    .site-nav__sub a {
+      display: block;
+      padding-block: var(--space-2);
+      font-size: var(--text-sm);
+      transition: color var(--dur-fast);
+    }
+    .site-nav__sub a:hover {
+      color: var(--accent-on-light);
+    }
+    .has-sub:hover .site-nav__sub,
+    .has-sub:focus-within .site-nav__sub,
+    .has-sub.is-open .site-nav__sub {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition-delay: 0s;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Sous-menu « Entreprises » (clavier / tactile)
+  const subToggle = header.querySelector<HTMLButtonElement>('[data-sub-toggle]')!;
+  subToggle.addEventListener('click', () => {
+    const open = subToggle.getAttribute('aria-expanded') !== 'true';
+    subToggle.setAttribute('aria-expanded', String(open));
+    subToggle.parentElement!.classList.toggle('is-open', open);
+  });
+  document.addEventListener('click', (e) => {
+    if (!subToggle.parentElement!.contains(e.target as Node)) {
+      subToggle.setAttribute('aria-expanded', 'false');
+      subToggle.parentElement!.classList.remove('is-open');
+    }
+  });
+
+  // Menu mobile plein écran
+  const burger = header.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const label = burger.querySelector<HTMLElement>('.burger__label')!;
+  const menu = header.querySelector<HTMLElement>('[data-mobile-menu]')!;
+  const items = menu.querySelectorAll<HTMLElement>('[data-mm-item]');
+
+  function setMenu(open: boolean) {
+    burger.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? label.dataset.closeLabel! : label.dataset.openLabel!;
+    document.body.classList.toggle('menu-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      menu.hidden = false;
+      if (reducedMotion()) return;
+      gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.6, ease: 'power3.inOut' });
+      gsap.fromTo(items, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, delay: 0.3 });
+    } else if (reducedMotion()) {
+      menu.hidden = true;
+    } else {
+      gsap.to(menu, { clipPath: 'inset(0 0 100% 0)', duration: 0.45, ease: 'power3.inOut', onComplete: () => { menu.hidden = true; } });
+    }
+  }
+  burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') setMenu(false);
+  });
+</script>

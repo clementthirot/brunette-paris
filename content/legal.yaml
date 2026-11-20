@@ -1,0 +1,13 @@
+seo:
+  title: Mentions légales | Brunette Paris
+  description: Mentions légales du site Brunette Paris, maroquinerie artisanale en Île-de-France.
+h1: Mentions légales
+sections:
+  - title: Éditeur du site
+    text: TODO — raison sociale, forme juridique, adresse, SIRET, responsable de la publication, email.
+  - title: Hébergement
+    text: "Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com. (TODO : vérifier les coordonnées à jour.)"
+  - title: Propriété intellectuelle
+    text: L’ensemble des contenus de ce site (textes, photographies, logos, modèles 3D) est la propriété de Brunette Paris, sauf mention contraire. Toute reproduction sans autorisation est interdite.
+  - title: Données personnelles
+    text: TODO — finalité du formulaire de contact, durée de conservation, prestataire d’envoi (Formspree ou autre), droits d’accès et de suppression, contact.

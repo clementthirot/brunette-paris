@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import DoubleEntree from '../components/home/DoubleEntree.astro';
+import Manifeste from '../components/home/Manifeste.astro';
+import Offres from '../components/home/Offres.astro';
+import Vedette from '../components/home/Vedette.astro';
+import StitchSteps from '../components/ui/StitchSteps.astro';
+import References from '../components/home/References.astro';
+import CtaFinal from '../components/ui/CtaFinal.astro';
+import { getHome, getSettings, getOffres, getPieces, getCreationsPage } from '../lib/content';
+
+const [home, settings, offres, pieces, creations] = await Promise.all([getHome(), getSettings(), getOffres(), getPieces(), getCreationsPage()]);
+const offresAccueil = home.offres.items.map((s) => offres.find((o) => o.slug === s)).filter((o) => !!o);
+const vedette = home.vedette.pieces.map((s) => pieces.find((p) => p.slug === s)).filter((p) => !!p);
+// « Découvrir nos offres » descend vers la section 11.4 (aucune page « Entreprises » globale n'est décrite dans le brief).
+const entreprisesHref = '#offres';
+---
+<Base title={home.seo.title} description={home.seo.description} hero="dark" image={home.hero.photo.image}>
+  <Hero h1={home.hero.h1} subtitle={home.hero.subtitle} photo={home.hero.photo} video={home.hero.video} scrollLabel={settings.labels.scroll} />
+  <DoubleEntree entreprises={home.entree.entreprises} particuliers={home.entree.particuliers} entreprisesHref={entreprisesHref} />
+  <Manifeste phrase={home.manifeste.phrase} chiffres={home.manifeste.chiffres} />
+  <Offres title={home.offres.title} offres={offresAccueil} learnMore={settings.labels.learnMore} />
+  <Vedette title={home.vedette.title} pieces={vedette} button={home.vedette.button} labels={settings.labels}
+    cuirs={creations.filtres.cuirs} leatherPrefix={creations.fiche.leatherPrefix} />
+  <section class="savoir-faire bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{home.savoirFaire.title}</h2>
+      <StitchSteps steps={home.savoirFaire.etapes} variant="frieze" />
+    </div>
+  </section>
+  <References label={home.references.label} />
+  <CtaFinal />
+</Base>

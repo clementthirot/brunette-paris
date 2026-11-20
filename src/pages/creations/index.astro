@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import PieceCard from '../../components/creations/PieceCard.astro';
+import { getCreationsPage, getPieces, getSettings } from '../../lib/content';
+import { CATEGORIES, CUIRS } from '../../../keystatic.config';
+
+const [page, pieces, settings] = await Promise.all([getCreationsPage(), getPieces(), getSettings()]);
+const { filtres } = page;
+const catLabel = (v: string) => (filtres.categories as Record<string, string>)[v] ?? v;
+const cuirLabel = (v: string) => (filtres.cuirs as Record<string, string>)[v] ?? v;
+---
+<Base title={page.seo.title} description={page.seo.description} hero="light">
+  <!-- Hero court, fond clair -->
+  <section class="c-hero bg-light">
+    <div class="container">
+      <h1 data-reveal>{page.h1}</h1>
+      <p class="c-hero__phrase" data-reveal>{page.phrase}</p>
+    </div>
+  </section>
+
+  <!-- Barre de filtres collante sous le header -->
+  <div class="filters bg-light" data-filters>
+    <div class="container filters__inner">
+      <fieldset class="filters__group">
+        <legend class="eyebrow">{filtres.type}</legend>
+        <div class="filters__chips">
+          <button class="chip is-active" data-filter="category" data-value="*" aria-pressed="true">{filtres.tous}</button>
+          {CATEGORIES.map((c) => (
+            <button class="chip" data-filter="category" data-value={c.value} aria-pressed="false">{catLabel(c.value)}</button>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset class="filters__group">
+        <legend class="eyebrow">{filtres.cuir}</legend>
+        <div class="filters__chips">
+          <button class="chip is-active" data-filter="leather" data-value="*" aria-pressed="true">{filtres.tous}</button>
+          {CUIRS.map((c) => (
+            <button class="chip" data-filter="leather" data-value={c.value} aria-pressed="false">{cuirLabel(c.value)}</button>
+          ))}
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- Grille de cartes -->
+  <section class="c-grid bg-light">
+    <div class="container">
+      <div class="c-grid__list" data-grid>
+        {pieces.map((p) => (
+          <PieceCard piece={p} labels={settings.labels} cuirLabel={cuirLabel(p.leather)} />
+        ))}
+      </div>
+      <p class="c-grid__empty" data-empty hidden aria-live="polite">{filtres.vide}</p>
+    </div>
+  </section>
+
+  <!-- Encart sur-mesure -->
+  <section class="c-encart bg-light">
+    <div class="container">
+      <div class="c-encart__box" data-reveal>
+        <p class="c-encart__text serif">{page.encart.text}</p>
+        <a href="/contact" class="btn btn--dark">{page.encart.button}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .c-hero { padding-block: calc(var(--header-h) + var(--space-8)) var(--space-6); }
+  .c-hero__phrase { margin-top: var(--space-4); font-size: var(--text-lg); color: var(--fg-on-light-muted); }
+
+  .filters {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 10;
+    border-block: 1px solid var(--ink-100);
+  }
+  .filters__inner { display: grid; gap: var(--space-3); padding-block: var(--space-3); }
+  .filters__group { display: flex; align-items: center; gap: var(--space-4); border: 0; margin: 0; padding: 0; min-width: 0; }
+  .filters__group legend { float: left; color: var(--accent-on-light); min-width: 3.2rem; padding: 0; }
+  .filters__chips { display: flex; gap: var(--space-2); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .chip {
+    flex: none;
+    min-height: 2.25rem;
+    padding: 0.55rem 0.9rem 0.4rem;
+    border: 1px solid var(--ink-200);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background-color var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
+  }
+  .chip:hover { border-color: var(--ink-950); }
+  .chip.is-active { background: var(--ink-950); border-color: var(--ink-950); color: var(--cream-50); }
+
+  .c-grid { padding-block: var(--space-7) var(--space-9); }
+  .c-grid__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: var(--space-7) var(--space-5); }
+  .c-grid__list :global(.piece-card.is-hidden) { display: none; }
+  .c-grid__empty { padding-block: var(--space-8); text-align: center; color: var(--fg-on-light-muted); }
+
+  .c-encart { padding-bottom: var(--section-y); }
+  .c-encart__box {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    padding: var(--space-7) var(--space-6);
+    border: 1px solid var(--sable-500);
+  }
+  .c-encart__text { font-size: var(--text-2xl); line-height: var(--leading-snug); max-width: 30ch; }
+  @media (min-width: 56em) {
+    .filters__inner { grid-auto-flow: column; justify-content: start; gap: var(--space-8); }
+    .c-encart__box { grid-auto-flow: column; justify-content: space-between; align-items: center; padding: var(--space-8); }
+  }
+</style>
+
+<script>
+  import { gsap, reducedMotion } from '../../scripts/motion';
+  import { Flip } from 'gsap/Flip';
+  gsap.registerPlugin(Flip);
+
+  // Filtrage côté client, transition des cartes en fondu et repositionnement fluide (GSAP Flip).
+  const root = document.querySelector<HTMLElement>('[data-filters]')!;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.piece-card'));
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  const state: Record<string, string> = { category: '*', leather: '*' };
+
+  function apply() {
+    const flipState = Flip.getState(cards);
+    let visible = 0;
+    cards.forEach((c) => {
+      const show = (state.category === '*' || c.dataset.category === state.category)
+        && (state.leather === '*' || c.dataset.leather === state.leather);
+      c.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    });
+    empty.hidden = visible > 0;
+    if (reducedMotion()) return;
+    Flip.from(flipState, {
+      duration: 0.7,
+      ease: 'power3.inOut',
+      absolute: true,
+      onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }),
+      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.96, duration: 0.4, ease: 'power2.in' }),
+    });
+  }
+
+  root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.filter!;
+      state[key] = btn.dataset.value!;
+      root.querySelectorAll<HTMLButtonElement>(`[data-filter="${key}"]`).forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      apply();
+    });
+  });
+</script>

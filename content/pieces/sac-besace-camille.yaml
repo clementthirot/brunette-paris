@@ -1,0 +1,17 @@
+title: Sac besace Camille
+date: '2026-10-02'
+category: sacs
+leather: vache
+description: >-
+  Une besace souple au tombé naturel, coupée dans un cuir de vache pleine fleur qui se patinera avec le temps. Couture sellier à la main, tranches teintées et lissées, rabat fermé par un rivet gravé à la marque.
+dimensions: 28 × 22 × 9 cm
+edition: unique
+availability: disponible
+price: 690
+photos:
+  - alt: Sac besace Camille, vue principale
+    placeholder: Besace Camille, cuir de vache naturel, face, fond neutre (4:5)
+  - alt: Sac besace Camille, détail
+    placeholder: Gros plan couture sellier et fermoir de la besace
+placeholderShape: cube
+model3d: /models/sac-besace-camille/model3d.glb

@@ -1,0 +1,95 @@
+---
+/** 11.5 Pièces en vedette — fond sombre. Visionneuse 3D + 4 vignettes. */
+import Viewer3D from '../ui/Viewer3D.astro';
+import Photo from '../ui/Photo.astro';
+import { pieceUrl, type Piece } from '../../lib/content';
+interface Props {
+  title: string;
+  pieces: Piece[];
+  button: string;
+  labels: { unique: string; limitee: string };
+  cuirs: Record<string, string>;
+  leatherPrefix: string;
+}
+const { title, pieces, button, labels, cuirs, leatherPrefix } = Astro.props;
+const first = pieces[0];
+const info = (p: Piece) => ({
+  name: p.title,
+  leather: `${leatherPrefix} ${(cuirs[p.leather] ?? p.leather).toLowerCase()}`,
+  edition: p.edition === 'unique' ? labels.unique : labels.limitee,
+  url: pieceUrl(p.slug),
+  model: p.model3d || '',
+  shape: p.placeholderShape,
+});
+---
+{first && (
+  <section class="vedette bg-dark section" data-vedette>
+    <div class="container">
+      <h2 class="vedette__title" data-reveal>{title}</h2>
+      <div class="vedette__grid">
+        <Viewer3D model={first.model3d} shape={first.placeholderShape} class="vedette__viewer" />
+        <div class="vedette__info" data-vedette-info aria-live="polite">
+          <p class="eyebrow vedette__edition" data-field="edition">{info(first).edition}</p>
+          <h3 class="vedette__name"><a href={info(first).url} data-field="name">{first.title}</a></h3>
+          <p class="vedette__leather" data-field="leather">{info(first).leather}</p>
+        </div>
+      </div>
+      <ul role="list" class="vedette__thumbs">
+        {pieces.map((p, i) => (
+          <li>
+            <button class:list={['vedette__thumb', { 'is-active': i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'}
+              data-piece={JSON.stringify(info(p))} aria-label={p.title}>
+              <Photo photo={p.photos?.[0]} ratio="1" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div class="vedette__cta"><a href="/creations" class="btn btn--ghost">{button}</a></div>
+    </div>
+  </section>
+)}
+<style>
+  .vedette__title { margin-bottom: var(--space-7); }
+  .vedette__grid { display: grid; gap: var(--space-6); align-items: center; }
+  .vedette__info { display: grid; gap: var(--space-3); transition: opacity 0.35s var(--ease-out); }
+  .vedette__info.is-fading { opacity: 0; }
+  .vedette__edition { color: var(--sable-500); }
+  .vedette__name { font-size: var(--text-3xl); }
+  .vedette__leather { color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
+  .vedette__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); margin-top: var(--space-7); }
+  .vedette__thumb { display: block; width: 100%; opacity: 0.5; outline-offset: 3px; transition: opacity var(--dur-fast); position: relative; }
+  .vedette__thumb::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px; background: var(--sable-500); transform: scaleX(0); transition: transform var(--dur-base) var(--ease-out); }
+  .vedette__thumb:hover, .vedette__thumb.is-active { opacity: 1; }
+  .vedette__thumb.is-active::after { transform: scaleX(1); }
+  .vedette__thumb :global(.ph__label span) { display: none; }
+  .vedette__cta { margin-top: var(--space-8); text-align: center; }
+  @media (min-width: 56em) {
+    .vedette__grid { grid-template-columns: 1.3fr 1fr; gap: var(--space-9); }
+    .vedette__thumbs { max-width: 40rem; gap: var(--space-4); }
+    .vedette__thumb :global(.ph__label span) { display: inline; font-size: 0.65rem; }
+  }
+</style>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-vedette]');
+  if (root) {
+    const viewer = root.querySelector<HTMLElement>('[data-viewer]')!;
+    const infoBox = root.querySelector<HTMLElement>('[data-vedette-info]')!;
+    const nameLink = infoBox.querySelector<HTMLAnchorElement>('[data-field="name"]')!;
+    const thumbs = root.querySelectorAll<HTMLButtonElement>('.vedette__thumb');
+    thumbs.forEach((btn) => btn.addEventListener('click', () => {
+      if (btn.classList.contains('is-active')) return;
+      const p = JSON.parse(btn.dataset.piece!);
+      thumbs.forEach((b) => { b.classList.toggle('is-active', b === btn); b.setAttribute('aria-pressed', String(b === btn)); });
+      // Changement de pièce dans la visionneuse avec fondu
+      viewer.dispatchEvent(new CustomEvent('viewer:load', { detail: { model: p.model, shape: p.shape } }));
+      infoBox.classList.add('is-fading');
+      setTimeout(() => {
+        infoBox.querySelector('[data-field="edition"]')!.textContent = p.edition;
+        infoBox.querySelector('[data-field="leather"]')!.textContent = p.leather;
+        nameLink.textContent = p.name;
+        nameLink.href = p.url;
+        infoBox.classList.remove('is-fading');
+      }, 350);
+    }));
+  }
+</script>
