@@ -1,0 +1,108 @@
+---
+/**
+ * Fiche réalisation (étude de cas) : hero, chiffres clés, demande / réponse / résultat,
+ * photos (et modèle 3D optionnel), témoignage, autres réalisations, CTA devis.
+ */
+import Base from '../../../layouts/Base.astro';
+import Photo from '../../../components/ui/Photo.astro';
+import Viewer3D from '../../../components/ui/Viewer3D.astro';
+import PageHero from '../../../components/page/PageHero.astro';
+import PageCta from '../../../components/page/PageCta.astro';
+import RealisationCard from '../../../components/cards/RealisationCard.astro';
+import {
+  getRealisations, getRealisationsPage, getSettings, getOffres, getEntreprisesPage,
+  offreUrl, paragraphs, breadcrumbJsonLd, type Realisation,
+} from '../../../lib/content';
+import { ROUTES } from '../../../lib/routes';
+
+export async function getStaticPaths() {
+  const items = await getRealisations();
+  return items.map((item) => ({ params: { slug: item.slug }, props: { item, all: items } }));
+}
+const { item, all } = Astro.props as { item: Realisation; all: Realisation[] };
+const [page, settings, offres, ePage] = await Promise.all([getRealisationsPage(), getSettings(), getOffres(), getEntreprisesPage()]);
+const offre = offres.find((o) => o.slug === item.offre);
+const others = all.filter((r) => r.slug !== item.slug).slice(0, 3);
+const crumbs = [
+  { label: settings.nav.home, href: '/' },
+  { label: settings.nav.entreprises, href: ROUTES.entreprises },
+  { label: settings.nav.realisations, href: ROUTES.realisations },
+  { label: item.title },
+];
+const blocs = [
+  { title: page.labels.contexte, text: item.contexte },
+  { title: page.labels.reponse, text: item.reponse },
+  { title: page.labels.resultat, text: item.resultat },
+].filter((b) => b.text);
+---
+<Base title={`${item.title} | ${settings.nav.realisations} | Brunette Paris`} description={item.resume} hero="dark" image={item.cover.image}
+  jsonLd={[breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <PageHero hero={{ eyebrow: item.secteur, h1: item.title, accroche: item.client, photo: item.cover }} breadcrumb={crumbs} />
+
+  <section class="rc-facts bg-light">
+    <div class="container rc-facts__grid">
+      {offre && (
+        <div><dt class="eyebrow">{page.labels.offre}</dt><dd><a href={offreUrl(offre.slug)} class="link-underline">{offre.title}</a></dd></div>
+      )}
+      {item.secteur && <div><dt class="eyebrow">{page.labels.secteur}</dt><dd>{item.secteur}</dd></div>}
+      {item.chiffres.map((c) => (
+        <div><dt class="eyebrow">{c.label}</dt><dd class="rc-facts__value">{c.value}</dd></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="rc-story bg-light section">
+    <div class="container container--narrow rc-story__inner">
+      {blocs.map((b) => (
+        <div class="rc-story__bloc" data-reveal>
+          <h2>{b.title}</h2>
+          {paragraphs(b.text).map((p) => <p>{p}</p>)}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {(item.photos.length > 0 || item.model3d) && (
+    <section class="rc-media bg-light section">
+      <div class="container rc-media__grid">
+        {item.model3d && <div class="rc-media__viewer"><Viewer3D model={item.model3d} /></div>}
+        {item.photos.map((p, i) => <Photo photo={p} ratio={i % 3 === 0 ? '4 / 5' : '1'} />)}
+      </div>
+    </section>
+  )}
+
+  {item.temoignage?.quote && (
+    <section class="rc-quote bg-dark section">
+      <figure class="container container--narrow" data-reveal>
+        <blockquote class="serif"><p>« {item.temoignage.quote} »</p></blockquote>
+        <figcaption>{item.temoignage.author}{item.temoignage.role && `, ${item.temoignage.role}`}</figcaption>
+      </figure>
+    </section>
+  )}
+
+  {others.length > 0 && (
+    <section class="rc-others bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.labels.autres}</h2>
+        <div class="rc-others__grid">{others.map((r) => <RealisationCard item={r} linkLabel={page.labels.voir} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <PageCta cta={ePage.cta} />
+</Base>
+<style>
+  .rc-facts { padding-block: var(--space-7); border-bottom: 1px solid var(--ink-200); }
+  .rc-facts__grid { display: flex; flex-wrap: wrap; gap: var(--space-6) var(--space-9); }
+  .rc-facts dt { color: var(--accent-on-light); margin-bottom: var(--space-2); }
+  .rc-facts__value { font-family: var(--font-serif); font-size: var(--text-3xl); line-height: 1; }
+  .rc-story__inner { display: grid; gap: var(--space-8); }
+  .rc-story__bloc { display: grid; gap: var(--space-4); }
+  .rc-story__bloc p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+  .rc-media { padding-top: 0; }
+  .rc-media__grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); align-items: start; }
+  .rc-media__viewer { grid-column: 1 / -1; max-width: 40rem; justify-self: center; width: 100%; }
+  .rc-quote blockquote { font-size: var(--text-2xl); line-height: 1.2; }
+  .rc-quote figcaption { margin-top: var(--space-5); color: var(--fg-on-dark-muted); font-size: var(--text-sm); letter-spacing: var(--tracking-ui); text-transform: uppercase; }
+  .rc-others__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+</style>

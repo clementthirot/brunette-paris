@@ -13,6 +13,13 @@ nav:
   creations: Créations
   atelier: L’atelier
   contact: Contact
+  entreprisesHub: Vue d’ensemble
+  realisations: Réalisations
+  toutesCreations: Toutes les créations
+  surMesure: Sur-mesure
+  entretien: Entretien du cuir
+  journal: Journal
+  faq: Questions fréquentes
   devis: Demander un devis
   menuOpen: Menu
   menuClose: Fermer
@@ -21,6 +28,15 @@ nav:
 footer:
   tagline: Maroquinerie artisanale, faite main en Île-de-France
   legalLabel: Mentions légales
+  confidentialiteLabel: Confidentialité
+  cgvLabel: Conditions générales de vente
+  particuliersTitle: Pour vous
+  maisonTitle: La maison
+  newsletter:
+    title: Les nouvelles de l’atelier
+    text: Une lettre par saison, les nouvelles pièces avant tout le monde. Jamais de spam.
+    url: '' # TODO : lien d'inscription Brevo ou Mailchimp (vide = bloc masqué)
+    button: S’inscrire
   copyright: © Brunette Paris — Maroquinerie artisanale
 ctaFinal:
   title: Un projet, un événement, une idée ?

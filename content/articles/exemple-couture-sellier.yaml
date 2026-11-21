@@ -1,0 +1,28 @@
+# EXEMPLE DE GABARIT — non publié. Remplacer le texte puis cocher « Publié ».
+title: La couture sellier, point par point
+date: 2026-11-21
+published: false
+category: savoir-faire
+seo:
+  title: La couture sellier expliquée par une maroquinière | Brunette Paris
+  description: Pourquoi la couture sellier à deux aiguilles est la signature des pièces en cuir faites main, et comment elle est réalisée à l'atelier.
+excerpt: Deux aiguilles, un seul fil, et des centaines de points serrés à la main. Plongée dans le geste qui fait tenir un sac pendant des décennies.
+cover:
+  alt: Couture sellier à deux aiguilles
+  placeholder: Paysage, mains réalisant une couture sellier à la pince
+externalUrl: ''
+sections:
+  - heading: Un geste hérité de la sellerie
+    text: TODO — texte de l’article (300 à 800 mots conseillés pour le référencement).
+    photo:
+      alt: ''
+      placeholder: ''
+    quote: ''
+  - heading: Pourquoi elle ne se défait pas
+    text: TODO
+    photo:
+      alt: Pince de sellier et alênes
+      placeholder: Pince de sellier et alênes posées sur l’établi
+    quote: Si un point casse, le second fil tient la couture.
+pieces:
+  - sac-besace-camille

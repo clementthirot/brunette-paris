@@ -1,0 +1,104 @@
+---
+/**
+ * Sur-mesure particuliers (/sur-mesure) : la porte d'entrée « Pour vous » du parcours particulier.
+ * Hero · Introduction · Ce que je peux créer · Étapes · Repères pratiques · FAQ · CTA.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/ui/Photo.astro';
+import StitchSteps from '../components/ui/StitchSteps.astro';
+import PageHero from '../components/page/PageHero.astro';
+import Faq from '../components/page/Faq.astro';
+import PageCta from '../components/page/PageCta.astro';
+import { getSurMesure, getSettings, paragraphs, faqJsonLd, breadcrumbJsonLd } from '../lib/content';
+import { ROUTES } from '../lib/routes';
+
+const [page, settings] = await Promise.all([getSurMesure(), getSettings()]);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.creations, href: ROUTES.creations }, { label: settings.nav.surMesure }];
+const service = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: page.hero.h1,
+  serviceType: 'Maroquinerie sur mesure',
+  provider: { '@id': new URL('/#atelier', Astro.site).href },
+  areaServed: settings.coordonnees.region,
+  description: page.seo.description,
+};
+---
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
+  jsonLd={[service, ...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <PageHero hero={page.hero} breadcrumb={crumbs} cta={page.cta.button ? { label: page.cta.button, href: page.cta.href || ROUTES.contactPerso } : undefined} />
+
+  <section class="sm-intro bg-light section">
+    <div class="container sm-intro__grid">
+      <div class="sm-intro__text">
+        <h2 data-reveal>{page.intro.h2}</h2>
+        {paragraphs(page.intro.text).map((p) => <p data-reveal>{p}</p>)}
+      </div>
+      <Photo photo={page.intro.photo} ratio="3 / 4" class="sm-intro__photo" />
+    </div>
+  </section>
+
+  <section class="sm-projets bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.projets.title}</h2>
+      <ul role="list" class="sm-projets__grid" data-reveal-group="0.1">
+        {page.projets.items.map((c) => (
+          <li class="sm-projet" data-reveal>
+            <Photo photo={c.photo} ratio="1" />
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sm-steps bg-light section">
+    <div class="container sm-steps__grid">
+      <h2 class="section-title" data-reveal>{page.etapes.title}</h2>
+      <StitchSteps steps={page.etapes.items} variant="vertical" />
+    </div>
+  </section>
+
+  <section class="sm-reperes bg-dark section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.reperes.title}</h2>
+      <dl class="sm-reperes__grid" data-reveal-group="0.08">
+        {page.reperes.items.map((r) => (
+          <div class="sm-repere" data-reveal><dt class="eyebrow">{r.label}</dt><dd>{r.value}</dd></div>
+        ))}
+      </dl>
+      {page.reperes.note && <p class="sm-reperes__note" data-reveal>{page.reperes.note}</p>}
+    </div>
+  </section>
+
+  <section class="sm-faq bg-light section">
+    <div class="container container--narrow"><Faq title={page.faq.title} items={page.faq.items} /></div>
+  </section>
+
+  <PageCta cta={page.cta} />
+</Base>
+<style>
+  .sm-intro__grid { display: grid; gap: var(--space-8); align-items: center; }
+  .sm-intro__text { display: grid; gap: var(--space-5); }
+  .sm-intro__text h2 { max-width: 16ch; margin-bottom: var(--space-3); }
+  .sm-intro__text p { color: var(--fg-on-light-muted); max-width: 60ch; }
+  .sm-projets { padding-top: 0; }
+  .sm-projets__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
+  .sm-projet { display: grid; gap: var(--space-3); align-content: start; }
+  .sm-projet h3 { font-size: var(--text-xl); margin-top: var(--space-2); }
+  .sm-projet p { color: var(--fg-on-light-muted); font-size: var(--text-sm); }
+  .sm-steps { padding-top: 0; }
+  .sm-steps__grid { display: grid; gap: var(--space-5); }
+  .sm-reperes__grid { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+  .sm-repere { border-top: 1px solid var(--ink-800); padding-top: var(--space-4); display: grid; gap: var(--space-2); }
+  .sm-repere dt { color: var(--sable-500); }
+  .sm-repere dd { font-family: var(--font-serif); font-size: var(--text-xl); }
+  .sm-reperes__note { margin-top: var(--space-7); color: var(--fg-on-dark-muted); max-width: 60ch; }
+  .sm-faq { padding-top: var(--section-y); }
+  @media (min-width: 56em) {
+    .sm-intro__grid { grid-template-columns: 1.15fr 1fr; gap: var(--space-10); }
+    .sm-intro__grid :global(.sm-intro__photo) { max-width: 30rem; justify-self: end; width: 100%; }
+    .sm-steps__grid { grid-template-columns: 1fr 1.4fr; gap: var(--space-9); align-items: start; }
+  }
+</style>

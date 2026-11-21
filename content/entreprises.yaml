@@ -1,0 +1,58 @@
+seo:
+  title: Maroquinerie artisanale pour les entreprises | Brunette Paris
+  description: Cadeaux d'entreprise en cuir, accessoires pour l'hôtellerie et le golf, pièces sur mesure pour les marques et les événements, fabriqués à la main en Île-de-France.
+hero:
+  eyebrow: Entreprises et maisons
+  h1: Un atelier de maroquinerie au service de votre marque
+  accroche: Des pièces en cuir pensées pour vos clients, vos équipes et vos lieux, cousues à la main en Île-de-France, de l’exemplaire unique à la petite série.
+  photo:
+    alt: Pièces en cuir marquées au logo d’une marque sur l’établi
+    placeholder: Plein cadre, pièces marquées au logo d’une marque sur l’établi
+intro:
+  h2: Un interlocuteur, de l’idée à la livraison
+  text: |-
+    Travailler avec Brunette Paris, c’est échanger directement avec la personne qui coupe, coud et marque vos pièces. Pas d’intermédiaire, pas de catalogue imposé : chaque projet part de votre usage, de vos codes et de votre calendrier.
+
+    Hôtels, golfs, maisons de luxe, labels de musique, organisateurs d’événements : l’atelier accompagne des projets de quelques pièces à plusieurs centaines d’exemplaires, toujours avec la même exigence de fabrication.
+pourquoi:
+  title: Pourquoi un atelier artisanal
+  items:
+    - title: Fait main, en France
+      text: Chaque pièce est coupée, cousue au point sellier et finie à la main en Île-de-France.
+    - title: Votre marque dans la matière
+      text: Logo en marquage à chaud, dorure ou rivet gravé. Une signature durable, jamais imprimée.
+    - title: Des petites séries sans compromis
+      text: Prototype validé avant fabrication, puis séries numérotées si vous le souhaitez.
+    - title: Un cadeau qu’on garde
+      text: Un objet utile qui vieillit bien et rappelle votre attention pendant des années.
+offresTitle: Trois façons de travailler ensemble
+etapes:
+  title: Notre méthode
+  items:
+    - title: Échange
+      text: Un appel ou un rendez-vous pour comprendre votre projet, vos quantités et vos délais.
+    - title: Proposition et échantillons
+      text: Choix des cuirs, des couleurs et du marquage, avec un devis détaillé.
+    - title: Prototype
+      text: Une première pièce réalisée pour validation avant de lancer la série.
+    - title: Fabrication et livraison
+      text: Fabrication à l’atelier, contrôle pièce par pièce, livraison ou remise en main propre.
+realisations:
+  title: Ils nous ont confié leur projet
+  link: Voir toutes les réalisations
+faq:
+  title: Les questions des entreprises
+  items:
+    - question: À partir de combien de pièces pouvez-vous travailler ?
+      answer: TODO — quantité minimum à confirmer avec Armonie (ex. dès une pièce pour un prototype, dès 10 pièces pour une série).
+    - question: Quels sont les délais de fabrication ?
+      answer: TODO — délai type à confirmer (ex. 3 à 6 semaines après validation du prototype selon les quantités).
+    - question: Pouvez-vous établir une facture et un devis au nom de l’entreprise ?
+      answer: TODO — confirmer statut et mentions (devis détaillé, facture, TVA applicable ou non).
+    - question: Est-il possible de se rencontrer à l’atelier ?
+      answer: TODO — préciser si les rendez-vous se font à l’atelier, dans vos locaux ou en visio.
+cta:
+  title: Parlons de votre projet
+  text: Décrivez-nous votre idée en quelques lignes, nous revenons vers vous sous 48 heures avec des premières pistes.
+  button: Demander un devis
+  href: /contact?profil=entreprise
