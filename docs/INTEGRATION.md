@@ -1,17 +1,21 @@
 # Intégration des PR #1 à #6 (21/11/2026)
 
-Branche `claude/project-thread-i75ldh`, ouverte en PR brouillon. Elle sert à voir le résultat combiné et à valider l'ordre de fusion : **rien n'est fusionné dans `main`**.
+Branche `claude/project-thread-i75ldh`, ouverte en PR brouillon. Elle sert à voir le résultat combiné et à valider l'ordre de fusion : la branche d'intégration elle-même ne fusionne rien dans `main`.
+
+**Mise à jour du 21/11/2026, 19 h 00 (UTC)** : la PR #2 (structure) est fusionnée dans `main`. La branche d'intégration a été remise à jour sur le nouveau `main`, sans conflit, et le build passe toujours.
 
 ## Ordre de fusion recommandé
 
-| Étape | PR | Pourquoi à ce rang | Conflits rencontrés |
+| Ordre restant | PR | Pourquoi à ce rang | Conflits rencontrés |
 | --- | --- | --- | --- |
-| 1 | #1 Copywriting | Ne touche que `content/*.yaml` : la base de texte des autres. | aucun |
-| 2 | #2 Structure | Crée `routes.ts`, l'en-tête, le pied de page et les nouvelles pages dont les autres dépendent. | aucun (`legal.yaml` et `settings.yaml` fusionnés automatiquement) |
-| 3 | #3 UI et DA | Styles et composants, pages modifiées d'une ligne. | aucun |
-| 4 | #4 Studio cadeaux | Nouvelle page, nouveau singleton. | `keystatic.config.ts` |
-| 5 | #6 Leviers B2B | Construite sur #4 : se recible sur `main` dès que #4 est fusionnée. | `keystatic.config.ts` |
-| 6 | #5 SEO | En dernier : son `Base.astro` accepte l'ancien appel (`title`/`description`), donc toutes les pages fonctionnent, puis le commit d'intégration branche les nouvelles pages sur le bloc SEO complet. | `Photo.astro`, `entreprises/[slug].astro`, `mentions-legales.astro` |
+| 1 | #1 Copywriting | Ne touche que `content/*.yaml` : la base de texte des autres. Se fusionne sans conflit sur `main` (#2 incluse), `legal.yaml` et `settings.yaml` étant modifiés sur des lignes différentes. | aucun |
+| ✅ | #2 Structure | **Fusionnée dans `main` le 21/11.** Crée `routes.ts`, l'en-tête, le pied de page et les nouvelles pages dont les autres dépendent. | aucun |
+| 2 | #3 UI et DA | Styles et composants, pages modifiées d'une ligne. | aucun |
+| 3 | #4 Studio cadeaux | Nouvelle page, nouveau singleton. | `keystatic.config.ts` |
+| 4 | #6 Leviers B2B | Construite sur #4 : se recible sur `main` dès que #4 est fusionnée. | `keystatic.config.ts` |
+| 5 | #5 SEO | En dernier : son `Base.astro` accepte l'ancien appel (`title`/`description`), donc toutes les pages fonctionnent, puis le commit d'intégration branche les nouvelles pages sur le bloc SEO complet. | `Photo.astro`, `entreprises/[slug].astro`, `mentions-legales.astro` |
+
+Contrôle sur le nouveau `main` : #1 et #3 se fusionnent proprement ; GitHub signale déjà un conflit sur #4 (`keystatic.config.ts`) et #5 (`mentions-legales.astro`), ceux décrits ci-dessous.
 
 Si Clément fusionne les PR une par une sur GitHub dans cet ordre, il retrouvera les mêmes conflits. Les résolutions ci-dessous s'appliquent telles quelles.
 
