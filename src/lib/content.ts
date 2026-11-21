@@ -15,6 +15,7 @@ export const getHome = () => must(reader.singletons.home.read(), 'home');
 export const getCreationsPage = () => must(reader.singletons.creationsPage.read(), 'creationsPage');
 export const getAtelier = () => must(reader.singletons.atelier.read(), 'atelier');
 export const getContact = () => must(reader.singletons.contact.read(), 'contact');
+export const getStudio = () => must(reader.singletons.studio.read(), 'studio');
 export const getLegal = () => must(reader.singletons.legal.read(), 'legal');
 
 export type Piece = Awaited<ReturnType<typeof getPieces>>[number];
@@ -39,4 +40,5 @@ export async function getAuthorizedReferences() {
 }
 
 export const offreUrl = (slug: string) => `/entreprises/${slug}`;
+export const STUDIO_URL = '/entreprises/studio-cadeaux';
 export const pieceUrl = (slug: string) => `/creations/${slug}`;

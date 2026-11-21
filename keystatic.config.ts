@@ -68,7 +68,7 @@ export default config({
   ui: {
     brand: { name: 'Brunette Paris' },
     navigation: {
-      'Pages': ['home', 'atelier', 'creationsPage', 'contact', 'legal'],
+      'Pages': ['home', 'atelier', 'creationsPage', 'studio', 'contact', 'legal'],
       'Contenus': ['pieces', 'offres', 'references'],
       'Réglages': ['settings'],
     },
@@ -559,6 +559,171 @@ export default config({
         aside: fields.object(
           { emailLabel: txt('Libellé email'), instagramLabel: txt('Libellé Instagram'), zoneLabel: txt('Libellé zone d’intervention') },
           { label: 'Colonne latérale' }
+        ),
+      },
+    }),
+
+    // -----------------------------------------------------------------------
+    studio: singleton({
+      label: 'Studio cadeaux (configurateur entreprises)',
+      path: 'content/studio',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        hero: fields.object(
+          {
+            eyebrow: txt('Surtitre'),
+            h1: txt('Titre H1'),
+            accroche: para('Accroche'),
+            start: txt('Bouton « commencer »'),
+          },
+          { label: 'Haut de page' }
+        ),
+        etapes: fields.object(
+          {
+            piece: txt('Étape 1 : la pièce'),
+            cuir: txt('Étape 2 : le cuir'),
+            marquage: txt('Étape 3 : le marquage'),
+            quantite: txt('Étape 4 : quantité et délai'),
+            brief: txt('Étape 5 : envoi du brief'),
+            precedent: txt('Bouton « précédent »'),
+            suivant: txt('Bouton « suivant »'),
+          },
+          { label: 'Libellés des étapes' }
+        ),
+        pieces: fields.array(
+          fields.object({
+            nom: txt('Nom de la pièce'),
+            texte: para('Description courte'),
+            forme: fields.select({
+              label: 'Silhouette d’aperçu',
+              description: 'Dessin utilisé dans l’aperçu interactif.',
+              options: [
+                { label: 'Porte-clés', value: 'porte-cles' },
+                { label: 'Porte-cartes', value: 'porte-cartes' },
+                { label: 'Portefeuille', value: 'portefeuille' },
+                { label: 'Protège-club de golf', value: 'golf' },
+                { label: 'Couverture de vinyle', value: 'vinyle' },
+                { label: 'Trousse de voyage', value: 'trousse' },
+                { label: 'Étiquette de bagage', value: 'etiquette' },
+                { label: 'Sous-main / set de table', value: 'sous-main' },
+              ],
+              defaultValue: 'porte-cles',
+            }),
+            prixMin: fields.number({ label: 'Prix unitaire HT bas (€)', description: 'Pour la quantité minimum, marquage à sec inclus.' }),
+            prixMax: fields.number({ label: 'Prix unitaire HT haut (€)' }),
+            quantiteMin: fields.integer({ label: 'Quantité minimum', defaultValue: 10 }),
+            delaiSemaines: fields.integer({ label: 'Délai de fabrication (semaines, à partir du prototype validé)', defaultValue: 4 }),
+            photo: photo('Photo (optionnelle, remplace le dessin dans la carte de choix)', 'studio'),
+          }),
+          { label: 'Pièces proposées', itemLabel: (p) => p.fields.nom.value || 'Pièce' }
+        ),
+        cuirs: fields.array(
+          fields.object({
+            nom: txt('Nom du cuir'),
+            couleur: txt('Couleur d’aperçu (code hexadécimal, ex. #6b3f26)'),
+            texte: txt('Précision (tannage, toucher…)'),
+            supplement: fields.number({ label: 'Supplément en % du prix (0 si aucun)', defaultValue: 0 }),
+          }),
+          { label: 'Cuirs proposés', itemLabel: (p) => p.fields.nom.value || 'Cuir' }
+        ),
+        fils: fields.array(
+          fields.object({ nom: txt('Nom du fil'), couleur: txt('Couleur (code hexadécimal)') }),
+          { label: 'Couleurs de fil', itemLabel: (p) => p.fields.nom.value || 'Fil' }
+        ),
+        marquages: fields.array(
+          fields.object({
+            nom: txt('Nom du marquage'),
+            texte: txt('Précision'),
+            rendu: fields.select({
+              label: 'Rendu dans l’aperçu',
+              options: [
+                { label: 'Marquage à sec (ton sur ton)', value: 'sec' },
+                { label: 'Dorure or', value: 'or' },
+                { label: 'Dorure argent', value: 'argent' },
+                { label: 'Rivet gravé', value: 'rivet' },
+              ],
+              defaultValue: 'sec',
+            }),
+            supplementUnitaire: fields.number({ label: 'Supplément par pièce HT (€)', defaultValue: 0 }),
+            fraisFixes: fields.number({ label: 'Frais fixes HT (€), ex. fabrication du cliché', defaultValue: 0 }),
+          }),
+          { label: 'Techniques de marquage', itemLabel: (p) => p.fields.nom.value || 'Marquage' }
+        ),
+        paliers: fields.array(
+          fields.object({
+            aPartirDe: fields.integer({ label: 'À partir de (pièces)' }),
+            remise: fields.number({ label: 'Remise sur le prix unitaire (%)' }),
+          }),
+          { label: 'Remises par quantité', itemLabel: (p) => `Dès ${p.fields.aPartirDe.value ?? '?'} pièces : −${p.fields.remise.value ?? 0} %` }
+        ),
+        estimation: fields.object(
+          {
+            afficher: fields.checkbox({
+              label: 'Afficher une estimation chiffrée',
+              description: 'Décocher pour masquer tous les prix : seuls le délai et le récapitulatif restent affichés.',
+              defaultValue: true,
+            }),
+            titre: txt('Titre du bloc estimation'),
+            unitaire: txt('Libellé prix unitaire'),
+            total: txt('Libellé total'),
+            fraisFixes: txt('Libellé frais fixes'),
+            delai: txt('Libellé délai'),
+            semaines: txt('Unité « semaines »'),
+            mention: para('Mention sous l’estimation'),
+            alerteDelai: para('Alerte si la date souhaitée est trop proche'),
+            alerteQuantite: txt('Alerte sous la quantité minimum (« {min} » est remplacé par la quantité)'),
+          },
+          { label: 'Estimation' }
+        ),
+        champs: fields.object(
+          {
+            logo: txt('Libellé import du logo'),
+            logoAide: txt('Aide import du logo'),
+            initiales: txt('Libellé texte à marquer (si pas de logo)'),
+            fil: txt('Libellé couleur de fil'),
+            quantite: txt('Libellé quantité'),
+            date: txt('Libellé date de remise souhaitée'),
+            occasion: txt('Libellé occasion'),
+            occasions: fields.array(txt('Occasion'), { label: 'Occasions proposées', itemLabel: (p) => p.value }),
+            nom: txt('Nom'),
+            societe: txt('Société'),
+            email: txt('Email'),
+            telephone: txt('Téléphone'),
+            message: txt('Message'),
+            requis: txt('Mention champ obligatoire'),
+            envoyer: txt('Bouton d’envoi'),
+            envoi: txt('Texte pendant l’envoi'),
+            partager: txt('Bouton « copier le lien de ma composition »'),
+            copie: txt('Confirmation lien copié'),
+            imprimer: txt('Bouton « imprimer le récapitulatif »'),
+          },
+          { label: 'Champs et boutons' }
+        ),
+        recap: fields.object(
+          { titre: txt('Titre du récapitulatif'), logoJoint: para('Note sur l’envoi du logo') },
+          { label: 'Récapitulatif' }
+        ),
+        confirmation: para('Message de confirmation'),
+        erreur: para('Message d’erreur'),
+        messagerie: para('Message quand le brief est envoyé par la messagerie (aucun service de formulaire configuré)'),
+        garanties: fields.object(
+          {
+            titre: txt('Titre'),
+            items: fields.array(
+              fields.object({ titre: txt('Titre'), texte: para('Texte') }),
+              { label: 'Arguments', itemLabel: (p) => p.fields.titre.value || 'Argument' }
+            ),
+          },
+          { label: 'Pourquoi l’atelier (preuves de confiance)' }
+        ),
+        teaser: fields.object(
+          {
+            titre: txt('Titre'),
+            texte: para('Texte'),
+            bouton: txt('Bouton'),
+          },
+          { label: 'Encart d’invitation (affiché sur les pages entreprises)' }
         ),
       },
     }),
