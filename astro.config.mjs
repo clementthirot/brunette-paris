@@ -12,6 +12,13 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 // SITE_URL permet de le surcharger sans toucher au code.
 const SITE = process.env.SITE_URL || 'https://www.brunette-paris.fr';
 
+// Variante « version de test » sur GitHub Pages (DEPLOY_TARGET=pages, voir .github/workflows/pages.yml) :
+// site 100 % statique, sans adaptateur Vercel ni administration Keystatic, servi sous un sous-chemin
+// (BASE_PATH, ex. /brunette-paris). Les liens écrits en dur (« /contact ») sont préfixés après le build
+// par scripts/pages-base-path.mjs. Sans DEPLOY_TARGET, la configuration Vercel reste inchangée.
+const IS_PAGES = process.env.DEPLOY_TARGET === 'pages';
+const BASE = IS_PAGES ? process.env.BASE_PATH || '/' : '/';
+
 // Pages dont la case « Masquer cette page des moteurs de recherche » est cochée dans Keystatic :
 // elles sont retirées du sitemap (la balise noindex est posée par le composant Seo).
 const PAGE_FILES = { home: '/', atelier: '/atelier', contact: '/contact', creations: '/creations', legal: '/mentions-legales' };
@@ -25,16 +32,16 @@ const NOINDEX_PATHS = new Set([
 
 export default defineConfig({
   site: SITE,
+  ...(IS_PAGES ? { base: BASE } : {}),
   output: 'static',
-  adapter: vercel(),
+  ...(IS_PAGES ? {} : { adapter: vercel() }),
   trailingSlash: 'ignore',
   vite: {
     // Pré-optimise les dépendances chargées à la demande pour éviter les rechargements en dev.
     optimizeDeps: { include: ['gsap', 'gsap/ScrollTrigger', 'gsap/Flip', 'three'] },
   },
   integrations: [
-    react(),
-    keystatic(),
+    ...(IS_PAGES ? [] : [react(), keystatic()]),
     sitemap({
       // Exclut l'administration, les API et les pages cochées « noindex » dans Keystatic.
       filter: (page) => {
