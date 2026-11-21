@@ -79,7 +79,34 @@ Trois options sont prévues dans `src/styles/tokens.css` : **Cormorant Garamond*
 3. **Administration en ligne** : dans `keystatic.config.ts`, passer `storage` à
    `{ kind: 'github', repo: 'OWNER/REPO' }` (ou Keystatic Cloud), puis suivre l'assistant sur `/keystatic`
    pour créer l'application GitHub et ajouter les variables d'environnement demandées dans Vercel.
-4. Mettre le domaine définitif dans `astro.config.mjs` (`SITE`) pour le sitemap et les balises canoniques.
+4. Mettre le domaine définitif dans `astro.config.mjs` (`SITE`) pour le sitemap et les balises canoniques
+   (tant qu'il n'est pas branché, définir `SEO_INDEX=false` dans Vercel : voir « Référencement (SEO) »).
+
+## Référencement (SEO)
+
+Mêmes standards que sur Metal Nature (audit SEO du 16/11/2026), adaptés à Keystatic et Vercel :
+
+- **Indexation** : seul le déploiement de production Vercel (`VERCEL_ENV=production`) est en `index, follow` ;
+  les prévisualisations et les builds locaux sont en `noindex`. `SEO_INDEX=false` bloque l'indexation
+  (à mettre dans Vercel tant que le domaine n'est pas branché), `SEO_INDEX=true` la force sur un autre hébergeur.
+- **Domaine** : `SITE` dans `astro.config.mjs` (ou variable `SITE_URL`). Canonique, sitemap, Open Graph et données
+  structurées en dépendent. L'autre variante (avec ou sans `www`) doit rediriger en 301 (réglage « Domains » de Vercel).
+- **Balises** : composant `src/components/global/Seo.astro` (title, description, robots, canonique avec barre finale
+  comme le sitemap, Open Graph avec dimensions de l'image, Twitter, validation Search Console et Bing).
+- **Champs éditables** : chaque page a un bloc **Référencement** dans Keystatic (titre ≈ 60 caractères, description
+  ≈ 155, image de partage 1200 × 630, case « noindex » qui retire aussi la page du sitemap). Les fiches pièces ont une
+  meta description facultative. **Réglages globaux › Référencement** : image de partage par défaut, lien de la fiche
+  Google Business Profile, adresse et horaires (données structurées), codes de validation.
+- **Données structurées** (`src/lib/seo.ts`) : `LocalBusiness` + `WebSite` (accueil et contact), `Product` + `Offer`
+  pour une pièce avec prix (sinon `CreativeWork`), `Service` + `FAQPage` sur les offres (seules les réponses rédigées,
+  sans `TODO` ni `[À CONFIRMER]`), `CollectionPage` sur la galerie, `AboutPage` sur l'atelier, `BreadcrumbList`
+  généré par le composant `Breadcrumb` à partir du fil d'Ariane affiché.
+- **robots.txt** généré (`src/pages/robots.txt.ts`) : `/keystatic` et `/api/` exclus, sitemap déclaré en production.
+- **Images** : width/height lus au build (pas de décalage de mise en page), `fetchpriority="high"` sur les images
+  du haut de page, police du texte préchargée. Image de partage et icônes générées depuis les logos :
+  `node scripts/generate-share-images.mjs`.
+
+Actions hors code (fiche Google, Search Console, liens locaux) : voir `docs/seo-recommandations.md`.
 
 ## TODO connus
 

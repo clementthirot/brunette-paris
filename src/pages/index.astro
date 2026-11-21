@@ -16,7 +16,7 @@ const vedette = home.vedette.pieces.map((s) => pieces.find((p) => p.slug === s))
 // « Découvrir nos offres » descend vers la section 11.4 (aucune page « Entreprises » globale n'est décrite dans le brief).
 const entreprisesHref = '#offres';
 ---
-<Base title={home.seo.title} description={home.seo.description} hero="dark" image={home.hero.photo.image}>
+<Base seo={home.seo} hero="dark" image={home.hero.photo.image} imageAlt={home.hero.photo.alt}>
   <Hero h1={home.hero.h1} subtitle={home.hero.subtitle} photo={home.hero.photo} video={home.hero.video} scrollLabel={settings.labels.scroll} />
   <DoubleEntree entreprises={home.entree.entreprises} particuliers={home.entree.particuliers} entreprisesHref={entreprisesHref} />
   <Manifeste phrase={home.manifeste.phrase} chiffres={home.manifeste.chiffres} />

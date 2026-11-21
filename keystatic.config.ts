@@ -32,11 +32,36 @@ const photo = (label: string, dir: string, placeholder = '') =>
     { label }
   );
 
+/** Image de partage (Open Graph) : 1200 × 630 px, JPG ou PNG. */
+const ogImage = (label = 'Image de partage (réseaux sociaux)', description = '') =>
+  fields.image({
+    label,
+    description: description || 'Format 1200 × 630 px (JPG ou PNG). Affichée quand la page est partagée (WhatsApp, LinkedIn, Facebook…).',
+    directory: 'public/images/partage',
+    publicPath: '/images/partage/',
+  });
+
 const seo = (title = '', description = '') =>
   fields.object(
     {
-      title: fields.text({ label: 'Titre SEO (balise title)', defaultValue: title }),
-      description: fields.text({ label: 'Meta description', multiline: true, defaultValue: description }),
+      title: fields.text({
+        label: 'Titre SEO (balise title)',
+        description: 'Environ 50 à 60 caractères : le mot-clé principal en premier, « Brunette Paris » à la fin.',
+        defaultValue: title,
+      }),
+      description: fields.text({
+        label: 'Meta description',
+        description: 'Environ 140 à 155 caractères : ce que la page apporte, avec une incitation à cliquer.',
+        multiline: true,
+        defaultValue: description,
+      }),
+      ogImage: ogImage('Image de partage (optionnelle)', 'Format 1200 × 630 px. Sinon : photo principale de la page, puis image de partage par défaut (Réglages globaux › Référencement).'),
+      ogImageAlt: fields.text({ label: 'Description de l’image de partage' }),
+      noindex: fields.checkbox({
+        label: 'Masquer cette page des moteurs de recherche (noindex)',
+        description: 'À cocher seulement pour une page sans intérêt dans Google.',
+        defaultValue: false,
+      }),
     },
     { label: 'Référencement' }
   );
@@ -136,6 +161,11 @@ export default config({
         category: fields.select({ label: 'Catégorie', options: [...CATEGORIES], defaultValue: 'sacs' }),
         leather: fields.select({ label: 'Cuir', options: [...CUIRS], defaultValue: 'vache' }),
         description: para('Description'),
+        seoDescription: fields.text({
+          label: 'Meta description (optionnelle)',
+          description: 'Environ 140 à 155 caractères. Sinon, le début de la description est utilisé.',
+          multiline: true,
+        }),
         dimensions: txt('Dimensions', 'TODO : dimensions à confirmer'),
         edition: fields.select({
           label: 'Pièce unique ou série limitée',
@@ -549,6 +579,31 @@ export default config({
             link: txt('Lien vers l’accueil'),
           },
           { label: 'Page 404' }
+        ),
+        referencement: fields.object(
+          {
+            ogImage: ogImage('Image de partage par défaut', 'Format 1200 × 630 px. Utilisée par les pages sans photo. Sinon : visuel au logo fourni avec le site.'),
+            googleBusinessUrl: fields.url({
+              label: 'Lien de la fiche Google Business Profile',
+              description: 'Lien public de la fiche (bouton « Partager » sur Google Maps). Relie le site à la fiche dans les données structurées.',
+            }),
+            streetAddress: fields.text({
+              label: 'Adresse de l’atelier (rue)',
+              description: 'Facultatif. À ne renseigner que si l’adresse est publique et identique à celle de la fiche Google.',
+            }),
+            postalCode: fields.text({ label: 'Code postal' }),
+            openingHours: fields.text({
+              label: 'Horaires (format schema.org)',
+              description: 'Facultatif. Ex. « Mo-Fr 10:00-18:00 » ou « Tu-Sa 10:00-19:00 ».',
+            }),
+            priceRange: fields.text({ label: 'Gamme de prix', description: 'Facultatif. Ex. « €€€ » ou « 50 € - 2 000 € ».' }),
+            googleVerification: fields.text({
+              label: 'Code de validation Google Search Console',
+              description: 'Valeur « content » de la balise HTML proposée par Search Console (inutile si validation par DNS).',
+            }),
+            bingVerification: fields.text({ label: 'Code de validation Bing Webmaster Tools' }),
+          },
+          { label: 'Référencement (SEO)' }
         ),
         formEndpoint: fields.url({
           label: 'Adresse d’envoi du formulaire (Formspree ou fonction serverless)',

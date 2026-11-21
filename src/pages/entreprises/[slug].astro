@@ -12,7 +12,8 @@ import StitchSteps from '../../components/ui/StitchSteps.astro';
 import Gallery from '../../components/offre/Gallery.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
 import StudioTeaser from '../../components/studio/StudioTeaser.astro';
-import { getOffres, getSettings, type Offre } from '../../lib/content';
+import { getOffres, getSettings, offreUrl, type Offre } from '../../lib/content';
+import { SITE_NAME, absolute, businessId } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const offres = await getOffres();
@@ -21,11 +22,28 @@ export async function getStaticPaths() {
 const { offre } = Astro.props as { offre: Offre };
 const settings = await getSettings();
 
-const faqLd = offre.faq.items.length
+// Prestation B2B rattachée à l'entreprise (données structurées Service).
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: offre.title,
+  description: offre.seo.description,
+  url: absolute(offreUrl(offre.slug), Astro.site),
+  serviceType: 'Maroquinerie sur mesure pour les professionnels',
+  provider: { '@id': businessId(Astro.site), '@type': 'LocalBusiness', name: SITE_NAME },
+  areaServed: [settings.coordonnees.city, settings.coordonnees.region]
+    .filter(Boolean)
+    .map((name) => ({ '@type': 'AdministrativeArea', name })),
+  audience: { '@type': 'BusinessAudience' },
+};
+
+// Seules les réponses rédigées sont déclarées (pas de « TODO » ni de « [À CONFIRMER] » dans Google).
+const faqReady = offre.faq.items.filter((q) => q.question && q.answer && !/TODO|À CONFIRMER/i.test(q.answer));
+const faqLd = faqReady.length
   ? [{
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: offre.faq.items.map((q) => ({
+      mainEntity: faqReady.map((q) => ({
         '@type': 'Question',
         name: q.question,
         acceptedAnswer: { '@type': 'Answer', text: q.answer },
@@ -33,7 +51,7 @@ const faqLd = offre.faq.items.length
     }]
   : [];
 ---
-<Base title={offre.seo.title} description={offre.seo.description} hero="dark" jsonLd={faqLd} image={offre.hero.photo.image}>
+<Base seo={offre.seo} hero="dark" jsonLd={[serviceLd, ...faqLd]} image={offre.hero.photo.image} imageAlt={offre.hero.photo.alt}>
   <!-- 1. Hero demi-écran, fond sombre -->
   <section class="o-hero bg-dark">
     <div class="o-hero__media" aria-hidden="true">

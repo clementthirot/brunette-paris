@@ -4,9 +4,24 @@ import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 
-// TODO: remplacer par le nom de domaine définitif une fois réservé.
-const SITE = 'https://www.brunette-paris.fr';
+// Domaine de production : canonique, sitemap, Open Graph et données structurées en dépendent.
+// TODO : confirmer le nom de domaine définitif (www ou non) avant la première mise en production ;
+// l'autre variante doit rediriger en 301 vers celle-ci (réglage « Domains » de Vercel).
+// SITE_URL permet de le surcharger sans toucher au code.
+const SITE = process.env.SITE_URL || 'https://www.brunette-paris.fr';
+
+// Pages dont la case « Masquer cette page des moteurs de recherche » est cochée dans Keystatic :
+// elles sont retirées du sitemap (la balise noindex est posée par le composant Seo).
+const PAGE_FILES = { home: '/', atelier: '/atelier', contact: '/contact', creations: '/creations', legal: '/mentions-legales' };
+const isNoindex = (file) => existsSync(file) && /^\s+noindex:\s*true\s*$/m.test(readFileSync(file, 'utf8'));
+const NOINDEX_PATHS = new Set([
+  ...Object.entries(PAGE_FILES).filter(([f]) => isNoindex(`content/${f}.yaml`)).map(([, p]) => p),
+  ...(existsSync('content/offres') ? readdirSync('content/offres') : [])
+    .filter((f) => isNoindex(`content/offres/${f}`))
+    .map((f) => `/entreprises/${f.replace(/\.ya?ml$/, '')}`),
+]);
 
 export default defineConfig({
   site: SITE,
@@ -21,7 +36,11 @@ export default defineConfig({
     react(),
     keystatic(),
     sitemap({
-      filter: (page) => !page.includes('/keystatic') && !page.includes('/api/'),
+      // Exclut l'administration, les API et les pages cochées « noindex » dans Keystatic.
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/+$/, '') || '/';
+        return !/^\/(keystatic|api)(\/|$)/.test(path) && !NOINDEX_PATHS.has(path);
+      },
     }),
   ],
 });
