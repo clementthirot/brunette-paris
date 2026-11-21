@@ -110,9 +110,9 @@ export default config({
   ui: {
     brand: { name: 'Brunette Paris' },
     navigation: {
-      'Pages': ['home', 'atelier', 'creationsPage', 'studio', 'contact', 'legal'],
-      'Contenus': ['pieces', 'offres', 'references'],
-      'Réglages': ['settings'],
+      'Pages': ['home', 'atelier', 'creationsPage', 'studio', 'echantillons', 'contact', 'legal'],
+      'Contenus': ['pieces', 'offres', 'occasions', 'references'],
+      'Réglages': ['settings', 'calendrier'],
     },
   },
 
@@ -265,102 +265,72 @@ export default config({
     }),
 
     // -----------------------------------------------------------------------
-    realisations: collection({
-      label: 'Réalisations (études de cas pro)',
+    occasions: collection({
+      label: 'Cadeaux par occasion (pages entreprises)',
       slugField: 'title',
-      path: 'content/realisations/*',
+      path: 'content/occasions/*',
       format: { data: 'yaml' },
-      columns: ['title', 'client', 'date'],
+      columns: ['title', 'order'],
       schema: {
         title: fields.slug({
-          name: { label: 'Titre de la réalisation' },
-          slug: { label: 'Adresse de la page', description: 'Page publiée sous /entreprises/realisations/<slug>' },
+          name: { label: 'Nom de l’occasion (ex. Cadeaux de fin d’année)' },
+          slug: { label: 'Adresse de la page', description: 'Ex. fin-d-annee → /entreprises/cadeaux/fin-d-annee' },
         }),
-        date: fields.date({ label: 'Date du projet', defaultValue: { kind: 'today' } }),
-        published: fields.checkbox({
-          label: 'Publiée',
-          description: 'Décocher pour garder la réalisation en brouillon (elle n’apparaît nulle part sur le site).',
-          defaultValue: false,
-        }),
-        featured: fields.checkbox({ label: 'Mise en avant sur la page Entreprises', defaultValue: false }),
-        client: txt('Client (ou description anonyme, ex. « Une maison de champagne »)'),
-        clientAuthorized: fields.checkbox({
-          label: 'Le client a autorisé l’affichage de son nom',
-          description: 'Sinon, seule la description anonyme est affichée.',
-          defaultValue: false,
-        }),
-        offre: fields.relationship({ label: 'Offre concernée', collection: 'offres' }),
-        secteur: txt('Secteur (ex. Hôtellerie, Golf, Musique)'),
-        chiffres: fields.array(
-          fields.object({ value: txt('Valeur (ex. « 120 »)'), label: txt('Libellé (ex. « pièces numérotées »)') }),
-          { label: 'Chiffres clés (2 à 4)', itemLabel: (p) => `${p.fields.value.value} ${p.fields.label.value}`.trim() || 'Chiffre' }
-        ),
-        resume: para('Résumé (carte et meta description)'),
-        cover: photo('Photo de couverture', 'realisations', 'Pièce livrée en situation chez le client'),
-        contexte: para('Le contexte / la demande'),
-        reponse: para('Notre réponse (matières, finitions, choix)'),
-        resultat: para('Le résultat'),
-        photos: fields.array(photo('Photo', 'realisations'), {
-          label: 'Photos du projet',
-          itemLabel: (p) => p.fields.alt.value || p.fields.placeholder.value || 'Photo',
-        }),
-        temoignage: fields.object(
-          { quote: para('Citation'), author: txt('Nom'), role: txt('Fonction et société') },
-          { label: 'Témoignage client (optionnel)' }
-        ),
-        model3d: fields.file({
-          label: 'Modèle 3D (fichier .glb, optionnel)',
-          directory: 'public/models/realisations',
-          publicPath: '/models/realisations/',
-          validation: { isRequired: false },
-        }),
-      },
-    }),
-
-    // -----------------------------------------------------------------------
-    articles: collection({
-      label: 'Journal (articles, coulisses, presse)',
-      slugField: 'title',
-      path: 'content/articles/*',
-      format: { data: 'yaml' },
-      columns: ['title', 'category', 'date'],
-      schema: {
-        title: fields.slug({
-          name: { label: 'Titre de l’article' },
-          slug: { label: 'Adresse de la page', description: 'Page publiée sous /journal/<slug>' },
-        }),
-        date: fields.date({ label: 'Date de publication', defaultValue: { kind: 'today' } }),
-        published: fields.checkbox({ label: 'Publié', description: 'Décocher pour garder l’article en brouillon.', defaultValue: false }),
-        category: fields.select({
-          label: 'Rubrique',
-          options: [
-            { label: 'À l’atelier', value: 'atelier' },
-            { label: 'Matières et savoir-faire', value: 'savoir-faire' },
-            { label: 'Conseils', value: 'conseils' },
-            { label: 'Presse et événements', value: 'presse' },
-          ],
-          defaultValue: 'atelier',
-        }),
+        order: fields.integer({ label: 'Ordre d’affichage', defaultValue: 0 }),
         seo: seo(),
-        excerpt: para('Chapeau (affiché sur la carte et en tête d’article)'),
-        cover: photo('Photo de couverture', 'journal', 'Photo de couverture (paysage)'),
-        externalUrl: fields.url({
-          label: 'Lien externe (optionnel)',
-          description: 'Pour une parution presse : la carte mène directement vers l’article du média.',
-        }),
-        sections: fields.array(
-          fields.object({
-            heading: txt('Intertitre (optionnel)'),
-            text: para('Texte (une ligne vide = nouveau paragraphe)'),
-            photo: photo('Photo (optionnelle)', 'journal', ''),
-            quote: para('Citation mise en exergue (optionnelle)'),
-          }),
-          { label: 'Contenu (sections)', itemLabel: (p) => p.fields.heading.value || p.fields.text.value.slice(0, 40) || 'Section' }
+        hero: fields.object(
+          {
+            eyebrow: txt('Surtitre'),
+            h1: txt('Titre H1'),
+            accroche: para('Accroche'),
+            photo: photo('Photo du haut de page', 'occasions'),
+          },
+          { label: 'Haut de page' }
         ),
-        pieces: fields.array(fields.relationship({ label: 'Pièce', collection: 'pieces' }), {
-          label: 'Pièces liées (affichées en bas de l’article)',
-          itemLabel: (p) => p.value ?? 'Pièce',
-        }),
+        carte: txt('Phrase courte (cartes de liste)'),
+        intro: fields.object(
+          { h2: txt('Titre'), texte: para('Texte (référencement)') },
+          { label: 'Introduction' }
+        ),
+        arguments: fields.array(
+          fields.object({ titre: txt('Titre'), texte: para('Texte') }),
+          { label: 'Arguments', itemLabel: (p) => p.fields.titre.value || 'Argument' }
+        ),
+        suggestions: fields.object(
+          {
+            titre: txt('Titre de la section'),
+            items: fields.array(
+              fields.object({
+                piece: txt('Nom de la pièce (exactement comme dans Studio cadeaux › Pièces)'),
+                pourquoi: txt('Pourquoi cette pièce pour cette occasion'),
+              }),
+              { label: 'Pièces suggérées', itemLabel: (p) => p.fields.piece.value || 'Pièce' }
+            ),
+          },
+          { label: 'Pièces suggérées' }
+        ),
+        preset: fields.object(
+          {
+            piece: txt('Pièce (nom exact)'),
+            cuir: txt('Cuir (nom exact)'),
+            marquage: txt('Marquage (nom exact)'),
+            quantite: fields.integer({ label: 'Quantité', defaultValue: 50 }),
+            occasion: txt('Occasion (exactement comme dans Studio cadeaux › Occasions proposées)'),
+            bouton: txt('Bouton vers le studio prérempli'),
+          },
+          { label: 'Composition préremplie dans le studio' }
+        ),
+        echeance: txt('Échéance du calendrier à mettre en avant (nom exact, vide = la prochaine)'),
+        faq: fields.object(
+          {
+            titre: txt('Titre'),
+            items: fields.array(
+              fields.object({ question: txt('Question'), reponse: para('Réponse') }),
+              { label: 'Questions', itemLabel: (p) => p.fields.question.value || 'Question' }
+            ),
+          },
+          { label: 'Questions fréquentes' }
+        ),
       },
     }),
 
@@ -881,6 +851,95 @@ export default config({
             bouton: txt('Bouton'),
           },
           { label: 'Encart d’invitation (affiché sur les pages entreprises)' }
+        ),
+        liens: fields.object(
+          {
+            occasionsTitre: txt('Titre de la section « par occasion »'),
+            realisations: txt('Lien vers les réalisations (texte)'),
+            realisationsUrl: txt('Lien vers les réalisations (adresse)', '/entreprises/realisations'),
+          },
+          { label: 'Liens complémentaires' }
+        ),
+      },
+    }),
+
+    // -----------------------------------------------------------------------
+    calendrier: singleton({
+      label: 'Calendrier des commandes (« commandez avant le… »)',
+      path: 'content/calendrier',
+      format: { data: 'yaml' },
+      schema: {
+        afficher: fields.checkbox({ label: 'Afficher le bandeau', defaultValue: true }),
+        joursAvant: fields.integer({
+          label: 'Afficher le bandeau à partir de combien de jours avant la date limite',
+          defaultValue: 60,
+        }),
+        modele: txt('Phrase du bandeau ({nom}, {date} et {remise} sont remplacés)'),
+        compte: txt('Compte à rebours ({n} est remplacé par le nombre de jours)'),
+        dernierJour: txt('Texte le jour de la date limite'),
+        bouton: txt('Bouton'),
+        echeances: fields.array(
+          fields.object({
+            nom: txt('Nom (ex. Cadeaux de fin d’année)'),
+            dateLimite: fields.date({ label: 'Date limite de commande' }),
+            remise: txt('Livraison promise (ex. livrés avant le 15 décembre)'),
+            lien: txt('Lien du bouton (vide = le studio cadeaux)'),
+          }),
+          { label: 'Échéances', itemLabel: (p) => `${p.fields.nom.value || 'Échéance'} · ${p.fields.dateLimite.value ?? ''}` }
+        ),
+      },
+    }),
+
+    // -----------------------------------------------------------------------
+    echantillons: singleton({
+      label: 'Kit d’échantillons',
+      path: 'content/echantillons',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        hero: fields.object(
+          { eyebrow: txt('Surtitre'), h1: txt('Titre H1'), accroche: para('Accroche') },
+          { label: 'Haut de page' }
+        ),
+        contenu: fields.object(
+          {
+            titre: txt('Titre « ce que contient le kit »'),
+            items: fields.array(
+              fields.object({ titre: txt('Titre'), texte: txt('Texte') }),
+              { label: 'Contenu du kit', itemLabel: (p) => p.fields.titre.value || 'Élément' }
+            ),
+            photo: photo('Photo du kit', 'echantillons', 'Kit d’échantillons ouvert : nuancier de cuirs et plaque marquée'),
+            condition: para('Conditions (gratuité, délai d’envoi…)'),
+          },
+          { label: 'Le kit' }
+        ),
+        formulaire: fields.object(
+          {
+            titre: txt('Titre du formulaire'),
+            cuirs: txt('Libellé choix des cuirs'),
+            cuirsAide: txt('Aide choix des cuirs ({max} est remplacé)'),
+            maxCuirs: fields.integer({ label: 'Nombre maximum de cuirs', defaultValue: 4 }),
+            plaque: txt('Case « plaque marquée à notre logo »'),
+            plaqueAide: txt('Aide plaque'),
+            nom: txt('Nom'),
+            societe: txt('Société'),
+            fonction: txt('Fonction'),
+            email: txt('Email professionnel'),
+            telephone: txt('Téléphone'),
+            adresse: txt('Adresse de livraison'),
+            projet: txt('Projet en quelques mots'),
+            requis: txt('Mention champ obligatoire'),
+            envoyer: txt('Bouton d’envoi'),
+            envoi: txt('Texte pendant l’envoi'),
+          },
+          { label: 'Formulaire' }
+        ),
+        confirmation: para('Message de confirmation'),
+        messagerie: para('Message quand la demande part par la messagerie'),
+        erreur: para('Message d’erreur'),
+        teaser: fields.object(
+          { titre: txt('Titre'), texte: para('Texte'), bouton: txt('Bouton') },
+          { label: 'Encart d’invitation (studio et pages occasion)' }
         ),
       },
     }),

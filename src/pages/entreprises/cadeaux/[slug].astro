@@ -1,0 +1,167 @@
+---
+/**
+ * Page « cadeaux par occasion » (fin d'année, séminaire, clients, golf…).
+ * Chaque page mène au Studio cadeaux avec une composition préremplie.
+ * Contenu : Keystatic › Cadeaux par occasion.
+ */
+import Base from '../../../layouts/Base.astro';
+import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
+import HotStampText from '../../../components/ui/HotStampText.astro';
+import Photo from '../../../components/ui/Photo.astro';
+import CtaFinal from '../../../components/ui/CtaFinal.astro';
+import DeadlineBanner from '../../../components/b2b/DeadlineBanner.astro';
+import SamplesTeaser from '../../../components/b2b/SamplesTeaser.astro';
+import OccasionList from '../../../components/b2b/OccasionList.astro';
+import { getOccasions, getSettings, getStudio, studioLink, type Occasion } from '../../../lib/content';
+import { thumbSvg } from '../../../scripts/studio-shapes';
+
+export async function getStaticPaths() {
+  const occasions = await getOccasions();
+  return occasions.map((occasion) => ({ params: { slug: occasion.slug }, props: { occasion } }));
+}
+const { occasion: o } = Astro.props as { occasion: Occasion };
+const [settings, studio] = await Promise.all([getSettings(), getStudio()]);
+const fr = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+
+const presetUrl = await studioLink(o.preset);
+const cuirPreset = studio.cuirs.find((c) => c.nom.toLowerCase() === o.preset.cuir.toLowerCase());
+const suggestions = await Promise.all(
+  o.suggestions.items.map(async (s) => {
+    const piece = studio.pieces.find((p) => p.nom.trim().toLowerCase() === s.piece.trim().toLowerCase());
+    return {
+      ...s,
+      piece,
+      url: await studioLink({ ...o.preset, piece: s.piece, quantite: Math.max(o.preset.quantite ?? 0, piece?.quantiteMin ?? 0) }),
+    };
+  })
+);
+
+const ld = o.faq.items.length
+  ? [{
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: o.faq.items.map((q) => ({ '@type': 'Question', name: q.question, acceptedAnswer: { '@type': 'Answer', text: q.reponse } })),
+    }]
+  : [];
+---
+<Base title={o.seo.title} description={o.seo.description} hero="dark" jsonLd={ld} image={o.hero.photo.image}>
+  <section class="c-hero bg-dark">
+    <div class="c-hero__media" aria-hidden="true">
+      <Photo photo={o.hero.photo} ratio="auto" class="c-hero__photo" loading="eager" />
+      <div class="c-hero__shade"></div>
+    </div>
+    <div class="container c-hero__content">
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: o.title }]} />
+      <p class="eyebrow c-hero__eyebrow">{o.hero.eyebrow}</p>
+      <HotStampText text={o.hero.h1} class="c-hero__title" />
+      <p class="c-hero__accroche">{o.hero.accroche}</p>
+      <a href={presetUrl} class="btn">{o.preset.bouton}</a>
+    </div>
+  </section>
+  <DeadlineBanner echeance={o.echeance} />
+
+  <!-- Introduction et arguments -->
+  <section class="c-intro bg-light section">
+    <div class="container c-intro__grid">
+      <div>
+        <h2 class="c-intro__h2" data-reveal>{o.intro.h2}</h2>
+        <p class="c-intro__text" data-reveal>{o.intro.texte}</p>
+      </div>
+      <ul role="list" class="c-args" data-reveal-group="0.1">
+        {o.arguments.map((a) => (
+          <li data-reveal><h3>{a.titre}</h3><p>{a.texte}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Pièces suggérées, chacune ouvre le studio préremplie -->
+  {suggestions.length > 0 && (
+    <section class="c-sugg bg-dark section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{o.suggestions.titre}</h2>
+        <ul role="list" class="c-sugg__grid" data-reveal-group="0.1">
+          {suggestions.map((s) => (
+            <li data-reveal>
+              <a href={s.url} class="c-card">
+                <span class="c-card__visual">
+                  {s.piece?.photo?.image
+                    ? <Photo photo={s.piece.photo} ratio="1" />
+                    : <Fragment set:html={thumbSvg(s.piece?.forme ?? 'porte-cles', cuirPreset?.couleur || '#8a4a24')} />}
+                </span>
+                <span class="c-card__name">{s.piece?.nom ?? s.piece}</span>
+                <span class="c-card__why">{s.pourquoi}</span>
+                {studio.estimation.afficher && s.piece?.prixMin != null && (
+                  <span class="c-card__meta nums">dès {fr.format(s.piece.prixMin)} € HT · {s.piece.quantiteMin} ex. min.</span>
+                )}
+                <span class="c-card__cta">{studio.teaser.bouton} →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <SamplesTeaser />
+
+  <!-- Questions fréquentes -->
+  {o.faq.items.length > 0 && (
+    <section class="c-faq bg-light section">
+      <div class="container container--narrow">
+        <h2 class="section-title" data-reveal>{o.faq.titre}</h2>
+        <div class="c-faq__list">
+          {o.faq.items.map((q) => (
+            <details class="c-faq__item" data-reveal>
+              <summary>{q.question}</summary>
+              <p>{q.reponse}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <OccasionList exclude={o.slug} />
+  <CtaFinal />
+</Base>
+
+<style>
+  .c-hero { position: relative; min-height: 70svh; display: grid; align-items: end; overflow: hidden; }
+  .c-hero__media { position: absolute; inset: 0; }
+  .c-hero__media :global(.c-hero__photo) { width: 100%; height: 100%; }
+  .c-hero__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(21 19 17 / 0.55), rgb(21 19 17 / 0.9)); }
+  .c-hero__content { position: relative; display: grid; gap: var(--space-4); justify-items: start; padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8); }
+  .c-hero__eyebrow { color: var(--accent); margin-top: var(--space-3); }
+  .c-hero :global(.c-hero__title) { font-size: var(--text-4xl); max-width: 16ch; line-height: var(--leading-tight); }
+  .c-hero__accroche { max-width: 40rem; color: var(--fg-on-dark-muted); font-size: var(--text-lg); margin-bottom: var(--space-3); }
+
+  .c-intro__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+  .c-intro__h2 { font-size: var(--text-3xl); margin-bottom: var(--space-5); }
+  .c-intro__text { color: var(--fg-on-light-muted); max-width: 40rem; }
+  .c-args { display: grid; gap: var(--space-5); align-content: start; }
+  .c-args li { padding-top: var(--space-4); border-top: 1px dashed var(--ink-300); }
+  .c-args h3 { font-family: var(--font-serif); font-size: var(--text-xl); }
+  .c-args p { color: var(--fg-on-light-muted); }
+
+  .c-sugg__grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .c-card { display: grid; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--ink-700); height: 100%; transition: border-color var(--dur-fast); }
+  .c-card:hover { border-color: var(--accent); }
+  .c-card__visual { display: block; aspect-ratio: 1; background: radial-gradient(circle at 50% 40%, var(--ink-800), var(--ink-950) 75%); }
+  .c-card__visual :global(svg) { width: 100%; height: 100%; display: block; }
+  .c-card__name { font-family: var(--font-serif); font-size: var(--text-xl); margin-top: var(--space-2); }
+  .c-card__why { color: var(--fg-on-dark-muted); font-size: var(--text-sm); }
+  .c-card__meta { color: var(--accent); font-size: var(--text-xs); }
+  .c-card__cta { margin-top: var(--space-2); font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--accent); }
+
+  .c-faq__list { display: grid; }
+  .c-faq__item { border-bottom: 1px solid var(--ink-200); padding-block: var(--space-4); }
+  .c-faq__item summary { cursor: pointer; font-family: var(--font-serif); font-size: var(--text-lg); list-style: none; display: flex; justify-content: space-between; gap: var(--space-4); }
+  .c-faq__item summary::after { content: '+'; color: var(--accent-on-light); }
+  .c-faq__item[open] summary::after { content: '−'; }
+  .c-faq__item p { margin-top: var(--space-3); color: var(--fg-on-light-muted); }
+
+  @media (min-width: 64em) {
+    .c-intro__grid { grid-template-columns: 1.2fr 1fr; gap: var(--space-9); }
+  }
+</style>

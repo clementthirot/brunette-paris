@@ -235,3 +235,7 @@ teaser:
     Composez votre cadeau d’entreprise en quelques clics : la pièce, le cuir, la dorure. Obtenez une
     estimation immédiate et envoyez un brief prêt à l’emploi.
   bouton: Ouvrir le studio cadeaux
+liens:
+  occasionsTitre: Des idées par occasion
+  realisations: Voir les réalisations pour d’autres entreprises
+  realisationsUrl: /entreprises/realisations

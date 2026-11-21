@@ -9,6 +9,9 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import HotStampText from '../../components/ui/HotStampText.astro';
 import Photo from '../../components/ui/Photo.astro';
+import DeadlineBanner from '../../components/b2b/DeadlineBanner.astro';
+import SamplesTeaser from '../../components/b2b/SamplesTeaser.astro';
+import OccasionList from '../../components/b2b/OccasionList.astro';
 import { getStudio, getSettings } from '../../lib/content';
 import { thumbSvg } from '../../scripts/studio-shapes';
 
@@ -91,6 +94,8 @@ const ld = [{
       <a href="#studio" class="btn">{s.hero.start}</a>
     </div>
   </section>
+
+  <DeadlineBanner />
 
   <!-- Configurateur -->
   <section id="studio" class="studio bg-dark" data-studio>
@@ -326,6 +331,9 @@ const ld = [{
       </ul>
     </div>
   </section>
+
+  <SamplesTeaser theme="dark" />
+  <OccasionList />
 </Base>
 
 <style>
@@ -337,7 +345,7 @@ const ld = [{
   .s-hero__accroche { max-width: 42rem; color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
 
   /* --- Mise en page --- */
-  .studio { padding-block: var(--space-6) var(--section-y); scroll-margin-top: var(--header-h); }
+  .studio { padding-block: var(--space-7) var(--section-y); scroll-margin-top: var(--header-h); }
   .studio__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
   .studio__grid > * { min-width: 0; }
   .studio__aside { display: grid; gap: var(--space-5); align-content: start; }

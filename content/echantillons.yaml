@@ -1,0 +1,56 @@
+seo:
+  title: Kit d’échantillons de cuir pour entreprises | Brunette Paris
+  description: >-
+    Recevez gratuitement un kit d’échantillons de cuir et une plaque marquée à votre logo pour préparer
+    vos cadeaux d’entreprise. Maroquinerie artisanale fabriquée en Île-de-France.
+hero:
+  eyebrow: Entreprises · Kit d’échantillons
+  h1: Touchez le cuir avant de décider
+  accroche: >-
+    Un cadeau en cuir se choisit avec les mains. Recevez à votre bureau une sélection de cuirs, et une
+    plaque marquée à votre logo pour juger du rendu avec vos équipes.
+contenu:
+  titre: Ce que contient le kit
+  items:
+    - titre: Jusqu’à quatre cuirs
+      texte: Les cuirs de votre choix, en carrés généreux, pour juger du toucher et de la couleur.
+    - titre: Une plaque marquée à votre logo
+      texte: Votre logo marqué à chaud dans le cuir, dans la finition qui vous tente.
+    - titre: Un nuancier de fils
+      texte: Pour imaginer les coutures, ton sur ton ou en contraste.
+    - titre: Une fiche de l’atelier
+      texte: Les pièces possibles, les quantités et les délais, pour préparer votre projet en interne.
+  photo:
+    alt: Kit d’échantillons de cuir Brunette Paris
+    placeholder: Kit d’échantillons ouvert sur un bureau, nuancier de cuirs et plaque marquée d’un logo
+  # TODO : conditions à valider avec Armonie (gratuité, zone, délai d’envoi).
+  condition: >-
+    Le kit est offert aux entreprises qui préparent un projet. Il est expédié sous une semaine en France
+    métropolitaine, ou remis en main propre à Paris.
+formulaire:
+  titre: Recevoir mon kit
+  cuirs: Les cuirs qui vous intéressent
+  cuirsAide: Jusqu’à {max} cuirs.
+  maxCuirs: 4
+  plaque: Ajouter une plaque marquée à notre logo
+  plaqueAide: L’atelier vous demandera votre logo en réponse.
+  nom: Nom
+  societe: Société
+  fonction: Fonction
+  email: Email professionnel
+  telephone: Téléphone
+  adresse: Adresse de livraison
+  projet: Votre projet en quelques mots (occasion, quantité, date)
+  requis: obligatoire
+  envoyer: Recevoir mon kit
+  envoi: Envoi en cours…
+confirmation: >-
+  Merci, votre demande est bien arrivée. Armonie prépare votre kit et vous écrit sous 48 heures pour
+  convenir de l’envoi.
+messagerie: >-
+  Votre messagerie s’ouvre avec la demande déjà rédigée : il ne reste qu’à l’envoyer.
+erreur: L’envoi n’a pas abouti. Votre messagerie va s’ouvrir avec la demande déjà rédigée.
+teaser:
+  titre: Envie de toucher le cuir ?
+  texte: Recevez un kit d’échantillons et une plaque marquée à votre logo, pour décider en équipe.
+  bouton: Demander le kit d’échantillons
