@@ -3,23 +3,4 @@ import LegalPage from '../components/page/LegalPage.astro';
 import { getLegal } from '../lib/content';
 const page = await getLegal();
 ---
-<Base seo={page.seo} hero="light">
-  <section class="legal bg-light">
-    <div class="container container--narrow">
-      <h1>{page.h1}</h1>
-      {page.sections.map((s) => (
-        <section class="legal__section">
-          <h2>{s.title}</h2>
-          <p>{s.text}</p>
-        </section>
-      ))}
-    </div>
-  </section>
-</Base>
-<style>
-  .legal { padding-block: calc(var(--header-h) + var(--space-8)) var(--section-y); }
-  .legal h1 { font-size: var(--text-3xl); margin-bottom: var(--space-7); }
-  .legal__section { padding-block: var(--space-5); border-top: 1px solid var(--ink-200); }
-  .legal__section h2 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
-  .legal__section p { color: var(--fg-on-light-muted); white-space: pre-line; }
-</style>
+<LegalPage page={page} />
