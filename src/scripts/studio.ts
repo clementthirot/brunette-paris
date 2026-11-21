@@ -232,6 +232,8 @@ export function initStudio() {
     q.set('qte', String(s.qty));
     if (s.texte) q.set('texte', s.texte);
     if (s.date) q.set('date', s.date);
+    const occ = (form.elements.namedItem('occasion') as HTMLSelectElement | null)?.value;
+    if (occ) q.set('occasion', occ);
     history.replaceState(null, '', `${location.pathname}?${q}${location.hash}`);
   }
 
@@ -245,8 +247,14 @@ export function initStudio() {
     if (q.get('qte')) qtyInput.value = String(parseInt(q.get('qte')!, 10) || qtyInput.value);
     if (q.get('texte')) textInput.value = q.get('texte')!.slice(0, 24);
     if (q.get('date')) dateInput.value = q.get('date')!;
+    const occ = q.get('occasion');
+    const sel = form.elements.namedItem('occasion') as HTMLSelectElement | null;
+    if (occ && sel && Array.from(sel.options).some((o) => o.value === occ)) sel.value = occ;
     syncRange();
-    return q.has('piece');
+    // ?etape=1 : composition préremplie mais parcours depuis le début (liens des pages occasion).
+    const etape = parseInt(q.get('etape') || '', 10);
+    if (etape >= 1) return etape - 1;
+    return q.has('piece') ? steps.length - 1 : 0;
   }
 
   // -------------------------------------------------------------------------
@@ -455,8 +463,7 @@ export function initStudio() {
   // -------------------------------------------------------------------------
   // Démarrage
   // -------------------------------------------------------------------------
-  const fromLink = readUrl();
-  go(fromLink ? steps.length - 1 : 0, false);
+  go(readUrl(), false);
   update(false);
   // Premier marquage quand l'aperçu entre à l'écran.
   const io = new IntersectionObserver((entries) => {

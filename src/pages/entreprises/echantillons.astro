@@ -1,0 +1,218 @@
+---
+/**
+ * Kit d'échantillons sur demande : cuirs au choix (nuancier du Studio cadeaux) et plaque marquée au logo.
+ * Envoi vers le service de formulaire (Réglages globaux) ou, à défaut, par la messagerie.
+ * Contenu : Keystatic › Kit d'échantillons ; cuirs : Keystatic › Studio cadeaux › Cuirs.
+ */
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import HotStampText from '../../components/ui/HotStampText.astro';
+import Photo from '../../components/ui/Photo.astro';
+import DeadlineBanner from '../../components/b2b/DeadlineBanner.astro';
+import { getEchantillons, getStudio, getSettings } from '../../lib/content';
+
+const [e, studio, settings] = await Promise.all([getEchantillons(), getStudio(), getSettings()]);
+const f = e.formulaire;
+const max = f.maxCuirs ?? 4;
+const cfg = {
+  endpoint: settings.formEndpoint || '',
+  email: settings.coordonnees.email || '',
+  max,
+  confirmation: e.confirmation,
+  messagerie: e.messagerie,
+  erreur: e.erreur,
+  envoi: f.envoi,
+};
+---
+<Base title={e.seo.title} description={e.seo.description} hero="dark">
+  <section class="k-hero bg-dark">
+    <div class="container k-hero__inner">
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: e.hero.eyebrow.split('·').pop()!.trim() }]} />
+      <p class="eyebrow k-hero__eyebrow">{e.hero.eyebrow}</p>
+      <HotStampText text={e.hero.h1} class="k-hero__title" />
+      <p class="k-hero__accroche">{e.hero.accroche}</p>
+    </div>
+  </section>
+  <DeadlineBanner />
+
+  <section class="kit bg-light section">
+    <div class="container kit__grid">
+      <!-- Le kit -->
+      <div class="kit__about">
+        <h2 class="kit__h2" data-reveal>{e.contenu.titre}</h2>
+        <div data-reveal><Photo photo={e.contenu.photo} ratio="4 / 3" /></div>
+        <ul role="list" class="kit__list" data-reveal-group="0.08">
+          {e.contenu.items.map((it, i) => (
+            <li data-reveal>
+              <span class="kit__num nums">{String(i + 1).padStart(2, '0')}</span>
+              <div><h3>{it.titre}</h3><p>{it.texte}</p></div>
+            </li>
+          ))}
+        </ul>
+        <p class="kit__condition" data-reveal>{e.contenu.condition}</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form class="kform" data-kit-form novalidate>
+        <script type="application/json" set:html={JSON.stringify(cfg)} />
+        <h2 class="kit__h2">{f.titre}</h2>
+        <fieldset class="kform__cuirs">
+          <legend class="field__label">{f.cuirs} <span class="req">· {f.cuirsAide.replace('{max}', String(max))}</span></legend>
+          <div class="swatches">
+            {studio.cuirs.map((c) => (
+              <label class="sw">
+                <input type="checkbox" name="cuirs" value={c.nom} data-cuir />
+                <span class="sw__color" style={`--c:${c.couleur}`}></span>
+                <span class="sw__name">{c.nom}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <label class="check">
+          <input type="checkbox" name="plaque" value="oui" checked />
+          <span><strong>{f.plaque}</strong><small>{f.plaqueAide}</small></span>
+        </label>
+        <div class="kform__fields">
+          <div class="field"><label for="k-nom" class="field__label">{f.nom} <span class="req">({f.requis})</span></label><input id="k-nom" name="nom" autocomplete="name" required /></div>
+          <div class="field"><label for="k-societe" class="field__label">{f.societe} <span class="req">({f.requis})</span></label><input id="k-societe" name="societe" autocomplete="organization" required /></div>
+          <div class="field"><label for="k-fonction" class="field__label">{f.fonction}</label><input id="k-fonction" name="fonction" autocomplete="organization-title" /></div>
+          <div class="field"><label for="k-tel" class="field__label">{f.telephone}</label><input id="k-tel" name="telephone" type="tel" autocomplete="tel" /></div>
+          <div class="field field--full"><label for="k-email" class="field__label">{f.email} <span class="req">({f.requis})</span></label><input id="k-email" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field field--full"><label for="k-adresse" class="field__label">{f.adresse} <span class="req">({f.requis})</span></label><textarea id="k-adresse" name="adresse" rows="3" autocomplete="street-address" required></textarea></div>
+          <div class="field field--full"><label for="k-projet" class="field__label">{f.projet}</label><textarea id="k-projet" name="projet" rows="3"></textarea></div>
+        </div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+        <div class="kform__actions"><button type="submit" class="btn btn--dark" data-submit>{f.envoyer}</button></div>
+        <p class="kform__status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .k-hero { padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8); }
+  .k-hero__inner { display: grid; gap: var(--space-5); justify-items: start; }
+  .k-hero__eyebrow { color: var(--accent); margin-top: var(--space-4); }
+  .k-hero :global(.k-hero__title) { font-size: var(--text-4xl); max-width: 16ch; line-height: var(--leading-tight); }
+  .k-hero__accroche { max-width: 42rem; color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
+
+  .kit__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .kit__about { display: grid; gap: var(--space-5); align-content: start; }
+  .kit__h2 { font-size: var(--text-2xl); margin-bottom: var(--space-2); }
+  .kit__list { display: grid; gap: var(--space-4); }
+  .kit__list li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4); padding-top: var(--space-4); border-top: 1px dashed var(--ink-300); }
+  .kit__num { font-family: var(--font-serif); font-size: var(--text-xl); color: var(--accent-on-light); }
+  .kit__list h3 { font-family: var(--font-serif); font-size: var(--text-lg); }
+  .kit__list p { color: var(--fg-on-light-muted); font-size: var(--text-sm); }
+  .kit__condition { font-size: var(--text-sm); color: var(--fg-on-light-muted); border-left: 2px solid var(--sable-500); padding-left: var(--space-3); }
+
+  .kform { display: grid; gap: var(--space-6); align-content: start; padding: var(--space-6); border: 1px solid var(--ink-200); background: var(--cream-0); }
+  .kform__cuirs { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+  .field__label { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-light-muted); }
+  .req { text-transform: none; letter-spacing: 0; opacity: 0.75; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: var(--space-3); }
+  .sw { position: relative; display: grid; gap: var(--space-2); cursor: pointer; }
+  .sw input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .sw__color {
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.22), transparent 60%), var(--c);
+    outline: 1px solid transparent;
+    outline-offset: 3px;
+    transition: outline-color var(--dur-fast), transform var(--dur-fast);
+  }
+  .sw input:checked + .sw__color { outline-color: var(--sable-600); transform: scale(0.94); }
+  .sw input:focus-visible + .sw__color { outline: 2px solid var(--reine-500); }
+  .sw input:disabled ~ * { opacity: 0.4; }
+  .sw__name { font-size: var(--text-xs); letter-spacing: 0.06em; }
+  .check { display: flex; gap: var(--space-3); align-items: flex-start; cursor: pointer; }
+  .check input { margin-top: 0.3rem; accent-color: var(--sable-600); width: 1.1rem; height: 1.1rem; }
+  .check span { display: grid; gap: var(--space-1); }
+  .check small { color: var(--fg-on-light-muted); font-size: var(--text-xs); }
+  .kform__fields { display: grid; gap: var(--space-5); }
+  .field { display: grid; gap: var(--space-2); }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.8rem 0 0.6rem;
+    border: 0;
+    border-bottom: 1px solid var(--ink-300);
+    background: transparent;
+    font-size: var(--text-base);
+    border-radius: 0;
+  }
+  .field textarea { border: 1px solid var(--ink-300); padding: var(--space-3); resize: vertical; }
+  .field input:focus,
+  .field textarea:focus { outline: none; border-color: var(--sable-600); }
+  .kform__status { min-height: 1.5em; font-family: var(--font-serif); font-size: var(--text-xl); }
+  .kform__status.is-info { font-family: var(--font-sans); font-size: var(--text-sm); color: var(--fg-on-light-muted); }
+  .kform.is-sent > :not(.kform__status):not(h2):not(script) { display: none; }
+
+  @media (min-width: 40em) {
+    .kform__fields { grid-template-columns: 1fr 1fr; }
+    .field--full { grid-column: 1 / -1; }
+  }
+  @media (min-width: 64em) {
+    .kit__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-9); align-items: start; }
+    .kform { position: sticky; top: calc(var(--header-h) + var(--space-4)); }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-kit-form]')!;
+  const cfg = JSON.parse(form.querySelector('script')!.textContent || '{}');
+  const status = form.querySelector<HTMLElement>('[data-status]')!;
+  const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const cuirs = Array.from(form.querySelectorAll<HTMLInputElement>('[data-cuir]'));
+
+  // Limite du nombre de cuirs : les autres cases se désactivent une fois le maximum atteint.
+  const limit = () => {
+    const n = cuirs.filter((c) => c.checked).length;
+    cuirs.forEach((c) => (c.disabled = !c.checked && n >= cfg.max));
+  };
+  cuirs.forEach((c) => c.addEventListener('change', limit));
+
+  function text(fd: FormData) {
+    const lines = [
+      `Cuirs : ${fd.getAll('cuirs').join(', ') || '—'}`,
+      `Plaque marquée au logo : ${fd.get('plaque') ? 'oui' : 'non'}`,
+      '',
+      [fd.get('nom'), fd.get('fonction'), fd.get('societe')].filter(Boolean).join(' · '),
+      [fd.get('email'), fd.get('telephone')].filter(Boolean).join(' · '),
+      '',
+      `Adresse de livraison :\n${fd.get('adresse') || ''}`,
+    ];
+    const projet = String(fd.get('projet') || '').trim();
+    if (projet) lines.push('', `Projet : ${projet}`);
+    return lines.join('\n');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const fd = new FormData(form);
+    status.classList.remove('is-info');
+    const label = submit.textContent;
+    submit.disabled = true;
+    submit.textContent = cfg.envoi;
+    try {
+      if (!cfg.endpoint) throw new Error('no-endpoint');
+      fd.set('cuirs', fd.getAll('cuirs').join(', '));
+      fd.set('source', 'Kit d’échantillons');
+      fd.set('_subject', `Kit d’échantillons : ${fd.get('societe')}`);
+      const res = await fetch(cfg.endpoint, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.classList.add('is-sent');
+      status.textContent = cfg.confirmation;
+    } catch (err) {
+      status.classList.add('is-info');
+      status.textContent = (err as Error).message === 'no-endpoint' ? cfg.messagerie : cfg.erreur;
+      if (cfg.email) {
+        const subject = `Kit d’échantillons : ${fd.get('societe')}`;
+        location.href = `mailto:${cfg.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text(new FormData(form)))}`;
+      }
+    } finally {
+      submit.disabled = false;
+      submit.textContent = label;
+    }
+  });
+</script>

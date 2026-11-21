@@ -1,0 +1,78 @@
+---
+/**
+ * Bandeau « commandez avant le… » : met en avant la prochaine date limite de commande
+ * avec un compte à rebours. Recalculé dans le navigateur (le site est statique) :
+ * le bandeau disparaît de lui-même une fois la date passée.
+ * Contenu : Keystatic › Calendrier des commandes.
+ */
+import { getCalendrier, STUDIO_URL } from '../../lib/content';
+interface Props { echeance?: string | null; theme?: 'dark' | 'light' }
+const { echeance = '', theme = 'dark' } = Astro.props;
+const cal = await getCalendrier();
+const items = cal.echeances
+  .filter((e) => e.dateLimite)
+  .map((e) => ({ nom: e.nom, date: e.dateLimite as string, remise: e.remise, lien: e.lien || STUDIO_URL }))
+  .sort((a, b) => a.date.localeCompare(b.date));
+const cfg = {
+  items,
+  prefer: (echeance ?? '').trim().toLowerCase(),
+  joursAvant: cal.joursAvant ?? 60,
+  modele: cal.modele,
+  compte: cal.compte,
+  dernierJour: cal.dernierJour,
+};
+---
+{cal.afficher && items.length > 0 && (
+  <aside class:list={['deadline', `deadline--${theme}`]} data-deadline hidden>
+    <script type="application/json" set:html={JSON.stringify(cfg)} />
+    <div class="container deadline__inner">
+      <span class="deadline__count nums" data-deadline-count></span>
+      <p class="deadline__text" data-deadline-text></p>
+      <a class="deadline__link link-underline" data-deadline-link href={STUDIO_URL}>{cal.bouton}</a>
+    </div>
+  </aside>
+)}
+<style>
+  .deadline { border-block: 1px dashed var(--sable-700); }
+  .deadline--dark { background: var(--ink-900); color: var(--fg-on-dark); }
+  .deadline--light { background: var(--sable-50); color: var(--fg-on-light); border-color: var(--sable-400); }
+  .deadline__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); padding-block: var(--space-4); }
+  .deadline__count {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    color: var(--accent);
+    min-width: 3.5ch;
+  }
+  .deadline--light .deadline__count { color: var(--accent-on-light); }
+  .deadline__text { flex: 1 1 18rem; font-size: var(--text-sm); letter-spacing: 0.02em; }
+  .deadline__link { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; }
+</style>
+<script>
+  type Cfg = {
+    items: { nom: string; date: string; remise: string; lien: string }[];
+    prefer: string;
+    joursAvant: number;
+    modele: string;
+    compte: string;
+    dernierJour: string;
+  };
+  document.querySelectorAll<HTMLElement>('[data-deadline]').forEach((el) => {
+    const cfg: Cfg = JSON.parse(el.querySelector('script')!.textContent || '{}');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const days = (d: string) => Math.round((new Date(`${d}T00:00:00`).getTime() - today.getTime()) / 86_400_000);
+    const upcoming = cfg.items.filter((i) => days(i.date) >= 0 && days(i.date) <= cfg.joursAvant);
+    // L'échéance demandée par la page si elle est proche, sinon la prochaine.
+    const item = upcoming.find((i) => i.nom.trim().toLowerCase() === cfg.prefer) ?? upcoming[0];
+    if (!item) return;
+    const n = days(item.date);
+    const date = new Date(`${item.date}T00:00:00`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+    el.querySelector('[data-deadline-count]')!.textContent = n === 0 ? cfg.dernierJour : cfg.compte.replace('{n}', String(n));
+    el.querySelector('[data-deadline-text]')!.textContent = cfg.modele
+      .replace('{nom}', item.nom)
+      .replace('{date}', date)
+      .replace('{remise}', item.remise);
+    el.querySelector<HTMLAnchorElement>('[data-deadline-link]')!.href = item.lien;
+    el.hidden = false;
+  });
+</script>

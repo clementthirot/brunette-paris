@@ -1,0 +1,40 @@
+---
+/** Encart d'invitation vers le kit d'échantillons. Textes : Keystatic › Kit d'échantillons › Encart. */
+import { getEchantillons, ECHANTILLONS_URL } from '../../lib/content';
+interface Props { theme?: 'dark' | 'light' }
+const { theme = 'light' } = Astro.props;
+const { teaser } = await getEchantillons();
+---
+<section class:list={['samples section', theme === 'dark' ? 'bg-dark' : 'bg-light']}>
+  <div class="container samples__inner" data-reveal-group="0.1">
+    <div class="samples__swatches" aria-hidden="true" data-reveal>
+      <span style="--c:#c8925a"></span><span style="--c:#8a4a24"></span><span style="--c:#293860"></span><span style="--c:#7e9994"></span>
+    </div>
+    <div class="samples__text">
+      <h2 class="samples__title" data-reveal>{teaser.titre}</h2>
+      <p data-reveal>{teaser.texte}</p>
+    </div>
+    <a href={ECHANTILLONS_URL} class="btn" data-reveal>{teaser.bouton}</a>
+  </div>
+</section>
+<style>
+  .samples { padding-block: var(--space-8); }
+  .samples__inner { display: grid; gap: var(--space-5); align-items: center; }
+  .samples__swatches { display: flex; }
+  .samples__swatches span {
+    width: 3.5rem;
+    aspect-ratio: 1;
+    margin-right: -0.9rem;
+    background: radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.22), transparent 60%), var(--c);
+    box-shadow: 0 0.4rem 0.8rem rgb(0 0 0 / 0.25);
+    transform: rotate(calc(var(--i, 0) * 1deg));
+  }
+  .samples__swatches span:nth-child(odd) { transform: rotate(-6deg); }
+  .samples__swatches span:nth-child(even) { transform: rotate(5deg) translateY(4px); }
+  .samples__title { font-size: var(--text-2xl); }
+  .samples__text p { color: var(--fg-on-light-muted); margin-top: var(--space-2); }
+  .bg-dark .samples__text p { color: var(--fg-on-dark-muted); }
+  @media (min-width: 64em) {
+    .samples__inner { grid-template-columns: auto 1fr auto; gap: var(--space-7); }
+  }
+</style>
