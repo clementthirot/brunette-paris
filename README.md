@@ -82,6 +82,19 @@ Trois options sont prévues dans `src/styles/tokens.css` : **Cormorant Garamond*
 4. Mettre le domaine définitif dans `astro.config.mjs` (`SITE`) pour le sitemap et les balises canoniques
    (tant qu'il n'est pas branché, définir `SEO_INDEX=false` dans Vercel : voir « Référencement (SEO) »).
 
+### Version de test sur GitHub Pages
+
+En attendant Vercel, chaque push sur `main` publie une version de test sur
+**https://clementthirot.github.io/brunette-paris/** (workflow `.github/workflows/pages.yml`).
+
+- Variante 100 % statique (`DEPLOY_TARGET=pages`) : sans adaptateur Vercel ni administration `/keystatic`
+  (les contenus se modifient en local ou, plus tard, sur Vercel).
+- Servie sous `/brunette-paris` : les liens écrits en dur sont préfixés après le build par
+  `scripts/pages-base-path.mjs`. En local : `DEPLOY_TARGET=pages BASE_PATH=/brunette-paris
+  SITE_URL=https://clementthirot.github.io npm run build:pages`.
+- Toujours en `noindex` (`SEO_INDEX=false`) pour ne pas concurrencer le futur domaine.
+- Activation (une fois) : Settings > Pages > Source = « GitHub Actions ».
+
 ## Référencement (SEO)
 
 Mêmes standards que sur Metal Nature (audit SEO du 16/11/2026), adaptés à Keystatic et Vercel :
