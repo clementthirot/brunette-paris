@@ -5,64 +5,110 @@ import Footer from '../components/global/Footer.astro';
 import Cursor from '../components/global/Cursor.astro';
 import Curtain from '../components/global/Curtain.astro';
 import { getSettings, getOffres } from '../lib/content';
+// Police du texte courant, préchargée pour un premier rendu sans saut de police (LCP, CLS).
+import josefin400 from '@fontsource/josefin-sans/files/josefin-sans-latin-400-normal.woff2?url';
 
-interface Props {
+import Seo from '../components/global/Seo.astro';
+import { SITE_NAME, DEFAULT_OG_IMAGE, absolute, absoluteFile, businessId, websiteId } from '../lib/seo';
+
+/** Champs « Référencement » d'une page Keystatic (titre, description, image de partage, noindex). */
+interface SeoFields {
   title: string;
+  description?: string;
+  ogImage?: string | null;
+  ogImageAlt?: string;
+  noindex?: boolean;
+}
+interface Props {
+  /** Champs SEO Keystatic de la page ; title/description/image/noindex ci-dessous les complètent ou les remplacent. */
+  seo?: SeoFields;
+  title?: string;
   description?: string;
   /** Thème du haut de page : 'dark' = hero sombre (header transparent, texte clair). */
   hero?: 'dark' | 'light';
   jsonLd?: Record<string, unknown>[];
+  /** Image de partage de repli (ex. photo du hero) si la page n'a pas d'image SEO dédiée. */
   image?: string | null;
+  imageAlt?: string;
+  type?: 'website' | 'product' | 'article';
   noindex?: boolean;
 }
-const { title, description = '', hero = 'light', jsonLd = [], image, noindex = false } = Astro.props;
+const { seo, hero = 'light', jsonLd = [], type = 'website' } = Astro.props;
+const title = Astro.props.title ?? seo?.title ?? SITE_NAME;
+const description = Astro.props.description ?? seo?.description ?? '';
+const image = seo?.ogImage || Astro.props.image;
+const imageAlt = (seo?.ogImage && seo?.ogImageAlt) || Astro.props.imageAlt;
+const noindex = Astro.props.noindex || seo?.noindex || false;
+
 const settings = await getSettings();
 const offres = await getOffres();
-const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = image ? new URL(image, Astro.site).href : undefined;
+const ref = settings.referencement;
 
-// Données structurées LocalBusiness, présentes sur toutes les pages.
-const localBusiness = {
+// Entreprise (LocalBusiness) et site (WebSite) : déclarés en entier sur l'accueil et la page contact,
+// les autres données structurées y renvoient par leur @id.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const withBusiness = path === '/' || path === '/contact';
+const { coordonnees: c } = settings;
+const business = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  '@id': new URL('/#atelier', Astro.site).href,
-  name: 'Brunette Paris',
-  description: 'Maroquinerie artisanale faite main en Île-de-France',
-  url: Astro.site?.href,
-  email: settings.coordonnees.email || undefined,
-  telephone: settings.coordonnees.phone || undefined,
+  '@id': businessId(Astro.site),
+  name: SITE_NAME,
+  description: settings.footer.tagline || undefined,
+  url: absolute('/', Astro.site),
+  logo: absoluteFile('/logo-brunette-paris.png', Astro.site),
+  image: absoluteFile(ref.ogImage || DEFAULT_OG_IMAGE.src, Astro.site),
+  email: c.email || undefined,
+  telephone: c.phone || undefined,
+  priceRange: ref.priceRange || undefined,
+  openingHours: ref.openingHours || undefined,
   address: {
     '@type': 'PostalAddress',
-    addressLocality: settings.coordonnees.city,
-    addressRegion: settings.coordonnees.region,
+    streetAddress: ref.streetAddress || undefined,
+    postalCode: ref.postalCode || undefined,
+    addressLocality: c.city || undefined,
+    addressRegion: c.region || undefined,
     addressCountry: 'FR',
   },
-  areaServed: settings.coordonnees.region,
-  sameAs: [settings.reseaux.instagramUrl, settings.reseaux.etsyUrl].filter(Boolean),
+  areaServed: [
+    c.city && { '@type': 'City', name: c.city },
+    c.region && { '@type': 'AdministrativeArea', name: c.region },
+  ].filter(Boolean),
+  knowsAbout: ['Maroquinerie artisanale', 'Sellerie', 'Cuir sur mesure', 'Cadeaux d’entreprise en cuir'],
+  sameAs: [ref.googleBusinessUrl, settings.reseaux.instagramUrl, settings.reseaux.etsyUrl].filter(Boolean),
 };
-const ld = [localBusiness, ...jsonLd];
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': websiteId(Astro.site),
+  name: SITE_NAME,
+  url: absolute('/', Astro.site),
+  inLanguage: 'fr-FR',
+  publisher: { '@id': businessId(Astro.site) },
+};
+const ld = [...(withBusiness ? [business, website] : []), ...jsonLd];
 ---
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="fr_FR" />
-    <meta property="og:site_name" content="Brunette Paris" />
-    <meta property="og:title" content={title} />
-    {description && <meta property="og:description" content={description} />}
-    <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content="summary_large_image" />
+    <Seo
+      title={title}
+      description={description}
+      image={image}
+      imageAlt={imageAlt}
+      defaultImage={ref.ogImage}
+      type={type}
+      noindex={noindex}
+      jsonLd={ld}
+      googleVerification={ref.googleVerification}
+      bingVerification={ref.bingVerification}
+    />
     <meta name="theme-color" content="#151311" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    {ld.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="font" type="font/woff2" href={josefin400} crossorigin />
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>

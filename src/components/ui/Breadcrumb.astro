@@ -1,7 +1,11 @@
 ---
+import { breadcrumbLd } from '../../lib/seo';
 interface Props { items: { label: string; href?: string }[] }
 const { items } = Astro.props;
+// Données structurées BreadcrumbList, générées à partir du fil d'Ariane affiché (même source, jamais de décalage).
+const ld = breadcrumbLd(items, Astro.site, Astro.url.pathname);
 ---
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
 <nav aria-label="Fil d’Ariane" class="breadcrumb">
   <ol role="list">
     {items.map((it, i) => (

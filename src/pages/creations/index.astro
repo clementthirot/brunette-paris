@@ -1,15 +1,31 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PieceCard from '../../components/creations/PieceCard.astro';
-import { getCreationsPage, getPieces, getSettings } from '../../lib/content';
+import { getCreationsPage, getPieces, getSettings, pieceUrl } from '../../lib/content';
+import { absolute, websiteId } from '../../lib/seo';
 import { CATEGORIES, CUIRS } from '../../../keystatic.config';
 
 const [page, pieces, settings] = await Promise.all([getCreationsPage(), getPieces(), getSettings()]);
 const { filtres } = page;
 const catLabel = (v: string) => (filtres.categories as Record<string, string>)[v] ?? v;
 const cuirLabel = (v: string) => (filtres.cuirs as Record<string, string>)[v] ?? v;
+
+// Galerie : page de collection listant les fiches pièces (données structurées CollectionPage + ItemList).
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: page.h1,
+  description: page.seo.description,
+  url: absolute('/creations', Astro.site),
+  inLanguage: 'fr-FR',
+  isPartOf: { '@id': websiteId(Astro.site) },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: pieces.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: absolute(pieceUrl(p.slug), Astro.site), name: p.title })),
+  },
+};
 ---
-<Base title={page.seo.title} description={page.seo.description} hero="light">
+<Base seo={page.seo} hero="light" jsonLd={[collectionLd]}>
   <!-- Hero court, fond clair -->
   <section class="c-hero bg-light">
     <div class="container">
