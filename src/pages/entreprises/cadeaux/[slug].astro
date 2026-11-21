@@ -12,7 +12,7 @@ import CtaFinal from '../../../components/ui/CtaFinal.astro';
 import DeadlineBanner from '../../../components/b2b/DeadlineBanner.astro';
 import SamplesTeaser from '../../../components/b2b/SamplesTeaser.astro';
 import OccasionList from '../../../components/b2b/OccasionList.astro';
-import { getOccasions, getSettings, getStudio, studioLink, type Occasion } from '../../../lib/content';
+import { getOccasions, getSettings, getStudio, studioLink, isAnswerReady, type Occasion } from '../../../lib/content';
 import { thumbSvg } from '../../../scripts/studio-shapes';
 
 export async function getStaticPaths() {
@@ -40,11 +40,11 @@ const ld = o.faq.items.length
   ? [{
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: o.faq.items.map((q) => ({ '@type': 'Question', name: q.question, acceptedAnswer: { '@type': 'Answer', text: q.reponse } })),
+      mainEntity: o.faq.items.filter((q) => isAnswerReady(q.reponse)).map((q) => ({ '@type': 'Question', name: q.question, acceptedAnswer: { '@type': 'Answer', text: q.reponse } })),
     }]
   : [];
 ---
-<Base title={o.seo.title} description={o.seo.description} hero="dark" jsonLd={ld} image={o.hero.photo.image}>
+<Base seo={o.seo} hero="dark" jsonLd={ld} image={o.hero.photo.image}>
   <section class="c-hero bg-dark">
     <div class="c-hero__media" aria-hidden="true">
       <Photo photo={o.hero.photo} ratio="auto" class="c-hero__photo" loading="eager" />

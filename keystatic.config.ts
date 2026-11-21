@@ -519,6 +519,8 @@ export default config({
             contact: txt('Menu : Contact'),
             entreprisesHub: txt('Sous-menu : Vue d’ensemble (page Entreprises)'),
             realisations: txt('Menu : Réalisations'),
+            studio: txt('Sous-menu : Studio cadeaux (configurateur)'),
+            echantillons: txt('Sous-menu : Kit d’échantillons'),
             toutesCreations: txt('Sous-menu : Toutes les créations'),
             surMesure: txt('Menu : Sur-mesure'),
             entretien: txt('Menu : Entretien'),

@@ -115,23 +115,16 @@ export const realisationUrl = (slug: string) => `/entreprises/realisations/${slu
 export const articleUrl = (slug: string) => `/journal/${slug}`;
 
 /** Données structurées FAQPage (Google) à partir d'une liste de questions. */
-export const faqJsonLd = (items: readonly { question: string; answer: string }[]) =>
-  items.length
+// Seules les réponses rédigées sont déclarées (pas de « TODO » ni de « [À CONFIRMER] » dans Google).
+export const isAnswerReady = (answer?: string) => !!answer && !/TODO|À CONFIRMER/i.test(answer);
+export const faqJsonLd = (all: readonly { question: string; answer: string }[]) => {
+  const items = all.filter((q) => q.question && isAnswerReady(q.answer));
+  return items.length
     ? [{
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         mainEntity: items.map((q) => ({ '@type': 'Question', name: q.question, acceptedAnswer: { '@type': 'Answer', text: q.answer } })),
       }]
     : [];
+};
 
-/** Données structurées BreadcrumbList (fil d'Ariane dans les résultats Google). */
-export const breadcrumbJsonLd = (site: URL | undefined, items: { label: string; href?: string }[]) => ({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: items.map((it, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    name: it.label,
-    ...(it.href ? { item: new URL(it.href, site).href } : {}),
-  })),
-});
