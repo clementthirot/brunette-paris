@@ -1,0 +1,20 @@
+seo:
+  title: Conditions générales de vente | Brunette Paris
+  description: Conditions générales de vente des créations et commandes sur mesure Brunette Paris.
+h1: Conditions générales de vente
+updated: 2026-11-21
+sections:
+  - title: Objet
+    text: TODO — à faire rédiger ou valider par un professionnel avant l’ouverture de la vente en ligne (Stripe).
+  - title: Commandes et prix
+    text: TODO — prix TTC ou HT, validité des devis, acompte pour le sur-mesure.
+  - title: Paiement
+    text: TODO — moyens de paiement (lien de paiement Stripe, virement).
+  - title: Livraison
+    text: TODO — zones, délais, frais, remise en main propre.
+  - title: Droit de rétractation
+    text: TODO — 14 jours pour les pièces du catalogue ; exclusion légale des pièces personnalisées ou sur mesure.
+  - title: Garantie et réparation
+    text: TODO — garanties légales de conformité et des vices cachés, service de réparation de l’atelier.
+  - title: Médiation
+    text: TODO — médiateur de la consommation désigné.

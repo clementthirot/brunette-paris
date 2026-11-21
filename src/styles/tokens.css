@@ -83,11 +83,19 @@
   --fg-on-light: var(--ink-950);
   --fg-on-light-muted: var(--ink-600);
   --accent: var(--sable-500); /* accent principal */
-  --accent-on-light: var(--sable-700); /* sable lisible sur fond clair */
+  --accent-on-light: #75603f; /* sable foncé : contraste ≥ 4,5:1 sur fond crème (AA petits textes) */
   --accent-2: var(--celadon-500); /* accent secondaire */
   --accent-3: var(--reine-500); /* accent secondaire (rideau de transition) */
+  --heading-on-light: var(--reine-500); /* charte : typographie en reine ou en sable */
+  --focus-ring: var(--reine-500); /* anneau de focus sur fond clair (sable illisible sur crème) */
   --placeholder-bg: var(--ink-200);
   --placeholder-bg-dark: var(--ink-800);
+
+  /* « Peau » des placeholders : imitent un cuir pleine fleur en attendant les photos.
+     Chaque thème de section redéfinit ces trois valeurs. */
+  --ph-leather-1: #e7d8bf; /* lumière */
+  --ph-leather-2: #cbb38c; /* ombre */
+  --ph-ink: #6a5333; /* monogramme, couture, légende */
 
   /* Dégradé « feuille d'or » de la dorure à chaud */
   --gold-gradient: linear-gradient(
@@ -140,7 +148,9 @@
   /* --- Divers ----------------------------------------------------------- */
   --radius: 2px;
   --header-h: 4.75rem;
+  --radius-soft: 6px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-stamp: cubic-bezier(0.7, 0, 0.2, 1); /* geste de presse : lent, appuyé, relâché */
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-slow: 1.2s;
   --dur-base: 0.6s;

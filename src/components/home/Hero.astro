@@ -12,7 +12,7 @@ const { h1, subtitle, photo, video, scrollLabel } = Astro.props;
     ) : photo.image ? (
       <img src={photo.image} alt="" fetchpriority="high" />
     ) : (
-      <div class="hero__ph"><span>{photo.placeholder}</span></div>
+      <div class="hero__ph"><span class="hero__ph-light"></span><span class="hero__ph-caption"><b>Vidéo d'atelier à venir</b> {photo.placeholder}</span></div>
     )}
     <div class="hero__shade"></div>
     <div class="hero__grain"></div>
@@ -44,17 +44,38 @@ const { h1, subtitle, photo, video, scrollLabel } = Astro.props;
   }
   .hero__media img,
   .hero__media video { width: 100%; height: 100%; object-fit: cover; }
+  /* En attendant la vidéo : peau sombre grainée, éclairée par une lumière d'atelier
+     qui glisse lentement, comme une lampe rasante sur l'établi. */
   .hero__ph {
-    display: grid;
-    place-items: start end;
-    padding: calc(var(--header-h) + 1rem) var(--gutter);
+    overflow: hidden;
     background:
-      radial-gradient(ellipse at 50% 40%, var(--ink-700), var(--ink-900) 70%);
-    color: var(--ink-400);
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.05' numOctaves='4' seed='3'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='2'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 320px,
+      radial-gradient(ellipse 90% 70% at 50% 45%, #4a372a, #1c1511 72%);
+    background-blend-mode: soft-light, normal;
   }
-  .hero__ph span { border: 1px dashed currentColor; padding: var(--space-2) var(--space-3); opacity: 0.8; }
+  .hero__ph-light {
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(closest-side, rgb(225 190 128 / 0.22), transparent 70%);
+    width: 70%;
+    height: 90%;
+    animation: atelier-light 18s var(--ease-in-out) infinite alternate;
+  }
+  @keyframes atelier-light {
+    from { transform: translate(-10%, 5%); }
+    to { transform: translate(70%, 20%); }
+  }
+  .hero__ph-caption {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--space-5);
+    max-width: 30ch;
+    color: var(--ink-400);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+  }
+  .hero__ph-caption b { display: block; font-weight: 400; letter-spacing: var(--tracking-ui); text-transform: uppercase; font-size: 0.625rem; }
   /* Assombrie à 60 % */
   .hero__shade { background: rgb(12 10 8 / 0.6); }
   /* Grain léger animé */
@@ -104,7 +125,7 @@ const { h1, subtitle, photo, video, scrollLabel } = Astro.props;
     60%, 100% { transform: translateY(100%); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero__grain { animation: none; }
+    .hero__grain, .hero__ph-light { animation: none; }
     .hero__scroll span { animation: none; transform: none; }
   }
 </style>

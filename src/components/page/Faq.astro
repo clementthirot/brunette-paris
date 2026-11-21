@@ -1,0 +1,53 @@
+---
+/**
+ * Bloc de questions fréquentes en accordéon (balises <details>, accessible sans JavaScript).
+ * Les données structurées FAQPage se génèrent côté page avec `faqJsonLd()` (lib/content).
+ */
+interface Props {
+  title?: string;
+  items: readonly { question: string; answer: string }[];
+  headingLevel?: 'h2' | 'h3';
+}
+const { title, items, headingLevel = 'h2' } = Astro.props;
+const H = headingLevel;
+---
+{items.length > 0 && (
+  <div class="faq-block">
+    {title && <H class="section-title faq-block__title" data-reveal>{title}</H>}
+    <div class="faq">
+      {items.map((q) => (
+        <details class="faq__item" data-reveal>
+          <summary class="faq__q">
+            <span>{q.question}</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a"><p>{q.answer}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .faq-block__title:is(h3) { font-size: var(--text-2xl); }
+  .faq { border-top: 1px solid var(--ink-200); }
+  .faq__item { border-bottom: 1px solid var(--ink-200); }
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-5);
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__icon { position: relative; flex: none; width: 14px; height: 14px; }
+  .faq__icon::before,
+  .faq__icon::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--accent-on-light); transition: transform var(--dur-base) var(--ease-out); }
+  .faq__icon::after { transform: rotate(90deg); }
+  .faq__item[open] .faq__icon::after { transform: rotate(0); }
+  .faq__a { padding-bottom: var(--space-5); color: var(--fg-on-light-muted); max-width: 60ch; white-space: pre-line; }
+</style>

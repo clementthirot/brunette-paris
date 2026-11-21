@@ -14,7 +14,7 @@ const { title, offres, learnMore } = Astro.props;
       <ul role="list" class="offres__track" data-offres-track>
         {offres.map((o, i) => (
           <li class="offre-card" data-reveal>
-            <a href={offreUrl(o.slug)} class="offre-card__link">
+            <a href={offreUrl(o.slug)} class="offre-card__link" data-cursor-label="Découvrir">
               <div class="offre-card__media"><Photo photo={o.card.photo} ratio="3 / 4" /></div>
               <div class="offre-card__body">
                 <span class="offre-card__num">{String(i + 1).padStart(2, '0')}</span>
