@@ -3,9 +3,20 @@
 import Base from '../layouts/Base.astro';
 import Photo from '../components/ui/Photo.astro';
 import { getAtelier } from '../lib/content';
+import { absolute, businessId } from '../lib/seo';
 const page = await getAtelier();
+
+// Page « À propos » rattachée à l'entreprise (données structurées).
+const aboutLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: page.seo.title,
+  url: absolute('/atelier', Astro.site),
+  about: { '@id': businessId(Astro.site) },
+  inLanguage: 'fr-FR',
+};
 ---
-<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}>
+<Base seo={page.seo} hero="dark" image={page.hero.photo.image} imageAlt={page.hero.photo.alt} jsonLd={[aboutLd]}>
   <!-- Hero fond sombre : portrait d'Armonie -->
   <section class="a-hero bg-dark">
     <div class="a-hero__media" aria-hidden="true">

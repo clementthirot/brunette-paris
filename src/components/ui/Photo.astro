@@ -1,4 +1,5 @@
 ---
+import { imageSize } from '../../lib/images';
 /**
  * Photo éditable dans Keystatic. Tant que l'image n'est pas fournie, affiche un
  * placeholder neutre au bon ratio, avec le libellé de la photo attendue.
@@ -14,11 +15,14 @@ interface Props {
 }
 const { photo, ratio = '4 / 5', class: cls = '', loading = 'lazy', sizes, ...rest } = Astro.props;
 const src = photo?.image || null;
+// Dimensions réelles de l'image (attributs width/height : pas de décalage de mise en page).
+const size = await imageSize(src);
 const label = photo?.placeholder || photo?.alt || 'Photo à fournir';
 ---
 <div class:list={['ph', cls]} style={`--ratio:${ratio}`} {...rest}>
   {src ? (
-    <img src={src} alt={photo?.alt ?? ''} loading={loading} decoding="async" sizes={sizes} />
+    <img src={src} alt={photo?.alt ?? ''} width={size?.width} height={size?.height} loading={loading}
+      fetchpriority={loading === 'eager' ? 'high' : undefined} decoding={loading === 'eager' ? 'sync' : 'async'} sizes={sizes} />
   ) : (
     <div class="ph__label" role="img" aria-label={photo?.alt || label}><span>{label}</span></div>
   )}

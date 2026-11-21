@@ -6,6 +6,7 @@ import Viewer3D from '../../components/ui/Viewer3D.astro';
 import PieceCard from '../../components/creations/PieceCard.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import { getPieces, getCreationsPage, getSettings, pieceUrl, type Piece } from '../../lib/content';
+import { SITE_NAME, absolute, absoluteFile, businessId, truncate } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const pieces = await getPieces();
@@ -26,32 +27,46 @@ const editionLabel = piece.edition === 'unique' ? settings.labels.unique : setti
 const priceFmt = typeof piece.price === 'number'
   ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(piece.price)
   : null;
-const firstImage = piece.photos?.find((p) => p.image)?.image ?? null;
+const firstPhoto = piece.photos?.find((p) => p.image) ?? null;
+const firstImage = firstPhoto?.image ?? null;
+const metaDescription = piece.seoDescription?.trim() || truncate(piece.description, 155);
+const pageUrl = absolute(pieceUrl(piece.slug), Astro.site);
+const availability = { disponible: 'https://schema.org/InStock', vendue: 'https://schema.org/SoldOut' }[piece.availability as string];
 
+// Pièce avec prix : Product + Offer (éligible aux résultats enrichis produit). Sans prix, Google signalerait un
+// Product incomplet (offers manquant) : la pièce est alors décrite comme une création (CreativeWork).
 const productLd = {
   '@context': 'https://schema.org',
-  '@type': 'Product',
+  '@type': priceFmt ? 'Product' : 'CreativeWork',
   name: piece.title,
   description: piece.description,
-  image: (piece.photos ?? []).filter((p) => p.image).map((p) => new URL(p.image!, Astro.site).href),
+  ...(firstImage ? { image: (piece.photos ?? []).filter((p) => p.image).map((p) => absoluteFile(p.image!, Astro.site)) } : {}),
   material: `Cuir de ${cuir.toLowerCase()}`,
-  brand: { '@type': 'Brand', name: 'Brunette Paris' },
-  url: new URL(pieceUrl(piece.slug), Astro.site).href,
+  ...(priceFmt
+    ? { sku: piece.slug, brand: { '@type': 'Brand', name: SITE_NAME }, manufacturer: { '@id': businessId(Astro.site) } }
+    : { creator: { '@id': businessId(Astro.site) } }),
+  url: pageUrl,
+  ...(priceFmt && piece.dimensions && !/TODO|À CONFIRMER/i.test(piece.dimensions)
+    ? { additionalProperty: [{ '@type': 'PropertyValue', name: 'Dimensions', value: piece.dimensions }] }
+    : {}),
   ...(priceFmt
     ? {
         offers: {
           '@type': 'Offer',
           price: piece.price,
           priceCurrency: 'EUR',
-          availability: piece.availability === 'vendue' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
-          url: piece.paymentLink || new URL(pieceUrl(piece.slug), Astro.site).href,
+          itemCondition: 'https://schema.org/NewCondition',
+          // Disponibilité déclarée seulement si elle est renseignée dans Keystatic (jamais « en stock » par défaut).
+          ...(availability ? { availability } : {}),
+          url: pageUrl,
+          seller: { '@id': businessId(Astro.site) },
         },
       }
     : {}),
 };
 const askHref = `/contact?piece=${encodeURIComponent(piece.title)}`;
 ---
-<Base title={title} description={piece.description.slice(0, 155)} hero="light" jsonLd={[productLd]} image={firstImage}>
+<Base title={title} description={metaDescription} type="product" hero="light" jsonLd={[productLd]} image={firstImage} imageAlt={firstPhoto?.alt}>
   <section class="fiche bg-light">
     <div class="container">
       <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: page.h1, href: '/creations' }, { label: piece.title }]} />

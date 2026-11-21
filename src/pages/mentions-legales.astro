@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { getLegal } from '../lib/content';
 const page = await getLegal();
 ---
-<Base title={page.seo.title} description={page.seo.description} hero="light">
+<Base seo={page.seo} hero="light">
   <section class="legal bg-light">
     <div class="container container--narrow">
       <h1>{page.h1}</h1>
