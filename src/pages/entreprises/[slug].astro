@@ -11,6 +11,7 @@ import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import StitchSteps from '../../components/ui/StitchSteps.astro';
 import Gallery from '../../components/offre/Gallery.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
+import StudioTeaser from '../../components/studio/StudioTeaser.astro';
 import { getOffres, getSettings, type Offre } from '../../lib/content';
 
 export async function getStaticPaths() {
@@ -111,6 +112,9 @@ const faqLd = offre.faq.items.length
       </div>
     </section>
   )}
+
+  <!-- Invitation au Studio cadeaux (configurateur) -->
+  <StudioTeaser />
 
   <!-- 7. Appel à l'action final -->
   <CtaFinal />
