@@ -171,10 +171,10 @@ export default config({
         placeholderShape: fields.select({
           label: 'Forme provisoire 3D (utilisée tant qu’aucun fichier .glb n’est fourni)',
           options: [
-            { label: 'Cube', value: 'cube' },
-            { label: 'Sphère', value: 'sphere' },
-            { label: 'Tore', value: 'torus' },
-            { label: 'Capsule', value: 'capsule' },
+            { label: 'Pochette / maroquinerie plate', value: 'cube' },
+            { label: 'Porte-clés / médaillon', value: 'sphere' },
+            { label: 'Ceinture roulée', value: 'torus' },
+            { label: 'Étui allongé', value: 'capsule' },
           ],
           defaultValue: 'cube',
         }),
