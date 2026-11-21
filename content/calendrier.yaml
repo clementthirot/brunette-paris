@@ -1,0 +1,28 @@
+afficher: true
+joursAvant: 60
+modele: '{nom} : commandez avant le {date}, {remise}.'
+compte: J-{n}
+dernierJour: Dernier jour
+bouton: Composer mon cadeau
+# TODO : dates limites à caler avec le planning réel de l’atelier.
+echeances:
+  - nom: Cadeaux de fin d’année
+    dateLimite: 2026-11-28
+    remise: livrés avant le 15 décembre
+    lien: /entreprises/cadeaux/fin-d-annee
+  - nom: Séminaires de printemps
+    dateLimite: 2027-02-26
+    remise: livrés pour vos événements d’avril
+    lien: /entreprises/cadeaux/seminaire
+  - nom: Saison de golf
+    dateLimite: 2027-03-12
+    remise: livrés pour l’ouverture des compétitions
+    lien: /entreprises/cadeaux/golf
+  - nom: Séminaires de rentrée
+    dateLimite: 2027-07-09
+    remise: livrés pour vos événements de septembre
+    lien: /entreprises/cadeaux/seminaire
+  - nom: Cadeaux de fin d’année
+    dateLimite: 2027-11-26
+    remise: livrés avant le 15 décembre
+    lien: /entreprises/cadeaux/fin-d-annee
