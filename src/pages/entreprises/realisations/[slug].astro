@@ -11,7 +11,7 @@ import PageCta from '../../../components/page/PageCta.astro';
 import RealisationCard from '../../../components/cards/RealisationCard.astro';
 import {
   getRealisations, getRealisationsPage, getSettings, getOffres, getEntreprisesPage,
-  offreUrl, paragraphs, breadcrumbJsonLd, type Realisation,
+  offreUrl, paragraphs, type Realisation,
 } from '../../../lib/content';
 import { ROUTES } from '../../../lib/routes';
 
@@ -35,8 +35,7 @@ const blocs = [
   { title: page.labels.resultat, text: item.resultat },
 ].filter((b) => b.text);
 ---
-<Base title={`${item.title} | ${settings.nav.realisations} | Brunette Paris`} description={item.resume} hero="dark" image={item.cover.image}
-  jsonLd={[breadcrumbJsonLd(Astro.site, crumbs)]}>
+<Base title={`${item.title} | ${settings.nav.realisations} | Brunette Paris`} description={item.resume} hero="dark" image={item.cover.image}>
   <PageHero hero={{ eyebrow: item.secteur, h1: item.title, accroche: item.client, photo: item.cover }} breadcrumb={crumbs} />
 
   <section class="rc-facts bg-light">

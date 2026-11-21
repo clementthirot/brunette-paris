@@ -3,14 +3,14 @@
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import ArticleCard from '../../components/cards/ArticleCard.astro';
-import { getArticles, getJournalPage, getSettings, breadcrumbJsonLd } from '../../lib/content';
+import { getArticles, getJournalPage, getSettings } from '../../lib/content';
 
 const [page, articles, settings] = await Promise.all([getJournalPage(), getArticles(), getSettings()]);
 const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.journal }];
 const cats = page.categories as Record<string, string>;
 const used = [...new Set(articles.map((a) => a.category))];
 ---
-<Base title={page.seo.title} description={page.seo.description} hero="light" jsonLd={[breadcrumbJsonLd(Astro.site, crumbs)]}>
+<Base seo={page.seo} hero="light">
   <section class="jr bg-light">
     <div class="container">
       <Breadcrumb items={crumbs} />
