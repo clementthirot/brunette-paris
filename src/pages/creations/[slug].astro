@@ -29,9 +29,7 @@ const priceFmt = typeof piece.price === 'number'
   : null;
 const firstPhoto = piece.photos?.find((p) => p.image) ?? null;
 const firstImage = firstPhoto?.image ?? null;
-// Les marqueurs « [À CONFIRMER : …] » restent visibles sur la page (draft) mais pas dans Google.
-const cleanDescription = piece.description.replace(/\s*\[À CONFIRMER[^\]]*\]/gi, '').trim();
-const metaDescription = piece.seoDescription?.trim() || truncate(cleanDescription, 155);
+const metaDescription = piece.seoDescription?.trim() || truncate(piece.description, 155);
 const pageUrl = absolute(pieceUrl(piece.slug), Astro.site);
 const availability = { disponible: 'https://schema.org/InStock', vendue: 'https://schema.org/SoldOut' }[piece.availability as string];
 
@@ -41,7 +39,7 @@ const productLd = {
   '@context': 'https://schema.org',
   '@type': priceFmt ? 'Product' : 'CreativeWork',
   name: piece.title,
-  description: cleanDescription,
+  description: piece.description,
   ...(firstImage ? { image: (piece.photos ?? []).filter((p) => p.image).map((p) => absoluteFile(p.image!, Astro.site)) } : {}),
   material: `Cuir de ${cuir.toLowerCase()}`,
   ...(priceFmt

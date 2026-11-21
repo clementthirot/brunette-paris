@@ -24,7 +24,7 @@ const cfg = {
   envoi: f.envoi,
 };
 ---
-<Base seo={e.seo} hero="dark">
+<Base title={e.seo.title} description={e.seo.description} hero="dark">
   <section class="k-hero bg-dark">
     <div class="container k-hero__inner">
       <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: e.hero.eyebrow.split('·').pop()!.trim() }]} />

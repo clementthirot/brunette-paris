@@ -11,8 +11,6 @@ export const ROUTES = {
   home: '/',
   entreprises: '/entreprises',
   realisations: '/entreprises/realisations',
-  studio: '/entreprises/studio-cadeaux',
-  echantillons: '/entreprises/echantillons',
   creations: '/creations',
   surMesure: '/sur-mesure',
   atelier: '/atelier',
@@ -40,9 +38,7 @@ export function mainNav(settings: Settings, offres: Offre[]): NavItem[] {
       children: [
         { label: nav.entreprisesHub, href: ROUTES.entreprises },
         ...offres.map((o) => ({ label: o.title, href: offreUrl(o.slug) })),
-        { label: nav.studio, href: ROUTES.studio },
         { label: nav.realisations, href: ROUTES.realisations },
-        { label: nav.echantillons, href: ROUTES.echantillons },
       ],
     },
     {
@@ -76,9 +72,7 @@ export function footerNav(settings: Settings, offres: Offre[]): { title: string;
       links: [
         { label: nav.entreprisesHub, href: ROUTES.entreprises },
         ...offres.map((o) => ({ label: o.title, href: offreUrl(o.slug) })),
-        { label: nav.studio, href: ROUTES.studio },
         { label: nav.realisations, href: ROUTES.realisations },
-        { label: nav.echantillons, href: ROUTES.echantillons },
       ],
     },
     {

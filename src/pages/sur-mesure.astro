@@ -9,7 +9,7 @@ import StitchSteps from '../components/ui/StitchSteps.astro';
 import PageHero from '../components/page/PageHero.astro';
 import Faq from '../components/page/Faq.astro';
 import PageCta from '../components/page/PageCta.astro';
-import { getSurMesure, getSettings, paragraphs, faqJsonLd } from '../lib/content';
+import { getSurMesure, getSettings, paragraphs, faqJsonLd, breadcrumbJsonLd } from '../lib/content';
 import { ROUTES } from '../lib/routes';
 
 const [page, settings] = await Promise.all([getSurMesure(), getSettings()]);
@@ -24,8 +24,8 @@ const service = {
   description: page.seo.description,
 };
 ---
-<Base seo={page.seo} hero="dark" image={page.hero.photo.image}
-  jsonLd={[service, ...faqJsonLd(page.faq.items)]}>
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
+  jsonLd={[service, ...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
   <PageHero hero={page.hero} breadcrumb={crumbs} cta={page.cta.button ? { label: page.cta.button, href: page.cta.href || ROUTES.contactPerso } : undefined} />
 
   <section class="sm-intro bg-light section">

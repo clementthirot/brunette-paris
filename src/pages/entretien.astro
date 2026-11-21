@@ -4,14 +4,14 @@ import Base from '../layouts/Base.astro';
 import Photo from '../components/ui/Photo.astro';
 import PageHero from '../components/page/PageHero.astro';
 import Faq from '../components/page/Faq.astro';
-import { getEntretien, getSettings, faqJsonLd } from '../lib/content';
+import { getEntretien, getSettings, faqJsonLd, breadcrumbJsonLd } from '../lib/content';
 import { ROUTES } from '../lib/routes';
 
 const [page, settings] = await Promise.all([getEntretien(), getSettings()]);
 const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.creations, href: ROUTES.creations }, { label: settings.nav.entretien }];
 ---
-<Base seo={page.seo} hero="dark" image={page.hero.photo.image}
-  jsonLd={[...faqJsonLd(page.faq.items)]}>
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
+  jsonLd={[...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
   <PageHero hero={page.hero} breadcrumb={crumbs} />
 
   <section class="en-intro bg-light section">
