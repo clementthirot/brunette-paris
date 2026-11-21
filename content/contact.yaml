@@ -1,6 +1,6 @@
 seo:
-  title: Contact et devis | Brunette Paris
-  description: Un événement, une commande sur mesure pour votre marque ou une pièce de la collection ? Écrivez à l’atelier Brunette Paris, maroquinerie artisanale en Île-de-France.
+  title: Contact et devis, maroquinerie sur mesure | Brunette Paris
+  description: Atelier cuir pour un événement, cadeaux d’entreprise sur mesure ou pièce de la collection ? Demandez un devis à Brunette Paris, maroquinerie artisanale.
 h1: Parlons de votre projet
 selecteur:
   entreprise: Je suis une entreprise
@@ -23,10 +23,10 @@ champs:
   piece: Pièce concernée
   message: Message
   requis: obligatoire
-  submit: Envoyer
+  submit: Envoyer ma demande
   sending: Envoi en cours…
 confirmation: Merci. L'atelier vous répond sous 48 heures.
-erreur: L’envoi n’a pas abouti. Vous pouvez réessayer ou écrire directement à l’atelier par email.
+erreur: Votre message n’est pas parti. Vous pouvez réessayer dans un instant, ou écrire directement à l’atelier par email.
 aside:
   emailLabel: Email
   instagramLabel: Instagram

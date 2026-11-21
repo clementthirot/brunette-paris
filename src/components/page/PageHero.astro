@@ -1,0 +1,52 @@
+---
+/**
+ * Hero des pages éditoriales (Entreprises, Sur-mesure, Entretien…) : photo plein cadre assombrie,
+ * fil d'Ariane, surtitre, titre H1 en marquage à chaud, accroche et bouton optionnel.
+ */
+import Photo from '../ui/Photo.astro';
+import Breadcrumb from '../ui/Breadcrumb.astro';
+import HotStampText from '../ui/HotStampText.astro';
+import type { Photo as PhotoT } from '../../lib/content';
+interface Props {
+  hero: { eyebrow?: string; h1: string; accroche?: string; photo?: PhotoT };
+  breadcrumb: { label: string; href?: string }[];
+  cta?: { label: string; href: string };
+  size?: 'half' | 'tall';
+}
+const { hero, breadcrumb, cta, size = 'half' } = Astro.props;
+---
+<section class:list={['p-hero bg-dark', `p-hero--${size}`]}>
+  <div class="p-hero__media" aria-hidden="true">
+    <Photo photo={hero.photo} ratio="auto" class="p-hero__photo" loading="eager" />
+    <div class="p-hero__shade"></div>
+  </div>
+  <div class="container p-hero__content">
+    <Breadcrumb items={breadcrumb} />
+    {hero.eyebrow && <p class="eyebrow p-hero__eyebrow">{hero.eyebrow}</p>}
+    <HotStampText text={hero.h1} class="p-hero__title" />
+    {hero.accroche && <p class="p-hero__accroche">{hero.accroche}</p>}
+    {cta && <a href={cta.href} class="btn">{cta.label}</a>}
+  </div>
+</section>
+
+<style>
+  .p-hero {
+    position: relative;
+    min-height: 62vh;
+    min-height: 62svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8);
+  }
+  .p-hero--tall { min-height: 80vh; min-height: 80svh; }
+  .p-hero__media,
+  .p-hero__shade { position: absolute; inset: 0; }
+  .p-hero__media :global(.p-hero__photo) { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
+  .p-hero__media :global(.ph__label) { place-items: start end; padding-top: calc(var(--header-h) + 1rem); }
+  .p-hero__shade { background: linear-gradient(180deg, rgb(12 10 8 / 0.5), rgb(12 10 8 / 0.8)); }
+  .p-hero__content { position: relative; display: grid; gap: var(--space-5); justify-items: start; }
+  .p-hero__eyebrow { color: var(--sable-500); margin-bottom: calc(-1 * var(--space-3)); }
+  .p-hero__content :global(.p-hero__title) { font-size: var(--text-4xl); max-width: 18ch; }
+  .p-hero__accroche { max-width: 48ch; font-size: var(--text-lg); color: var(--fg-on-dark-muted); }
+</style>

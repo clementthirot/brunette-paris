@@ -1,0 +1,32 @@
+# EXEMPLE DE GABARIT — non publié. Dupliquer ou remplacer par une vraie réalisation, puis cocher « Publiée ».
+title: Exemple — Coffrets cadeaux pour un club de golf
+date: 2026-11-21
+published: false
+featured: true
+client: Un golf de l’ouest parisien
+clientAuthorized: false
+offre: hotellerie-restauration-golf
+secteur: Golf
+chiffres:
+  - value: '60'
+    label: étuis numérotés
+  - value: '5'
+    label: semaines de fabrication
+resume: TODO — résumé en deux phrases de la demande et du résultat.
+cover:
+  alt: Étuis de golf en cuir marqués au logo du club
+  placeholder: Étuis de golf en cuir marqués au logo du club, posés sur le green
+contexte: TODO — la demande du client, en trois à quatre phrases.
+reponse: TODO — les choix de cuir, de finitions et de marquage, et pourquoi.
+resultat: TODO — ce qui a été livré, la réaction des destinataires, la suite éventuelle.
+photos:
+  - alt: Prototype sur l’établi
+    placeholder: Prototype et gabarit sur l’établi
+  - alt: Marquage du logo
+    placeholder: Macro du logo marqué à chaud
+  - alt: Série terminée
+    placeholder: Série de pièces alignées avant livraison
+temoignage:
+  quote: ''
+  author: ''
+  role: ''

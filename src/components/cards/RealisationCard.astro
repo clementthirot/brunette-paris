@@ -1,0 +1,30 @@
+---
+/** Carte réalisation (étude de cas pro) : photo de couverture, secteur, titre, client, résumé. */
+import Photo from '../ui/Photo.astro';
+import { realisationUrl, type Realisation } from '../../lib/content';
+interface Props { item: Realisation; linkLabel: string }
+const { item, linkLabel } = Astro.props;
+---
+<article class="r-card" data-reveal>
+  <a href={realisationUrl(item.slug)} class="r-card__link">
+    <Photo photo={item.cover} ratio="4 / 3" />
+    <div class="r-card__body">
+      {item.secteur && <p class="eyebrow r-card__secteur">{item.secteur}</p>}
+      <h3 class="r-card__title">{item.title}</h3>
+      <p class="r-card__client">{item.client}</p>
+      {item.resume && <p class="r-card__resume">{item.resume}</p>}
+      <span class="link-underline r-card__more">{linkLabel}</span>
+    </div>
+  </a>
+</article>
+<style>
+  .r-card__link { display: grid; gap: var(--space-4); }
+  .r-card__body { display: grid; gap: var(--space-2); }
+  .r-card__secteur { color: var(--accent-on-light); }
+  .r-card__title { font-size: var(--text-xl); }
+  .r-card__client { font-size: var(--text-sm); color: var(--fg-on-light-muted); }
+  .r-card__resume { color: var(--fg-on-light-muted); max-width: 48ch; }
+  .r-card__more { justify-self: start; margin-top: var(--space-2); font-size: var(--text-sm); }
+  .r-card__link :global(.ph) { transition: transform var(--dur-base) var(--ease-out); }
+  .r-card__link:hover :global(.ph) { transform: scale(0.985); }
+</style>

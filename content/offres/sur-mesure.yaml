@@ -2,7 +2,7 @@ title: Sur-mesure pour les marques
 order: 2
 seo:
   title: Maroquinerie sur mesure pour marques et maisons de luxe | Brunette Paris
-  description: Cadeaux d'entreprise en cuir, accessoires de marque et pièces sur mesure, fabriqués à la main en Île-de-France.
+  description: Cadeaux d’entreprise en cuir personnalisés, accessoires de marque et petites séries sur mesure, cousus main et marqués à chaud par Brunette Paris.
 card:
   phrase: Cadeaux d’entreprise et pièces pour maisons de luxe, conçus à quatre mains avec votre marque.
   photo:
@@ -10,7 +10,7 @@ card:
     placeholder: Pièce en cuir avec logo marqué à chaud, ambiance studio (vertical)
 hero:
   h1: Le cuir à l'image de votre marque
-  accroche: Des pièces pensées pour vos équipes, vos clients et vos produits.
+  accroche: Des pièces pensées pour vos équipes, vos clients et vos produits, de la première esquisse à la dernière couture.
   photo:
     alt: Prototypes en cuir sur l’établi
     placeholder: Plein cadre, prototypes et gabarits sur l’établi
@@ -18,16 +18,16 @@ intro:
   h2: Du prototype à la petite série
   paragraph1: >-
     Chaque collaboration commence par une conversation. Nous concevons vos pièces à quatre mains avec votre
-    équipe : vos valeurs, vos codes, l’usage attendu, puis les matières et les finitions qui leur
-    ressemblent. De ce dialogue naissent des cadeaux d’entreprise en cuir qui ont du sens, des accessoires
-    pour vos boutiques ou des pièces destinées à accompagner vos propres produits. La maroquinerie sur mesure
-    permet d’aller au bout d’une idée, sans compromis imposés par un catalogue.
+    équipe : vos valeurs, vos codes, l’usage attendu, puis les cuirs, les teintes et les finitions qui leur
+    ressemblent. De ce dialogue naissent des cadeaux d’entreprise en cuir qui ont du sens, des accessoires pour
+    vos boutiques ou des pièces qui accompagnent vos propres produits. La maroquinerie sur mesure permet d’aller
+    au bout d’une idée, sans les compromis d’un catalogue, et d’offrir un objet que personne d’autre n’aura.
   paragraph2: >-
-    Après validation d’un prototype, l’atelier réalise des séries limitées, numérotées si vous le souhaitez,
-    toujours cousues à la main. Votre logo est marqué à chaud ou en dorure, jamais imprimé : une signature
-    discrète, durable, qui s’inscrit dans la matière. Cette fabrication française, en Île-de-France, garantit
-    un suivi de près à chaque étape et une qualité constante d’une pièce à l’autre, de la première à la
-    dernière.
+    Une fois le prototype validé, l’atelier réalise des séries limitées, numérotées si vous le souhaitez,
+    toujours cousues à la main. Votre logo est marqué à chaud ou doré, jamais imprimé : une signature discrète
+    qui s’inscrit dans la matière et ne s’efface pas. Cette fabrication française, dans un atelier d’Île-de-France,
+    vous garantit un interlocuteur unique, un suivi de près à chaque étape et la même exigence de la première
+    pièce à la dernière.
   photo:
     alt: Dorure à chaud d’un logo
     placeholder: Vertical, dorure à chaud d’un logo sur cuir
@@ -35,27 +35,27 @@ pointsCles:
   title: Ce que nous proposons
   items:
     - title: Cadeaux d'entreprise
-      text: Pour vos collaborateurs, vos partenaires ou vos clients, des pièces utiles et durables.
+      text: Pour vos collaborateurs, vos partenaires ou vos clients, des pièces utiles qui se gardent des années plutôt qu’un objet promotionnel de plus.
       photo:
         alt: Cadeaux d’entreprise en cuir
         placeholder: Carré, coffret de cadeaux d’entreprise en cuir
-    - title: Accessoires pour maisons de luxe (ex. protège-caméras)
-      text: Des accessoires discrets et précis, réalisés au millimètre pour vos univers.
+    - title: Accessoires pour maisons de luxe
+      text: Protège-caméras, étuis, pochettes de présentation… des accessoires discrets et précis, ajustés au millimètre à vos univers.
       photo:
         alt: Protège-caméra en cuir
         placeholder: Carré, protège-caméra en cuir pour maison de luxe
     - title: Couvertures de CD et vinyles
-      text: Des éditions spéciales habillées de cuir pour les labels et les artistes.
+      text: Des éditions spéciales habillées de cuir et signées à la dorure, pour les labels, les artistes et les coffrets collectors.
       photo:
         alt: Couverture de vinyle en cuir
         placeholder: Carré, couverture de vinyle en cuir marquée à chaud
     - title: Accessoires de voyage
-      text: "Étiquettes, porte-passeports, trousses : des compagnons de route à vos couleurs."
+      text: "Étiquettes de bagage, porte-passeports, trousses : des compagnons de route à vos couleurs."
       photo:
         alt: Accessoires de voyage en cuir
         placeholder: Carré, accessoires de voyage en cuir
     - title: Marquage de logo
-      text: Rivet gravé, dorure ou marquage à chaud, pour signer chaque pièce sans couleur ajoutée.
+      text: Rivet gravé, dorure ou marquage à chaud, pour signer chaque pièce dans la matière, sans aucune couleur imprimée.
       photo:
         alt: Marquage de logo dans le cuir
         placeholder: Carré, macro logo marqué dans le cuir
@@ -63,36 +63,48 @@ etapes:
   title: Comment ça se passe
   items:
     - title: Brief et intentions
-      text: Nous échangeons sur votre marque, vos destinataires, vos quantités et vos délais.
+      text: Nous échangeons sur votre marque, vos destinataires, vos quantités, votre budget et vos délais.
     - title: Échantillons et prototype
-      text: Choix des cuirs et des finitions, puis réalisation d’un prototype à valider.
+      text: Vous touchez les cuirs et les finitions, puis nous réalisons un prototype que vous validez avant toute série.
     - title: Fabrication
-      text: Les pièces sont coupées, cousues et marquées à la main à l’atelier.
+      text: Les pièces sont coupées, cousues et marquées à la main à l’atelier, une à une.
     - title: Livraison
       text: Contrôle pièce par pièce, emballage soigné et livraison à l’adresse de votre choix.
 galerie:
   title: Galerie
   photos:
-    - alt: Prototype sur l’établi
+    - alt: Prototype en cuir et gabarit sur l’établi
       placeholder: Prototype et gabarit papier sur l’établi
-    - alt: Logo doré
+    - alt: Logo en dorure à chaud sur cuir
       placeholder: Macro logo en dorure à chaud
-    - alt: Série limitée
+    - alt: Série limitée de pièces en cuir
       placeholder: Série limitée de pièces alignées
-    - alt: Protège-caméra
+    - alt: Protège-caméra en cuir sur mesure
       placeholder: Protège-caméra en situation
-    - alt: Couverture vinyle
+    - alt: Couverture de vinyle en cuir
       placeholder: Couverture de vinyle en cuir
-    - alt: Emballage
+    - alt: Pièces emballées prêtes à la livraison
       placeholder: Pièces emballées prêtes à la livraison
 faq:
   title: Questions fréquentes
   items:
     - question: Quelle quantité minimum ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        L’atelier travaille aussi bien sur une pièce unique que sur une petite série. Tout étant fait à la main,
+        nous privilégions les séries limitées, où chaque pièce garde son caractère. [À CONFIRMER : quantité
+        minimum et quantité maximale réalisables]
     - question: Quel délai ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Le délai dépend de la pièce et des quantités : il faut compter le temps du prototype, de sa validation,
+        puis de la fabrication. Pour un cadeau de fin d’année, mieux vaut nous contacter dès la rentrée.
+        [À CONFIRMER : délais types, prototype et série]
     - question: Peut-on choisir le cuir ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Oui. Nous vous présentons des échantillons de cuirs et de teintes, principalement en vache pleine fleur,
+        et selon les projets en python ou en crocodile. Vous choisissez aussi le fil, les tranches et les
+        éléments métalliques.
     - question: Comment est marqué le logo ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Par marquage à chaud, en dorure à chaud ou sur un rivet gravé. Le logo s’inscrit dans le cuir, sans
+        encre ni impression, ce qui garantit une signature sobre et durable. Un fer est réalisé à partir de votre
+        fichier vectoriel. [À CONFIRMER : délai et coût du fer]

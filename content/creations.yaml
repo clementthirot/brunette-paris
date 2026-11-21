@@ -1,8 +1,8 @@
 seo:
   title: Sacs, ceintures et accessoires en cuir faits main | Brunette Paris
-  description: Pièces uniques et séries limitées en cuir de vache, python et crocodile, cousues main en Île-de-France.
+  description: 'Sacs, ceintures, petite maroquinerie et accessoires de golf Brunette Paris : pièces uniques en vache, python et crocodile, cousues main en Île-de-France.'
 h1: Créations
-phrase: Chaque pièce est unique, ou presque.
+phrase: Chaque pièce est unique, ou presque. Toutes sont coupées et cousues à la main.
 filtres:
   type: Type
   cuir: Cuir
@@ -19,7 +19,7 @@ filtres:
     python: Python
     crocodile: Crocodile
 encart:
-  text: Une envie particulière ? L'atelier réalise aussi des commandes sur mesure.
+  text: Une envie particulière, une taille, une teinte, des initiales ? L’atelier réalise aussi des commandes sur mesure.
   button: Parlons de votre projet
 fiche:
   seoTitle: '{nom} en cuir de {cuir} | Brunette Paris'
@@ -32,8 +32,9 @@ fiche:
   ask: Demander cette pièce
   entretienTitle: Entretien du cuir
   entretienText: >-
-    Le cuir est une matière vivante. Dépoussiérez-le avec un chiffon doux et sec, nourrissez-le une à deux
-    fois par an avec une crème incolore adaptée, et tenez-le à l’écart des sources de chaleur directe. En cas
-    de pluie, laissez-le sécher naturellement à l’air libre. Pour le python et le crocodile, l’atelier vous
-    conseille personnellement : écrivez-nous. (TODO : conseils à valider avec la cliente.)
+    Le cuir est une matière vivante : il fonce, se patine et garde la mémoire de vos gestes. Dépoussiérez-le
+    avec un chiffon doux et sec, nourrissez-le une à deux fois par an avec une crème incolore adaptée, et
+    tenez-le à l’écart des sources de chaleur directe. S’il est mouillé, laissez-le sécher naturellement, loin
+    d’un radiateur, puis nourrissez-le. Pour le python et le crocodile, plus délicats, l’atelier vous conseille
+    personnellement : écrivez-nous. [À CONFIRMER : conseils d’entretien d’Armonie]
   similarTitle: Vous aimerez aussi

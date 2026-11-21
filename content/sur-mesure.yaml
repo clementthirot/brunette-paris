@@ -1,0 +1,81 @@
+seo:
+  title: Sac et accessoire en cuir sur mesure, fait main à Paris | Brunette Paris
+  description: Faites fabriquer votre sac, votre ceinture ou votre cadeau en cuir sur mesure par une maroquinière artisanale en Île-de-France. Choix du cuir, des couleurs, des initiales.
+hero:
+  eyebrow: Pour vous
+  h1: Une pièce pensée pour vous seul
+  accroche: Un sac à vos mesures, une ceinture gravée de vos initiales, un cadeau qui n’existe qu’une fois. Racontez-moi votre idée, je la fabrique à la main.
+  photo:
+    alt: Échantillons de cuir présentés à une cliente
+    placeholder: Plein cadre, Armonie présente des échantillons de cuir à une cliente
+intro:
+  h2: Le sur-mesure, simplement
+  text: |-
+    Vous avez repéré une pièce dans les créations mais la voudriez dans une autre couleur ? Vous cherchez un cadeau de mariage, de naissance, de départ ? Vous avez une idée précise, ou seulement une envie ?
+
+    Le sur-mesure commence toujours par un échange. Ensemble, nous choisissons la forme, le cuir, le fil et les finitions. Je réalise ensuite la pièce entièrement à la main, à l’atelier, et je vous tiens informé à chaque étape.
+  photo:
+    alt: Croquis et gabarit papier d’un sac
+    placeholder: Vertical, croquis et gabarit papier d’un sac sur l’établi
+projets:
+  title: Ce que je peux créer pour vous
+  items:
+    - title: Un sac à votre image
+      text: Besace, cabas, pochette du soir, aux dimensions et aux couleurs de votre choix.
+      photo:
+        alt: Sac sur mesure en cours de fabrication
+        placeholder: Carré, sac en cours d’assemblage
+    - title: Une pièce existante, réinventée
+      text: Une création du catalogue déclinée dans un autre cuir, une autre teinte, une autre taille.
+      photo:
+        alt: Variantes de couleurs de cuir
+        placeholder: Carré, nuancier de cuirs autour d’une pièce
+    - title: Un cadeau personnalisé
+      text: Initiales en dorure ou marquage à chaud, date gravée, pour un mariage, une naissance, un départ.
+      photo:
+        alt: Initiales dorées sur cuir
+        placeholder: Carré, macro d’initiales en dorure à chaud
+    - title: Un accessoire de passion
+      text: Étui de golf, couverture de vinyle, porte-partition, protège-appareil photo.
+      photo:
+        alt: Accessoire de passion en cuir
+        placeholder: Carré, étui de golf ou couverture de vinyle sur mesure
+etapes:
+  title: Les étapes de votre commande
+  items:
+    - title: On en parle
+      text: Par message ou à l’atelier, vous me décrivez votre idée, votre usage et votre budget.
+    - title: Croquis et devis
+      text: Je vous envoie une proposition, un choix de cuirs et un devis. Un acompte lance la fabrication.
+    - title: Fabrication à la main
+      text: Coupe, couture sellier, finitions. Je vous partage quelques photos des étapes clés.
+    - title: Remise de votre pièce
+      text: En main propre à Paris ou par envoi soigné, avec ses conseils d’entretien.
+reperes:
+  title: Repères pratiques
+  items:
+    - label: Délai
+      value: TODO — ex. 4 à 8 semaines
+    - label: Budget indicatif
+      value: TODO — ex. à partir de 150 € pour une petite pièce
+    - label: Acompte
+      value: TODO — ex. 30 % à la commande
+    - label: Retouches
+      value: TODO — ex. un aller-retour inclus avant fabrication
+  note: Chaque pièce étant unique, le devis est établi après notre premier échange. Il est gratuit et sans engagement.
+faq:
+  title: Questions fréquentes
+  items:
+    - question: Puis-je apporter mon propre modèle ou une photo d’inspiration ?
+      answer: Oui, c’est même un très bon point de départ. Nous adaptons ensemble l’idée aux contraintes du cuir.
+    - question: Puis-je choisir la couleur du fil ?
+      answer: TODO — confirmer le nuancier de fils disponibles.
+    - question: Livrez-vous en dehors de l’Île-de-France ?
+      answer: TODO — confirmer les modes et délais d’envoi.
+    - question: Peut-on offrir un sur-mesure en bon cadeau ?
+      answer: TODO — confirmer si un bon cadeau est proposé (levier intéressant avant les fêtes).
+cta:
+  title: Racontez-moi votre idée
+  text: Quelques lignes suffisent pour commencer. Je vous réponds personnellement.
+  button: Démarrer mon projet
+  href: /contact?profil=particulier
