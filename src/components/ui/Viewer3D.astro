@@ -1,13 +1,22 @@
 ---
-/** Visionneuse 3D unique et réutilisable (fichier .glb déclaré dans Keystatic, sinon forme provisoire). */
+/**
+ * Visionneuse 3D unique et réutilisable (fichier .glb déclaré dans Keystatic, sinon forme provisoire en cuir).
+ * États : chargement (couture qui tourne), prête, indication « glisser pour tourner » qui s'efface
+ * à la première prise en main, et repli sobre si WebGL est indisponible.
+ */
 import { getSettings } from '../../lib/content';
 interface Props { model?: string | null; shape?: string | null; autorotate?: boolean; class?: string; id?: string }
 const { model, shape = 'cube', autorotate = true, class: cls = '', id } = Astro.props;
 const { labels } = await getSettings();
 ---
 <div class:list={['viewer', cls]} id={id} data-viewer data-model={model || undefined} data-shape={shape}
-  data-autorotate={autorotate ? '' : undefined} role="img" aria-label={labels.viewer3d} data-cursor-hover>
-  <svg class="viewer__hint" viewBox="0 0 40 16" aria-hidden="true"><path d="M2 8h36M2 8l5-5M2 8l5 5M38 8l-5-5M38 8l-5 5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+  data-autorotate={autorotate ? '' : undefined} role="img" aria-label={labels.viewer3d} data-cursor-label="Tourner">
+  <span class="viewer__loader" aria-hidden="true"></span>
+  <span class="viewer__fallback" aria-hidden="true">Aperçu 3D indisponible sur cet appareil</span>
+  <span class="viewer__hint" aria-hidden="true">
+    <svg viewBox="0 0 40 16"><path d="M2 8h36M2 8l5-5M2 8l5 5M38 8l-5-5M38 8l-5 5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    <span>Glisser pour tourner</span>
+  </span>
 </div>
 <style>
   .viewer {
@@ -16,6 +25,8 @@ const { labels } = await getSettings();
     aspect-ratio: 1;
     touch-action: pan-y;
     cursor: grab;
+    /* Halo de lumière d'atelier derrière la pièce */
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--sable-500) 14%, transparent), transparent 75%);
   }
   .viewer:active { cursor: grabbing; }
   .viewer :global(.viewer__canvas) {
@@ -26,15 +37,60 @@ const { labels } = await getSettings();
     opacity: 0;
     transition: opacity 0.35s var(--ease-out);
   }
+  /* Chargement : un cercle de couture qui tourne */
+  .viewer__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: -1.75rem 0 0 -1.75rem;
+    border-radius: 50%;
+    border: 1px dashed var(--sable-500);
+    animation: viewer-spin 6s linear infinite;
+    transition: opacity var(--dur-base);
+  }
+  .viewer.is-ready .viewer__loader,
+  .viewer.is-fallback .viewer__loader { opacity: 0; animation: none; }
+  @keyframes viewer-spin { to { transform: rotate(360deg); } }
+  .viewer__fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: var(--space-6);
+    text-align: center;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .viewer.is-fallback .viewer__fallback { display: grid; }
+  .viewer.is-fallback .viewer__hint { display: none; }
   .viewer__hint {
     position: absolute;
     left: 50%;
     bottom: var(--space-3);
-    width: 2.5rem;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-1);
     transform: translateX(-50%);
-    color: var(--sable-500);
-    opacity: 0.7;
+    color: var(--accent-on-light);
     pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  :global(.bg-dark) .viewer__hint,
+  :global(.bg-reine) .viewer__hint { color: var(--sable-500); }
+  .viewer__hint svg { width: 2.5rem; }
+  .viewer__hint span {
+    font-size: 0.625rem;
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .viewer.is-touched .viewer__hint { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .viewer__loader { animation: none; }
   }
 </style>
 <script>
