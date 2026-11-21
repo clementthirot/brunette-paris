@@ -1,7 +1,11 @@
 ---
-/** Curseur personnalisé, desktop uniquement : petit cercle sable qui grossit sur les éléments cliquables. */
+/**
+ * Curseur personnalisé, desktop uniquement : petit point sable qui grossit sur les
+ * éléments cliquables. Un élément portant data-cursor-label="Voir" transforme le
+ * curseur en pastille dorée légendée (cartes, galerie, visionneuse 3D…).
+ */
 ---
-<div class="cursor" aria-hidden="true" data-cursor></div>
+<div class="cursor" aria-hidden="true" data-cursor><span class="cursor__label" data-cursor-text></span></div>
 <style>
   .cursor {
     position: fixed;
@@ -11,6 +15,8 @@
     width: 10px;
     height: 10px;
     margin: -5px 0 0 -5px;
+    display: grid;
+    place-items: center;
     border-radius: 50%;
     background: var(--sable-500);
     pointer-events: none;
@@ -32,6 +38,44 @@
     background: color-mix(in srgb, var(--sable-500) 35%, transparent);
     border: 1px solid var(--sable-500);
   }
+  .cursor.is-down {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+  }
+  .cursor.is-label {
+    width: 84px;
+    height: 84px;
+    margin: -42px 0 0 -42px;
+    background: var(--sable-500);
+    border: 0;
+    box-shadow: 0 8px 24px rgb(20 22 34 / 0.18);
+  }
+  /* Couture qui tourne autour de la pastille */
+  .cursor.is-label::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 1px dashed rgb(21 19 17 / 0.45);
+    animation: cursor-seam 8s linear infinite;
+  }
+  @keyframes cursor-seam { to { transform: rotate(360deg); } }
+  .cursor__label {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    color: var(--ink-950);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity var(--dur-fast), transform var(--dur-fast) var(--ease-out);
+  }
+  .cursor.is-label .cursor__label { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor.is-label::before { animation: none; }
+  }
   @media (hover: hover) and (pointer: fine) {
     :global(html.has-cursor),
     :global(html.has-cursor a),
@@ -46,17 +90,25 @@
   import { gsap, finePointer, reducedMotion } from '../../scripts/motion';
   const el = document.querySelector<HTMLElement>('[data-cursor]');
   if (el && finePointer()) {
+    const text = el.querySelector<HTMLElement>('[data-cursor-text]')!;
     document.documentElement.classList.add('has-cursor');
     const dur = reducedMotion() ? 0 : 0.35;
     const xTo = gsap.quickTo(el, 'x', { duration: dur, ease: 'power3.out' });
     const yTo = gsap.quickTo(el, 'y', { duration: dur, ease: 'power3.out' });
-    const CLICKABLE = 'a, button, [role="button"], label, select, summary, input[type="submit"], [data-cursor-hover]';
+    const CLICKABLE = 'a, button, [role="button"], label, select, summary, input[type="submit"], [data-cursor-hover], [data-cursor-label]';
     window.addEventListener('pointermove', (e) => {
       el.classList.add('is-visible');
       xTo(e.clientX);
       yTo(e.clientY);
-      el.classList.toggle('is-hover', !!(e.target as Element).closest?.(CLICKABLE));
+      const target = e.target as Element;
+      const labelled = target.closest?.<HTMLElement>('[data-cursor-label]');
+      const label = labelled?.dataset.cursorLabel || '';
+      if (text.textContent !== label) text.textContent = label;
+      el.classList.toggle('is-label', !!label);
+      el.classList.toggle('is-hover', !label && !!target.closest?.(CLICKABLE));
     }, { passive: true });
+    window.addEventListener('pointerdown', () => el.classList.add('is-down'));
+    window.addEventListener('pointerup', () => el.classList.remove('is-down'));
     document.addEventListener('pointerleave', () => el.classList.remove('is-visible'));
   } else {
     el?.remove();

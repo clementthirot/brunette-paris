@@ -58,7 +58,7 @@ const faqLd = faqReady.length
       <div class="o-hero__shade"></div>
     </div>
     <div class="container o-hero__content">
-      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: offre.title }]} />
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises, href: '/entreprises' }, { label: offre.title }]} />
       <HotStampText text={offre.hero.h1} class="o-hero__title" />
       <p class="o-hero__accroche">{offre.hero.accroche}</p>
       <a href="/contact" class="btn">{settings.nav.devis}</a>
@@ -130,6 +130,9 @@ const faqLd = faqReady.length
     </section>
   )}
 
+  <!-- Invitation au Studio cadeaux (configurateur) -->
+  <StudioTeaser />
+
   <!-- 7. Appel à l'action final -->
   <CtaFinal />
 </Base>
@@ -147,7 +150,6 @@ const faqLd = faqReady.length
   .o-hero__media,
   .o-hero__shade { position: absolute; inset: 0; }
   .o-hero__media :global(.o-hero__photo) { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
-  .o-hero__media :global(.ph__label) { place-items: start end; padding-top: calc(var(--header-h) + 1rem); }
   .o-hero__shade { background: linear-gradient(180deg, rgb(12 10 8 / 0.55), rgb(12 10 8 / 0.78)); }
   .o-hero__content { position: relative; display: grid; gap: var(--space-5); justify-items: start; }
   .o-hero__content :global(.o-hero__title) { font-size: var(--text-4xl); max-width: 18ch; }

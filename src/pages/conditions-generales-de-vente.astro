@@ -1,0 +1,6 @@
+---
+import LegalPage from '../components/page/LegalPage.astro';
+import { getCgv } from '../lib/content';
+const page = await getCgv();
+---
+<LegalPage page={page} />

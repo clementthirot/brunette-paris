@@ -174,15 +174,19 @@ const endpoint = settings.formEndpoint || '';
   }
   form.querySelectorAll<HTMLInputElement>('[data-profile]').forEach((r) => r.addEventListener('change', () => setProfile(r.value)));
 
-  // Pièce préremplie si l'on vient d'une fiche (/contact?piece=…) : profil particulier présélectionné.
-  const piece = new URLSearchParams(location.search).get('piece');
-  if (piece) {
-    pieceInput.value = piece;
-    form.querySelector<HTMLInputElement>('[data-profile][value="particulier"]')!.checked = true;
-    setProfile('particulier');
-  } else {
-    setProfile('entreprise');
-  }
+  // Préremplissage depuis l'adresse :
+  //  /contact?piece=…            → pièce préremplie, profil particulier (fiche pièce) ;
+  //  /contact?profil=particulier → profil présélectionné (pages Sur-mesure, Entretien, Entreprises) ;
+  //  /contact?objet=reparation   → message amorcé (page Entretien).
+  const params = new URLSearchParams(location.search);
+  const piece = params.get('piece');
+  const wanted = params.get('profil');
+  const profile = piece || wanted === 'particulier' ? 'particulier' : 'entreprise';
+  if (piece) pieceInput.value = piece;
+  form.querySelector<HTMLInputElement>(`[data-profile][value="${profile}"]`)!.checked = true;
+  setProfile(profile);
+  const message = form.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+  if (message && !message.value && params.get('objet') === 'reparation') message.value = 'Réparation : ';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();

@@ -1,13 +1,16 @@
 ---
 import Logo from '../ui/Logo.astro';
-import { offreUrl, type Offre } from '../../lib/content';
+import { type Offre } from '../../lib/content';
+import { mainNav, ROUTES } from '../../lib/routes';
 interface Props {
   settings: Awaited<ReturnType<typeof import('../../lib/content').getSettings>>;
   offres: Offre[];
 }
 const { settings, offres } = Astro.props;
 const { nav } = settings;
-const path = Astro.url.pathname;
+const items = mainNav(settings, offres);
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href.split('?')[0];
 const isActive = (href: string) => path === href || path.startsWith(href + '/');
 ---
 <header class="site-header" data-header>
@@ -18,24 +21,26 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
 
     <nav class="site-nav" aria-label="Navigation principale">
       <ul role="list" class="site-nav__list">
-        <li class="site-nav__item has-sub">
-          <button class="site-nav__link" aria-expanded="false" aria-controls="sub-entreprises" data-sub-toggle>
-            {nav.entreprises}
-            <svg width="9" height="6" viewBox="0 0 9 6" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" /></svg>
-          </button>
-          <ul role="list" class="site-nav__sub" id="sub-entreprises">
-            {offres.map((o) => (
-              <li><a href={offreUrl(o.slug)} aria-current={isActive(offreUrl(o.slug)) ? 'page' : undefined}>{o.title}</a></li>
-            ))}
-          </ul>
-        </li>
-        <li class="site-nav__item"><a class="site-nav__link" href="/creations" aria-current={isActive('/creations') ? 'page' : undefined}>{nav.creations}</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="/atelier" aria-current={isActive('/atelier') ? 'page' : undefined}>{nav.atelier}</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="/contact" aria-current={isActive('/contact') ? 'page' : undefined}>{nav.contact}</a></li>
+        {items.map((item, i) => item.children ? (
+          <li class="site-nav__item has-sub">
+            <button class="site-nav__link" aria-expanded="false" aria-controls={`sub-${i}`} data-sub-toggle
+              aria-current={isActive(item.href) ? 'true' : undefined}>
+              {item.label}
+              <svg width="9" height="6" viewBox="0 0 9 6" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" fill="none" stroke="currentColor" /></svg>
+            </button>
+            <ul role="list" class="site-nav__sub" id={`sub-${i}`}>
+              {item.children.map((c) => (
+                <li><a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>{c.label}</a></li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li class="site-nav__item"><a class="site-nav__link" href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
       </ul>
     </nav>
 
-    <a href="/contact" class="btn site-header__cta">{nav.devis}</a>
+    <a href={ROUTES.contact} class="btn site-header__cta">{nav.devis}</a>
 
     <button class="burger" aria-expanded="false" aria-controls="mobile-menu" data-burger>
       <span class="burger__label" data-open-label={nav.menuOpen} data-close-label={nav.menuClose}>{nav.menuOpen}</span>
@@ -46,15 +51,16 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   <!-- Menu mobile plein écran : les liens apparaissent un par un -->
   <div class="mobile-menu bg-dark" id="mobile-menu" hidden data-mobile-menu>
     <ul role="list" class="mobile-menu__list container">
-      <li class="mobile-menu__group" data-mm-item>
-        <span class="eyebrow">{nav.entreprises}</span>
-        <ul role="list">
-          {offres.map((o) => <li><a href={offreUrl(o.slug)}>{o.title}</a></li>)}
-        </ul>
-      </li>
-      <li data-mm-item><a class="mobile-menu__big" href="/creations">{nav.creations}</a></li>
-      <li data-mm-item><a class="mobile-menu__big" href="/atelier">{nav.atelier}</a></li>
-      <li data-mm-item><a class="mobile-menu__big" href="/contact">{nav.contact}</a></li>
+      {items.map((item) => item.children ? (
+        <li class="mobile-menu__group" data-mm-item>
+          <a class="mobile-menu__big" href={item.href}>{item.label}</a>
+          <ul role="list">
+            {item.children.filter((c) => c.href !== item.href).map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+          </ul>
+        </li>
+      ) : (
+        <li data-mm-item><a class="mobile-menu__big" href={item.href}>{item.label}</a></li>
+      ))}
     </ul>
   </div>
 </header>
@@ -152,8 +158,8 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
     font-family: var(--font-serif);
     font-size: var(--text-xl);
   }
-  .mobile-menu__group .eyebrow {
-    color: var(--sable-500);
+  .mobile-menu__group ul a {
+    color: var(--fg-on-dark-muted);
   }
   .mobile-menu__big {
     font-family: var(--font-serif);
@@ -207,7 +213,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
       transition: transform var(--dur-base) var(--ease-out);
     }
     .site-nav__link:hover::after,
-    .site-nav__link[aria-current='page']::after {
+    .site-nav__link[aria-current]::after {
       transform: scaleX(1);
     }
     .site-nav__sub {
@@ -255,18 +261,23 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Sous-menu « Entreprises » (clavier / tactile)
-  const subToggle = header.querySelector<HTMLButtonElement>('[data-sub-toggle]')!;
-  subToggle.addEventListener('click', () => {
-    const open = subToggle.getAttribute('aria-expanded') !== 'true';
-    subToggle.setAttribute('aria-expanded', String(open));
-    subToggle.parentElement!.classList.toggle('is-open', open);
-  });
+  // Sous-menus (clavier / tactile) : un seul ouvert à la fois.
+  const toggles = [...header.querySelectorAll<HTMLButtonElement>('[data-sub-toggle]')];
+  const setSub = (t: HTMLButtonElement, open: boolean) => {
+    t.setAttribute('aria-expanded', String(open));
+    t.parentElement!.classList.toggle('is-open', open);
+  };
+  toggles.forEach((t) =>
+    t.addEventListener('click', () => {
+      const open = t.getAttribute('aria-expanded') !== 'true';
+      toggles.forEach((o) => setSub(o, o === t && open));
+    })
+  );
   document.addEventListener('click', (e) => {
-    if (!subToggle.parentElement!.contains(e.target as Node)) {
-      subToggle.setAttribute('aria-expanded', 'false');
-      subToggle.parentElement!.classList.remove('is-open');
-    }
+    toggles.forEach((t) => { if (!t.parentElement!.contains(e.target as Node)) setSub(t, false); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggles.forEach((t) => setSub(t, false));
   });
 
   // Menu mobile plein écran

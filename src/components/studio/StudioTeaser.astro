@@ -1,0 +1,50 @@
+---
+/**
+ * Encart d'invitation vers le Studio cadeaux (pages entreprises).
+ * Textes : Keystatic › Studio cadeaux › Encart d'invitation.
+ */
+import { getStudio, STUDIO_URL } from '../../lib/content';
+import { thumbSvg } from '../../scripts/studio-shapes';
+const { teaser, pieces, cuirs } = await getStudio();
+// Trois silhouettes de pièces, chacune dans un cuir différent (les cuirs trop sombres sont écartés, peu lisibles en vignette).
+const lum = (hex: string) => {
+  const n = parseInt(hex.replace('#', '').padEnd(6, '0').slice(0, 6), 16);
+  return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+};
+const couleurs = cuirs.map((c) => c.couleur).filter((c) => /^#[0-9a-f]{3,6}$/i.test(c) && lum(c) > 0.15);
+const vignettes = pieces.slice(0, 3).map((p, i) => thumbSvg(p.forme, couleurs[i % Math.max(couleurs.length, 1)] || '#8a4a24'));
+---
+<section class="teaser bg-light section">
+  <div class="container teaser__grid">
+    <div class="teaser__text" data-reveal-group="0.1">
+      <h2 class="teaser__title" data-reveal>{teaser.titre}</h2>
+      <p data-reveal>{teaser.texte}</p>
+      <a href={STUDIO_URL} class="btn" data-reveal>{teaser.bouton}</a>
+    </div>
+    <a href={STUDIO_URL} class="teaser__visual" aria-hidden="true" tabindex="-1" data-reveal>
+      {vignettes.map((svg) => <span class="teaser__thumb" set:html={svg} />)}
+    </a>
+  </div>
+</section>
+<style>
+  .teaser { border-top: 1px dashed var(--ink-300); }
+  .teaser__grid { display: grid; gap: var(--space-7); align-items: center; }
+  .teaser__text { display: grid; gap: var(--space-5); justify-items: start; }
+  .teaser__title { font-size: var(--text-3xl); max-width: 16ch; }
+  .teaser__text p { color: var(--fg-on-light-muted); font-size: var(--text-lg); max-width: 36rem; }
+  .teaser__visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .teaser__thumb {
+    display: block;
+    aspect-ratio: 3 / 4;
+    background: radial-gradient(circle at 50% 40%, var(--ink-800), var(--ink-950) 75%);
+    border: 1px solid var(--ink-800);
+    transition: transform var(--dur-base) var(--ease-out), border-color var(--dur-fast);
+  }
+  .teaser__thumb :global(svg) { width: 100%; height: 100%; }
+  .teaser__thumb:nth-child(2) { transform: translateY(var(--space-5)); }
+  .teaser__visual:hover .teaser__thumb { border-color: var(--sable-500); }
+  .teaser__visual:hover .teaser__thumb:nth-child(2) { transform: translateY(0); }
+  @media (min-width: 64em) {
+    .teaser__grid { grid-template-columns: 1fr 1fr; gap: var(--space-9); }
+  }
+</style>

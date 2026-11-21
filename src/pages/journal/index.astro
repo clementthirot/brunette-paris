@@ -1,0 +1,68 @@
+---
+/** Journal (/journal) : articles, coulisses et parutions presse, filtrables par rubrique. */
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import ArticleCard from '../../components/cards/ArticleCard.astro';
+import { getArticles, getJournalPage, getSettings, breadcrumbJsonLd } from '../../lib/content';
+
+const [page, articles, settings] = await Promise.all([getJournalPage(), getArticles(), getSettings()]);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.journal }];
+const cats = page.categories as Record<string, string>;
+const used = [...new Set(articles.map((a) => a.category))];
+---
+<Base title={page.seo.title} description={page.seo.description} hero="light" jsonLd={[breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <section class="jr bg-light">
+    <div class="container">
+      <Breadcrumb items={crumbs} />
+      <h1 class="jr__title" data-reveal>{page.h1}</h1>
+      <p class="jr__phrase" data-reveal>{page.phrase}</p>
+
+      {articles.length > 0 ? (
+        <>
+          {used.length > 1 && (
+            <div class="jr__filters" role="group" aria-label="Rubriques" data-journal-filters>
+              <button type="button" aria-pressed="true" data-cat="">{page.tous}</button>
+              {used.map((c) => <button type="button" aria-pressed="false" data-cat={c}>{cats[c] ?? c}</button>)}
+            </div>
+          )}
+          <div class="jr__grid" data-journal-grid>
+            {articles.map((a) => (
+              <ArticleCard item={a} categoryLabel={cats[a.category] ?? a.category} readLabel={page.lire} externalLabel={page.externe} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p class="jr__empty" data-reveal>
+          {page.vide}
+          {settings.reseaux.instagramUrl && <> <a href={settings.reseaux.instagramUrl} class="link-underline" target="_blank" rel="noopener">{settings.reseaux.instagramHandle}</a></>}
+        </p>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .jr { padding-block: calc(var(--header-h) + var(--space-7)) var(--section-y); }
+  .jr__title { font-size: var(--text-display); margin-top: var(--space-5); }
+  .jr__phrase { max-width: 52ch; color: var(--fg-on-light-muted); font-size: var(--text-lg); margin-block: var(--space-4) var(--space-7); }
+  .jr__filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .jr__filters button { padding: 0.55rem 1rem 0.45rem; border: 1px solid var(--ink-200); font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; transition: background-color var(--dur-fast), color var(--dur-fast); }
+  .jr__filters button[aria-pressed='true'] { background: var(--ink-950); color: var(--cream-50); border-color: var(--ink-950); }
+  .jr__grid { display: grid; gap: var(--space-8) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+  .jr__grid :global([hidden]) { display: none; }
+  .jr__empty { padding: var(--space-8); border: 1px dashed var(--ink-300, #bbb); max-width: 60ch; color: var(--fg-on-light-muted); }
+</style>
+<script>
+  const filters = document.querySelector<HTMLElement>('[data-journal-filters]');
+  const grid = document.querySelector<HTMLElement>('[data-journal-grid]');
+  if (filters && grid) {
+    const buttons = [...filters.querySelectorAll<HTMLButtonElement>('button')];
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        buttons.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        grid.querySelectorAll<HTMLElement>('[data-category]').forEach((card) => {
+          card.hidden = !!b.dataset.cat && card.dataset.category !== b.dataset.cat;
+        });
+      })
+    );
+  }
+</script>

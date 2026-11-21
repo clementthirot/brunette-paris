@@ -1,16 +1,16 @@
 title: Événements et séminaires
 order: 1
 seo:
-  title: Atelier cuir pour séminaires et événements d'entreprise à Paris | Brunette Paris
-  description: Bar à ceintures et ateliers de personnalisation cuir pour vos séminaires, salons et soirées d'entreprise en Île-de-France.
+  title: Atelier cuir pour séminaires et événements à Paris | Brunette Paris
+  description: Bar à ceintures et atelier de personnalisation cuir pour vos séminaires, salons et soirées en Île-de-France. Chaque invité repart avec sa pièce.
 card:
-  phrase: Bar à ceintures et ateliers de personnalisation, installés au cœur de vos séminaires.
+  phrase: Bar à ceintures et ateliers de personnalisation, installés au cœur de vos séminaires et de vos soirées.
   photo:
     alt: Bar à ceintures installé lors d’un séminaire
     placeholder: Bar à ceintures en événement, cuirs et boucles présentés sur table (vertical)
 hero:
   h1: Ateliers cuir pour vos événements
-  accroche: Vos invités repartent avec une pièce qu'ils ont personnalisée eux-mêmes.
+  accroche: Vos invités repartent avec une pièce qu’ils ont personnalisée eux-mêmes.
   photo:
     alt: Invités personnalisant leur ceinture en cuir
     placeholder: Plein cadre, invités autour de l’atelier nomade pendant une soirée d’entreprise
@@ -18,16 +18,18 @@ intro:
   h2: Une animation qui laisse une trace
   paragraph1: >-
     Pour vos séminaires, salons et soirées, Brunette Paris installe un atelier de maroquinerie nomade au cœur
-    de votre événement. L’artisane arrive avec son établi, ses outils, ses peaux et ses boucles : en quelques
-    minutes, un coin de salle devient un véritable atelier. Chaque participant choisit son cuir, sa boucle,
-    puis grave lui-même son prénom ou ses initiales. Une animation séminaire qui ne ressemble à aucune autre,
-    où l’on apprend un geste plutôt que de regarder un écran.
+    de votre événement. Armonie arrive avec son établi, ses outils, ses peaux et ses boucles : en quelques
+    minutes, un coin de salle devient un véritable atelier. Chaque participant choisit son cuir et sa boucle,
+    puis frappe lui-même son prénom ou ses initiales au fer. C’est une animation séminaire qui ne ressemble à
+    aucune autre : on y apprend un geste, on y parle matière, et l’on y passe plus de temps qu’on ne l’avait
+    prévu.
   paragraph2: >-
-    Pensé comme un atelier team building ou comme une animation libre au fil de la soirée, le format s’adapte
-    à votre nombre d’invités et à votre lieu. Chacun repart avec un cadeau d’entreprise personnalisé, fabriqué
-    sous ses yeux et un peu de ses mains : une ceinture, un porte-clés ou une étiquette de bagage qu’il gardera
-    longtemps. Pour vos équipes comme pour vos clients, c’est un souvenir concret de votre événement, et une
-    façon élégante d’associer votre entreprise à un savoir-faire artisanal d’Île-de-France.
+    En atelier team building, en petits groupes et sur un temps dédié, ou en animation libre au fil d’un
+    cocktail, le format s’adapte à votre nombre d’invités, à votre lieu et à votre déroulé. Chacun repart avec
+    un cadeau d’entreprise personnalisé, fabriqué sous ses yeux et un peu de ses mains : une ceinture, un
+    porte-clés ou une étiquette de bagage qu’il utilisera longtemps. Pour vos équipes comme pour vos clients,
+    c’est un souvenir concret de votre événement, et une façon élégante d’associer votre nom à un savoir-faire
+    artisanal d’Île-de-France.
   photo:
     alt: Artisane gravant des initiales sur une ceinture
     placeholder: Vertical, artisane gravant des initiales au poste de marquage
@@ -35,27 +37,27 @@ pointsCles:
   title: Ce que nous proposons
   items:
     - title: Bar à ceintures
-      text: Vos invités composent leur ceinture, du cuir à la boucle, et la voient prendre forme en direct.
+      text: Vos invités composent leur ceinture, du cuir à la boucle, et la voient prendre forme en direct, à leur taille.
       photo:
         alt: Bar à ceintures
         placeholder: Carré, présentoir de ceintures et boucles
     - title: Porte-clés personnalisés
-      text: Une petite pièce rapide à réaliser, idéale pour les grands groupes et les salons.
+      text: Une petite pièce rapide à personnaliser, idéale pour les grands groupes, les salons et les lancements.
       photo:
         alt: Porte-clés en cuir personnalisés
         placeholder: Carré, porte-clés en cuir alignés avec initiales
     - title: Étiquettes de bagage
-      text: Un objet de voyage utile et durable, gravé au nom de chaque participant.
+      text: Un compagnon de voyage utile et durable, marqué au nom de chaque participant. Parfait pour un incentive.
       photo:
         alt: Étiquettes de bagage en cuir
         placeholder: Carré, étiquettes de bagage en cuir avec sangles
     - title: Marquage de prénoms et initiales
-      text: Marquage à chaud ou dorure, réalisé sur place sur la pièce de votre choix.
+      text: Marquage à chaud ou dorure, réalisé sur place, sur la pièce de votre choix ou sur vos propres cadeaux.
       photo:
         alt: Marquage d’initiales à chaud
         placeholder: Carré, gros plan fer à marquer sur cuir
     - title: Atelier découverte du cuir
-      text: "Une initiation en petit groupe aux gestes du maroquinier : coupe, couture, finitions."
+      text: "Une initiation en petit groupe aux gestes du maroquinier : coupe, couture sellier, finitions. Chacun repart avec l’objet qu’il a cousu."
       photo:
         alt: Atelier découverte du cuir
         placeholder: Carré, participants apprenant la couture main
@@ -63,42 +65,60 @@ etapes:
   title: Comment ça se passe
   items:
     - title: Échange sur votre événement
-      text: "Date, lieu, nombre d’invités, intentions : nous construisons ensemble le format."
+      text: "Date, lieu, nombre d’invités, intentions : nous construisons ensemble le format, et vous recevez un devis détaillé."
     - title: Choix des cuirs et des pièces
-      text: Nous vous proposons une sélection de cuirs, de boucles et de pièces adaptées.
+      text: Nous vous proposons une sélection de cuirs, de teintes, de boucles et de pièces, aux couleurs de votre événement si vous le souhaitez.
     - title: Installation de l'atelier sur place
-      text: L’artisane installe son poste de travail, prêt à accueillir vos invités.
+      text: Armonie installe son poste de travail avant l’arrivée de vos invités. Une table, une prise, et l’atelier est prêt.
     - title: Vos invités repartent avec leur pièce
-      text: Chaque participant emporte une pièce personnalisée, finie à la main.
+      text: Chaque participant emporte une pièce personnalisée, finie à la main, et l’histoire du geste qui va avec.
 galerie:
   title: Galerie
   photos:
-    - alt: Atelier nomade en soirée
+    - alt: Atelier cuir nomade lors d’une soirée d’entreprise
       placeholder: Atelier nomade en soirée d’entreprise
-    - alt: Boucles de ceinture
+    - alt: Boucles de ceinture en laiton
       placeholder: Gros plan boucles de ceinture laiton
-    - alt: Invitée gravant ses initiales
+    - alt: Invitée gravant ses initiales sur le cuir
       placeholder: Invitée gravant ses initiales
-    - alt: Ceintures terminées
+    - alt: Ceintures personnalisées terminées
       placeholder: Ceintures terminées alignées sur l’établi
-    - alt: Atelier en salon professionnel
+    - alt: Atelier cuir sur un salon professionnel
       placeholder: Stand atelier en salon professionnel
-    - alt: Mains et outils
+    - alt: Mains et outils sur l’établi nomade
       placeholder: Mains et outils sur l’établi nomade
-    - alt: Porte-clés gravés
+    - alt: Porte-clés en cuir gravés
       placeholder: Porte-clés gravés posés dans une coupelle
 faq:
   title: Questions fréquentes
   items:
     - question: Combien de participants ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        L’atelier s’adapte à la taille de votre événement. En atelier découverte, nous travaillons en petits
+        groupes pour que chacun ait le temps d’apprendre le geste. En bar à ceintures ou en marquage libre, les
+        invités se succèdent tout au long de la soirée. [À CONFIRMER : taille de groupe idéale et capacité
+        maximale par session]
     - question: Quelle durée ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Comptez quelques minutes par invité pour un porte-clés ou un marquage, un peu plus pour une ceinture, et
+        une session plus longue pour un atelier découverte. Nous calons le format sur votre programme.
+        [À CONFIRMER : durées types par format]
     - question: Quel espace prévoir ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Un espace de quelques mètres carrés, une ou deux tables et une prise électrique pour le fer à marquer
+        suffisent. L’atelier s’installe aussi bien dans une salle de séminaire que dans un hôtel, un showroom ou
+        sur un stand. [À CONFIRMER : surface et mobilier exacts]
     - question: Peut-on ajouter le logo de l'entreprise ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Oui. Nous faisons réaliser un fer à votre logo pour le marquer à chaud ou en dorure, à côté du prénom de
+        chaque invité. Comme pour toutes nos pièces, le marquage se fait dans la matière, sans encre ni impression.
+        [À CONFIRMER : délai et coût de fabrication du fer]
     - question: Intervenez-vous hors Île-de-France ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        L’atelier intervient à Paris et dans toute l’Île-de-France. Pour un séminaire ailleurs en France, parlons-en :
+        les déplacements sont possibles sur demande.
     - question: Quel délai pour réserver ?
-      answer: TODO — réponse à rédiger avec la cliente.
+      answer: >-
+        Le plus tôt est le mieux, surtout pour les périodes de fin d’année et de séminaires de rentrée, et si vous
+        souhaitez un marquage à votre logo. Écrivez-nous dès que la date se précise. [À CONFIRMER : délai minimum
+        conseillé]

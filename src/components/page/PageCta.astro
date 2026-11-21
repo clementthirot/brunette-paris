@@ -1,0 +1,29 @@
+---
+/**
+ * Appel à l'action de fin de page. Utilise le CTA propre à la page s'il est renseigné dans Keystatic,
+ * sinon l'appel à l'action global (Réglages globaux › Appel à l'action final).
+ */
+import CtaFinal from '../ui/CtaFinal.astro';
+interface Props { cta?: { title: string; text: string; button: string; href: string } | null }
+const { cta } = Astro.props;
+const own = cta && cta.title && cta.button;
+---
+{own ? (
+  <section class="cta bg-dark section">
+    <div class="container container--narrow cta__inner" data-reveal-group="0.12">
+      <h2 class="cta__title" data-reveal>{cta!.title}</h2>
+      {cta!.text && <p class="cta__text" data-reveal>{cta!.text}</p>}
+      <div class="cta__actions" data-reveal>
+        <a href={cta!.href || '/contact'} class="btn">{cta!.button}</a>
+      </div>
+    </div>
+  </section>
+) : (
+  <CtaFinal />
+)}
+<style>
+  .cta__inner { text-align: center; display: grid; justify-items: center; gap: var(--space-5); }
+  .cta__title { font-size: var(--text-3xl); max-width: 16ch; }
+  .cta__text { color: var(--fg-on-dark-muted); font-size: var(--text-lg); max-width: 48ch; }
+  .cta__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-6); margin-top: var(--space-4); }
+</style>

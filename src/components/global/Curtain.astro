@@ -1,7 +1,13 @@
 ---
-/** Transition entre pages : rideau couleur reine qui glisse de bas en haut, 0,6 s. */
+/**
+ * Transition entre pages : rideau couleur reine qui glisse de bas en haut, 0,6 s.
+ * Le monogramme doré y est « frappé » au passage (logo secondaire sur fond reine, charte p. 3).
+ */
+import monoUrl from '../../assets/logos/logo-secondaire.svg?url';
 ---
-<div class="curtain" aria-hidden="true" data-curtain></div>
+<div class="curtain" aria-hidden="true" data-curtain style={`--mono:url("${monoUrl}")`}>
+  <span class="curtain__mono" data-curtain-mono></span>
+</div>
 <style>
   .curtain {
     position: fixed;
@@ -10,6 +16,19 @@
     background: var(--reine-500);
     pointer-events: none;
     transform: translateY(100%);
+    visibility: hidden; /* rangé : jamais visible (captures pleine page, impression, zoom) */
+    display: grid;
+    place-items: center;
+  }
+  .curtain.is-active,
+  :global(html.is-arriving) .curtain { visibility: visible; }
+  .curtain__mono {
+    width: clamp(5rem, 12vw, 8rem);
+    aspect-ratio: 1;
+    background: var(--gold-gradient);
+    background-size: 200% 100%;
+    -webkit-mask: var(--mono) center / contain no-repeat;
+    mask: var(--mono) center / contain no-repeat;
   }
   /* Arrivée sur une page après une transition : le rideau couvre l'écran puis sort par le haut. */
   :global(html.is-arriving) .curtain {
@@ -27,6 +46,7 @@
 <script>
   import { gsap, reducedMotion } from '../../scripts/motion';
   const curtain = document.querySelector<HTMLElement>('[data-curtain]')!;
+  const mono = curtain.querySelector<HTMLElement>('[data-curtain-mono]')!;
   const DURATION = 0.6;
   const arriving = document.documentElement.classList.contains('is-arriving');
   // GSAP prend la main sur la transformation (y en px remis à 0, position en yPercent).
@@ -34,6 +54,8 @@
 
   // Sortie du rideau à l'arrivée
   if (arriving) {
+    curtain.classList.add('is-active');
+    gsap.fromTo(mono, { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.94, duration: 0.3, ease: 'power2.in' });
     gsap.fromTo(curtain, { yPercent: 0 }, {
       yPercent: -100,
       duration: DURATION,
@@ -41,6 +63,7 @@
       delay: 0.05,
       onComplete: () => {
         document.documentElement.classList.remove('is-arriving');
+        curtain.classList.remove('is-active');
         gsap.set(curtain, { yPercent: 100 });
       },
     });
@@ -56,16 +79,16 @@
     if (url.pathname === location.pathname && url.search === location.search) return; // ancre sur la même page
     e.preventDefault();
     try { sessionStorage.setItem('bp-curtain', '1'); } catch {}
-    gsap.fromTo(curtain, { yPercent: 100 }, {
-      yPercent: 0,
-      duration: DURATION,
-      ease: 'power3.inOut',
-      onComplete: () => { location.href = url.href; },
-    });
+    curtain.classList.add('is-active');
+    gsap.timeline({ onComplete: () => { location.href = url.href; } })
+      .fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: DURATION, ease: 'power3.inOut' })
+      // Frappe du monogramme : il s'imprime en doré, puis un reflet balaie la dorure
+      .fromTo(mono, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, '-=0.2')
+      .fromTo(mono, { backgroundPosition: '100% 0' }, { backgroundPosition: '0% 0', duration: 0.3, ease: 'power1.inOut' }, '<');
   });
 
   // Retour arrière (bfcache) : on s'assure que le rideau est rangé.
   window.addEventListener('pageshow', (e) => {
-    if (e.persisted) gsap.set(curtain, { yPercent: 100 });
+    if (e.persisted) { gsap.set(curtain, { yPercent: 100 }); curtain.classList.remove('is-active'); }
   });
 </script>

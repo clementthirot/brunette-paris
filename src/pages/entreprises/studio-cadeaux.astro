@@ -1,0 +1,629 @@
+---
+/**
+ * Studio cadeaux : configurateur de cadeau d'entreprise en cuir.
+ * Choix de la pièce, du cuir, du fil et du marquage, aperçu du logo marqué à chaud,
+ * estimation indicative et envoi d'un brief (service de formulaire ou, à défaut, messagerie).
+ * Tous les textes, pièces, cuirs, marquages et prix sont éditables dans Keystatic › Studio cadeaux.
+ */
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import HotStampText from '../../components/ui/HotStampText.astro';
+import Photo from '../../components/ui/Photo.astro';
+import { getStudio, getSettings } from '../../lib/content';
+import { thumbSvg } from '../../scripts/studio-shapes';
+
+const [s, settings] = await Promise.all([getStudio(), getSettings()]);
+const endpoint = settings.formEndpoint || '';
+const email = settings.coordonnees.email || '';
+const fr = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+
+/** Données transmises au script du configurateur. */
+const data = {
+  pieces: s.pieces.map((p) => ({
+    nom: p.nom,
+    forme: p.forme,
+    prixMin: p.prixMin ?? 0,
+    prixMax: p.prixMax ?? p.prixMin ?? 0,
+    quantiteMin: p.quantiteMin ?? 1,
+    delai: p.delaiSemaines ?? 4,
+  })),
+  cuirs: s.cuirs.map((c) => ({ nom: c.nom, couleur: c.couleur || '#8a4a24', supplement: c.supplement ?? 0 })),
+  fils: s.fils.map((f) => ({ nom: f.nom, couleur: f.couleur })),
+  marquages: s.marquages.map((m) => ({
+    nom: m.nom,
+    rendu: m.rendu,
+    supplement: m.supplementUnitaire ?? 0,
+    fixes: m.fraisFixes ?? 0,
+  })),
+  paliers: s.paliers
+    .map((p) => ({ min: p.aPartirDe ?? 0, remise: p.remise ?? 0 }))
+    .sort((a, b) => a.min - b.min),
+  afficherPrix: s.estimation.afficher,
+  textes: {
+    semaines: s.estimation.semaines,
+    alerteQuantite: s.estimation.alerteQuantite,
+    copie: s.champs.copie,
+    confirmation: s.confirmation,
+    erreur: s.erreur,
+    messagerie: s.messagerie,
+    envoi: s.champs.envoi,
+    labels: {
+      piece: s.etapes.piece,
+      cuir: s.etapes.cuir,
+      fil: s.champs.fil,
+      marquage: s.etapes.marquage,
+      texte: s.champs.initiales,
+      quantite: s.champs.quantite,
+      date: s.champs.date,
+      occasion: s.champs.occasion,
+      unitaire: s.estimation.unitaire,
+      total: s.estimation.total,
+      delai: s.estimation.delai,
+    },
+  },
+  endpoint,
+  email,
+};
+
+const steps = [s.etapes.piece, s.etapes.cuir, s.etapes.marquage, s.etapes.quantite, s.etapes.brief];
+const defaultPiece = s.pieces[0];
+const today = new Date().toISOString().slice(0, 10);
+const qMin = defaultPiece?.quantiteMin ?? 10;
+
+const ld = [{
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: s.hero.h1,
+  serviceType: 'Cadeaux d’entreprise en cuir sur mesure',
+  provider: { '@id': new URL('/#atelier', Astro.site).href },
+  areaServed: 'FR',
+  description: s.seo.description,
+}];
+---
+<Base title={s.seo.title} description={s.seo.description} hero="dark" jsonLd={ld}>
+  <!-- Haut de page -->
+  <section class="s-hero bg-dark">
+    <div class="container s-hero__inner">
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: s.hero.eyebrow.split('·')[0].trim() }]} />
+      <p class="eyebrow s-hero__eyebrow">{s.hero.eyebrow}</p>
+      <HotStampText text={s.hero.h1} class="s-hero__title" />
+      <p class="s-hero__accroche">{s.hero.accroche}</p>
+      <a href="#studio" class="btn">{s.hero.start}</a>
+    </div>
+  </section>
+
+  <!-- Configurateur -->
+  <section id="studio" class="studio bg-dark" data-studio>
+    <script type="application/json" data-studio-data set:html={JSON.stringify(data)} />
+    <div class="container studio__grid">
+      <!-- Aperçu (colonne collante) -->
+      <div class="studio__aside">
+        <figure class="stage" data-stage aria-live="polite">
+          <svg class="stage__svg" viewBox="0 0 400 400" role="img" aria-labelledby="stage-title">
+            <title id="stage-title" data-stage-title>{defaultPiece?.nom}</title>
+            <defs>
+              <filter id="studio-grain" x="0" y="0" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" />
+                <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.1" />
+              </filter>
+              <radialGradient id="studio-light" cx="38%" cy="30%" r="80%">
+                <stop offset="0" stop-color="#fff" stop-opacity=".22" />
+                <stop offset=".55" stop-color="#fff" stop-opacity="0" />
+                <stop offset="1" stop-color="#000" stop-opacity=".35" />
+              </radialGradient>
+              <linearGradient id="studio-metal" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#8d7753" />
+                <stop offset=".45" stop-color="#f1e1c4" />
+                <stop offset="1" stop-color="#8d7753" />
+              </linearGradient>
+              <clipPath id="studio-clip"><path data-shape-clip d="" /></clipPath>
+            </defs>
+            <ellipse cx="200" cy="360" rx="150" ry="14" fill="#000" opacity=".45" />
+            <g data-shape-under></g>
+            <path data-shape-body d="" class="stage__leather" />
+            <g clip-path="url(#studio-clip)">
+              <rect width="400" height="400" filter="url(#studio-grain)" opacity=".35" style="mix-blend-mode:multiply" />
+              <rect width="400" height="400" fill="url(#studio-light)" />
+            </g>
+            <g data-shape-extra></g>
+            <path data-shape-stitch d="" class="stage__stitch" />
+          </svg>
+          <!-- Logo marqué (positionné sur la zone de marquage de la silhouette) -->
+          <div class="mark" data-mark data-render="sec" data-stamp-duration="1.2" data-stamp-delay="0">
+            <span class="mark__rivet" aria-hidden="true"></span>
+            <span class="mark__shadow" data-stamp-deboss><span class="mark__layer mark__deboss"></span></span>
+            <span class="mark__layer mark__gold" data-stamp-gold></span>
+            <span class="mark__layer mark__sheen" data-stamp-sheen></span>
+          </div>
+          <figcaption class="stage__caption" data-stage-caption></figcaption>
+        </figure>
+
+        <!-- Estimation en direct -->
+        <div class="estimate" data-estimate>
+          <p class="eyebrow estimate__title">{data.afficherPrix ? s.estimation.titre : s.estimation.delai}</p>
+          <dl class="estimate__grid">
+            {data.afficherPrix && (
+              <>
+                <div><dt>{s.estimation.unitaire}</dt><dd class="nums" data-est-unit>—</dd></div>
+                <div><dt>{s.estimation.total}</dt><dd class="nums" data-est-total>—</dd><dd class="estimate__sub nums" data-est-fixes data-label={s.estimation.fraisFixes}></dd></div>
+              </>
+            )}
+            <div><dt>{s.estimation.delai}</dt><dd class="nums" data-est-delay>—</dd></div>
+          </dl>
+          <p class="estimate__alert" data-alert-qty hidden></p>
+          <p class="estimate__alert" data-alert-date hidden>{s.estimation.alerteDelai}</p>
+          <p class="estimate__mention">{s.estimation.mention}</p>
+        </div>
+      </div>
+
+      <!-- Étapes -->
+      <form class="studio__form" data-studio-form novalidate>
+        <ol class="progress" role="list">
+          {steps.map((label, i) => (
+            <li>
+              <button type="button" class="progress__btn" data-goto={i} aria-current={i === 0 ? 'step' : undefined}>
+                <span class="progress__num nums">{String(i + 1).padStart(2, '0')}</span>
+                <span class="progress__label">{label}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+
+        <!-- 1. La pièce -->
+        <fieldset class="step" data-step="0">
+          <legend class="step__title">{s.etapes.piece}</legend>
+          <div class="choices choices--pieces">
+            {s.pieces.map((p, i) => (
+              <label class="choice choice--piece">
+                <input type="radio" name="piece" value={i} checked={i === 0} />
+                <span class="choice__visual">
+                  {p.photo?.image ? <Photo photo={p.photo} ratio="1" /> : <Fragment set:html={thumbSvg(p.forme)} />}
+                </span>
+                <span class="choice__name">{p.nom}</span>
+                <span class="choice__text">{p.texte}</span>
+                {data.afficherPrix && p.prixMin != null && (
+                  <span class="choice__meta nums">dès {fr.format(p.prixMin)} € HT · {p.quantiteMin} ex. min.</span>
+                )}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- 2. Le cuir et le fil -->
+        <fieldset class="step" data-step="1" hidden>
+          <legend class="step__title">{s.etapes.cuir}</legend>
+          <div class="choices choices--swatches">
+            {s.cuirs.map((c, i) => (
+              <label class="choice choice--swatch">
+                <input type="radio" name="cuir" value={i} checked={i === 0} />
+                <span class="swatch" style={`--c:${c.couleur}`}></span>
+                <span class="choice__name">{c.nom}</span>
+                <span class="choice__text">{c.texte}</span>
+              </label>
+            ))}
+          </div>
+          <p class="step__sub">{s.champs.fil}</p>
+          <div class="chips">
+            {s.fils.map((f, i) => (
+              <label class="chip">
+                <input type="radio" name="fil" value={i} checked={i === 0} />
+                <span><i class="chip__dot" style={f.couleur ? `--c:${f.couleur}` : undefined}></i>{f.nom}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- 3. Le marquage -->
+        <fieldset class="step" data-step="2" hidden>
+          <legend class="step__title">{s.etapes.marquage}</legend>
+          <div class="choices choices--marks">
+            {s.marquages.map((m, i) => (
+              <label class="choice choice--mark">
+                <input type="radio" name="marquage" value={i} checked={i === 0} />
+                <span class="choice__name">{m.nom}</span>
+                <span class="choice__text">{m.texte}</span>
+              </label>
+            ))}
+          </div>
+          <div class="fields">
+            <div class="field field--full">
+              <span class="field__label">{s.champs.logo}</span>
+              <label class="drop" data-drop>
+                <input type="file" accept="image/svg+xml,image/png,image/webp,image/jpeg" class="visually-hidden" data-logo-input />
+                <span class="drop__text" data-drop-text>{s.champs.logoAide}</span>
+              </label>
+            </div>
+            <div class="field field--full">
+              <label for="s-texte" class="field__label">{s.champs.initiales}</label>
+              <input id="s-texte" name="texte" type="text" maxlength="24" placeholder="BRUNETTE" data-text-input />
+            </div>
+          </div>
+          <p class="step__note">{s.recap.logoJoint}</p>
+        </fieldset>
+
+        <!-- 4. Quantité et délai -->
+        <fieldset class="step" data-step="3" hidden>
+          <legend class="step__title">{s.etapes.quantite}</legend>
+          <div class="fields">
+            <div class="field field--full">
+              <label for="s-qte" class="field__label">{s.champs.quantite}</label>
+              <div class="qty">
+                <input type="range" min="1" max="500" step="1" value={qMin} data-qty-range aria-label={s.champs.quantite} />
+                <input id="s-qte" name="quantite" type="number" min="1" max="5000" value={qMin} inputmode="numeric" class="nums" data-qty-input />
+              </div>
+            </div>
+            <div class="field">
+              <label for="s-date" class="field__label">{s.champs.date}</label>
+              <input id="s-date" name="date" type="date" min={today} data-date-input />
+            </div>
+            <div class="field">
+              <label for="s-occasion" class="field__label">{s.champs.occasion}</label>
+              <select id="s-occasion" name="occasion">
+                {s.champs.occasions.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 5. Brief -->
+        <fieldset class="step" data-step="4" hidden>
+          <legend class="step__title">{s.etapes.brief}</legend>
+          <div class="recap" data-recap-block>
+            <p class="eyebrow">{s.recap.titre}</p>
+            <dl class="recap__list" data-recap></dl>
+          </div>
+          <div class="fields" data-brief-fields>
+            <div class="field">
+              <label for="s-nom" class="field__label">{s.champs.nom} <span class="req">({s.champs.requis})</span></label>
+              <input id="s-nom" name="nom" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="s-societe" class="field__label">{s.champs.societe} <span class="req">({s.champs.requis})</span></label>
+              <input id="s-societe" name="societe" type="text" autocomplete="organization" required />
+            </div>
+            <div class="field">
+              <label for="s-email" class="field__label">{s.champs.email} <span class="req">({s.champs.requis})</span></label>
+              <input id="s-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="s-tel" class="field__label">{s.champs.telephone}</label>
+              <input id="s-tel" name="telephone" type="tel" autocomplete="tel" />
+            </div>
+            <div class="field field--full">
+              <label for="s-message" class="field__label">{s.champs.message}</label>
+              <textarea id="s-message" name="message" rows="4"></textarea>
+            </div>
+          </div>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+          <div class="brief__actions" data-brief-actions>
+            <button type="submit" class="btn" data-submit>{s.champs.envoyer}</button>
+            <button type="button" class="link-underline" data-share>{s.champs.partager}</button>
+            <button type="button" class="link-underline" data-print>{s.champs.imprimer}</button>
+          </div>
+          <p class="brief__status" role="status" aria-live="polite" data-status></p>
+        </fieldset>
+
+        <div class="step-nav" data-step-nav>
+          <button type="button" class="btn btn--ghost" data-prev>{s.etapes.precedent}</button>
+          <button type="button" class="btn" data-next>{s.etapes.suivant}</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Preuves de confiance -->
+  <section class="trust bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{s.garanties.titre}</h2>
+      <ul role="list" class="trust__grid" data-reveal-group="0.1">
+        {s.garanties.items.map((g, i) => (
+          <li class="trust__item" data-reveal>
+            <span class="trust__num nums">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="trust__title">{g.titre}</h3>
+            <p>{g.texte}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- Haut de page --- */
+  .s-hero { padding-block: calc(var(--header-h) + var(--space-8)) var(--space-8); }
+  .s-hero__inner { display: grid; gap: var(--space-5); justify-items: start; }
+  .s-hero__eyebrow { color: var(--accent); margin-top: var(--space-4); }
+  .s-hero :global(.s-hero__title) { font-size: var(--text-4xl); max-width: 18ch; line-height: var(--leading-tight); }
+  .s-hero__accroche { max-width: 42rem; color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
+
+  /* --- Mise en page --- */
+  .studio { padding-block: var(--space-6) var(--section-y); scroll-margin-top: var(--header-h); }
+  .studio__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+  .studio__grid > * { min-width: 0; }
+  .studio__aside { display: grid; gap: var(--space-5); align-content: start; }
+
+  /* --- Aperçu --- */
+  .stage {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 38%, var(--ink-800), var(--ink-950) 72%);
+    border: 1px solid var(--ink-800);
+    overflow: hidden;
+  }
+  .stage__svg { width: 100%; height: 100%; display: block; }
+  .stage__leather { fill: var(--leather, #8a4a24); transition: fill var(--dur-base) var(--ease-out); }
+  .stage__stitch {
+    fill: none;
+    stroke: var(--thread, #e1be80);
+    stroke-width: 2.2;
+    stroke-dasharray: 6 5;
+    stroke-linecap: round;
+    transition: stroke var(--dur-base);
+  }
+  .stage__caption {
+    position: absolute;
+    left: var(--space-4);
+    bottom: var(--space-3);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    color: var(--fg-on-dark-muted);
+  }
+
+  /* Logo marqué */
+  .mark { position: absolute; display: grid; place-items: center; pointer-events: none; }
+  .mark > * { grid-area: 1 / 1; width: 100%; height: 100%; }
+  .mark__layer { display: block; }
+  .mark__shadow > .mark__layer { width: 100%; height: 100%; }
+  .mark[data-kind='logo'] .mark__layer {
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+  .mark[data-kind='text'] .mark__layer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-family: var(--font-serif);
+    font-size: var(--mark-fs, 1.4rem);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .mark[data-kind='text'] .mark__layer::after { content: var(--txt); }
+  .mark__shadow { display: block; filter: drop-shadow(0 -1px 0 rgb(0 0 0 / 0.7)) drop-shadow(0 1px 0 rgb(255 236 205 / 0.2)); }
+  .mark__deboss { background-color: color-mix(in srgb, var(--leather) 55%, #000); }
+  .mark[data-kind='text'] .mark__deboss { background-color: transparent; color: color-mix(in srgb, var(--leather) 55%, #000); -webkit-background-clip: initial; background-clip: initial; }
+  .mark__gold { background: var(--gold-gradient); background-size: 200% 100%; background-position: 30% 0; }
+  .mark[data-render='argent'] .mark__gold {
+    background-image: linear-gradient(100deg, #8c8f93 0%, #d9dcdf 30%, #ffffff 46%, #b9bdc2 62%, #7d8186 100%);
+  }
+  .mark[data-render='sec'] .mark__gold { background-image: none; background-color: color-mix(in srgb, var(--leather) 72%, #000); }
+  .mark__sheen {
+    background: linear-gradient(105deg, transparent 42%, rgb(255 250 236 / 0.95) 50%, transparent 58%);
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+  .mark__rivet { display: none; }
+  .mark[data-render='rivet'] .mark__rivet {
+    display: block;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff3d6, #d9b77a 35%, #8d7753 75%, #5a4a30);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 0.5), inset 0 -2px 3px rgb(0 0 0 / 0.35);
+  }
+  .mark[data-render='rivet'] .mark__shadow,
+  .mark[data-render='rivet'] .mark__gold,
+  .mark[data-render='rivet'] .mark__sheen { width: 62%; height: 62%; }
+  .mark[data-render='rivet'] .mark__gold { background-image: none; background-color: #3c3429; }
+  .mark[data-render='rivet'] .mark__deboss { background-color: rgb(255 255 255 / 0.35); }
+  .mark[data-kind='text'][data-render='rivet'] .mark__deboss { background-color: transparent; color: rgb(255 255 255 / 0.35); }
+
+  /* --- Estimation --- */
+  .estimate { padding: var(--space-5); border: 1px solid var(--ink-700); display: grid; gap: var(--space-3); }
+  .estimate__title { color: var(--accent); }
+  .estimate__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: var(--space-4); margin: 0; }
+  .estimate dt { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-dark-muted); }
+  .estimate dd { margin: var(--space-1) 0 0; font-family: var(--font-serif); font-size: var(--text-lg); white-space: nowrap; }
+  .estimate dd.estimate__sub { font-family: var(--font-sans); font-size: var(--text-xs); color: var(--fg-on-dark-muted); }
+  .estimate__alert { font-size: var(--text-sm); color: var(--sable-300); border-left: 2px solid var(--sable-500); padding-left: var(--space-3); }
+  .estimate__mention { font-size: var(--text-xs); color: var(--fg-on-dark-muted); line-height: var(--leading-snug); }
+
+  /* --- Progression --- */
+  .progress { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); padding-bottom: var(--space-2); margin-bottom: var(--space-6); border-bottom: 1px dashed var(--ink-700); }
+  .progress__btn {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    color: var(--fg-on-dark-muted);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color var(--dur-fast);
+  }
+  .progress__btn:hover,
+  .progress__btn[aria-current='step'] { color: var(--accent); }
+  .progress__num { font-family: var(--font-serif); font-size: var(--text-lg); letter-spacing: 0; }
+  @media (max-width: 39.99em) {
+    /* Sur petit écran, seul le libellé de l'étape en cours est affiché. */
+    .progress { flex-wrap: nowrap; justify-content: space-between; }
+    .progress__btn:not([aria-current='step']) .progress__label { display: none; }
+  }
+
+  /* --- Étapes --- */
+  .step { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .step[hidden] { display: none; }
+  .step__title { font-family: var(--font-serif); font-size: var(--text-2xl); margin-bottom: var(--space-5); padding: 0; }
+  .step__sub { margin: var(--space-6) 0 var(--space-3); font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-dark-muted); }
+  .step__note { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--fg-on-dark-muted); }
+
+  .choices { display: grid; gap: var(--space-3); }
+  .choices--pieces { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); }
+  .choices--swatches { grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+  .choices--marks { grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); margin-bottom: var(--space-6); }
+  .choice {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border: 1px solid var(--ink-700);
+    cursor: pointer;
+    transition: border-color var(--dur-fast), background-color var(--dur-fast);
+  }
+  .choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .choice:hover { border-color: var(--ink-500); }
+  .choice:has(input:checked) { border-color: var(--accent); background: rgb(225 190 128 / 0.06); }
+  .choice:has(input:focus-visible) { outline: 1px solid var(--accent); outline-offset: 3px; }
+  .choice__visual { display: block; aspect-ratio: 1; background: var(--ink-900); }
+  .choice__visual :global(svg) { width: 100%; height: 100%; display: block; }
+  .choice__name { font-family: var(--font-serif); font-size: var(--text-lg); line-height: var(--leading-snug); }
+  .choice__text { font-size: var(--text-sm); color: var(--fg-on-dark-muted); line-height: var(--leading-snug); }
+  .choice__meta { font-size: var(--text-xs); color: var(--accent); letter-spacing: 0.04em; }
+  .swatch {
+    display: block;
+    aspect-ratio: 4 / 3;
+    background:
+      radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.2), transparent 60%),
+      var(--c);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .chip { position: relative; }
+  .chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .chip span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    padding: 0.6rem 1.1rem 0.5rem;
+    border: 1px solid var(--ink-700);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-ui);
+    text-transform: uppercase;
+    transition: border-color var(--dur-fast), color var(--dur-fast);
+  }
+  .chip input:checked + span { border-color: var(--accent); color: var(--accent); }
+  .chip input:focus-visible + span { outline: 1px solid var(--accent); outline-offset: 3px; }
+  .chip__dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--c, linear-gradient(135deg, var(--sable-700), var(--ink-700)));
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+  }
+
+  .fields { display: grid; gap: var(--space-5); }
+  .field { display: grid; gap: var(--space-2); }
+  .field__label { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-dark-muted); }
+  .req { text-transform: none; letter-spacing: 0; opacity: 0.7; }
+  .field input:not([type='range']),
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 0.8rem 0 0.6rem;
+    border: 0;
+    border-bottom: 1px solid var(--ink-600);
+    background: transparent;
+    color: inherit;
+    font-size: var(--text-base);
+    border-radius: 0;
+    color-scheme: dark;
+  }
+  .field select option { background: var(--ink-900); }
+  .field textarea { border: 1px solid var(--ink-600); padding: var(--space-3); resize: vertical; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus { outline: none; border-color: var(--accent); }
+  .qty { display: grid; grid-template-columns: 1fr 6rem; gap: var(--space-4); align-items: center; }
+  .qty input[type='range'] { accent-color: var(--sable-500); width: 100%; }
+  .qty input[type='number'] { font-family: var(--font-serif); font-size: var(--text-xl); text-align: right; }
+
+  .drop {
+    display: grid;
+    place-items: center;
+    min-height: 6.5rem;
+    padding: var(--space-4);
+    border: 1px dashed var(--ink-500);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--dur-fast), background-color var(--dur-fast);
+  }
+  .drop:hover,
+  .drop.is-over { border-color: var(--accent); background: rgb(225 190 128 / 0.05); }
+  .drop:has(input:focus-visible) { outline: 1px solid var(--accent); outline-offset: 3px; }
+  .drop__text { font-size: var(--text-sm); color: var(--fg-on-dark-muted); max-width: 32ch; }
+  .drop.has-file .drop__text { color: var(--accent); }
+
+  .recap { padding: var(--space-5); border: 1px solid var(--ink-700); margin-bottom: var(--space-6); }
+  .recap .eyebrow { color: var(--accent); margin-bottom: var(--space-3); }
+  .recap__list { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-5); margin: 0; font-size: var(--text-sm); }
+  .recap__list :global(dt) { color: var(--fg-on-dark-muted); }
+  .recap__list :global(dd) { margin: 0; }
+
+  .brief__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); margin-top: var(--space-6); }
+  .brief__actions .link-underline { font-size: var(--text-sm); }
+  .brief__status { min-height: 1.5em; margin-top: var(--space-4); font-family: var(--font-serif); font-size: var(--text-xl); }
+  .brief__status.is-info { font-family: var(--font-sans); font-size: var(--text-sm); color: var(--fg-on-dark-muted); }
+  .studio__form.is-sent [data-brief-fields],
+  .studio__form.is-sent [data-brief-actions] [data-submit] { display: none; }
+
+  .step-nav { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-7); }
+  .step-nav [hidden] { visibility: hidden; display: inline-flex; }
+
+  /* --- Preuves de confiance --- */
+  .trust__grid { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .trust__item { display: grid; gap: var(--space-2); align-content: start; padding-top: var(--space-4); border-top: 1px dashed var(--ink-300); }
+  .trust__num { font-family: var(--font-serif); color: var(--accent-on-light); font-size: var(--text-xl); }
+  .trust__title { font-family: var(--font-serif); font-size: var(--text-xl); }
+  .trust__item p { color: var(--fg-on-light-muted); }
+
+  @media (min-width: 40em) {
+    .fields { grid-template-columns: 1fr 1fr; }
+    .field--full { grid-column: 1 / -1; }
+  }
+  @media (min-width: 64em) {
+    .studio__grid { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: var(--space-9); align-items: start; }
+    .studio__aside { position: sticky; top: calc(var(--header-h) + var(--space-4)); }
+  }
+  @media (max-width: 63.99em) {
+    /* Sur mobile, l'aperçu reste visible en haut pendant les choix ; l'estimation passe sous les étapes. */
+    .studio__aside { display: contents; }
+    .stage {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-2));
+      z-index: 2;
+      width: min(72%, 30vh);
+      margin-inline: auto;
+      box-shadow: 0 1.5rem 2rem -1rem var(--ink-950);
+    }
+    .stage__caption { display: none; }
+    .estimate { order: 3; }
+  }
+
+  /* --- Impression du récapitulatif --- */
+  @media print {
+    :global(header), :global(footer), :global(.grain), :global(.skip-link), .s-hero, .trust, .progress, .step-nav,
+    [data-brief-fields], [data-brief-actions], .step__title, .brief__status { display: none !important; }
+    .studio, .studio :global(*) { background: #fff !important; color: #000 !important; border-color: #999 !important; }
+    .stage { background: #fff !important; max-width: 12cm; position: static; }
+    .stage__svg rect, .stage__svg ellipse { display: none; }
+    .studio__grid { display: block; }
+    .studio__aside { position: static; }
+    .step[data-step='4'] { display: block !important; }
+    .step:not([data-step='4']) { display: none !important; }
+  }
+</style>
+
+<script>
+  import { initStudio } from '../../scripts/studio';
+  initStudio();
+</script>

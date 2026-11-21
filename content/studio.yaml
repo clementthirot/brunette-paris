@@ -1,0 +1,237 @@
+seo:
+  title: Studio cadeaux d’entreprise en cuir, composez et estimez en ligne | Brunette Paris
+  description: >-
+    Composez votre cadeau d’entreprise en cuir : choisissez la pièce, le cuir, le marquage de votre logo,
+    voyez l’aperçu et obtenez une estimation indicative. Fabrication artisanale en Île-de-France.
+hero:
+  eyebrow: Studio cadeaux · Entreprises
+  h1: Composez votre cadeau, voyez votre logo dans le cuir
+  accroche: >-
+    En cinq étapes, choisissez une pièce, son cuir et sa signature. Déposez votre logo : il se marque à
+    chaud sous vos yeux. Vous repartez avec une estimation et un brief prêt à partager en interne.
+  start: Commencer
+etapes:
+  piece: La pièce
+  cuir: Le cuir
+  marquage: Le marquage
+  quantite: Quantité et délai
+  brief: Votre brief
+  precedent: Précédent
+  suivant: Suivant
+# TODO : prix, quantités minimum et délais indicatifs à valider avec Armonie avant la mise en ligne.
+pieces:
+  - nom: Porte-clés
+    texte: Le petit objet que l’on garde toute une vie. Idéal pour un séminaire ou une première attention.
+    forme: porte-cles
+    prixMin: 24
+    prixMax: 32
+    quantiteMin: 20
+    delaiSemaines: 3
+    photo:
+      alt: Porte-clés en cuir marqué d’un logo
+      placeholder: Porte-clés en cuir, fond neutre
+  - nom: Porte-cartes
+    texte: Fin, cousu main, glissé dans une poche de veste. Le cadeau collaborateur par excellence.
+    forme: porte-cartes
+    prixMin: 42
+    prixMax: 58
+    quantiteMin: 15
+    delaiSemaines: 4
+    photo:
+      alt: Porte-cartes en cuir
+      placeholder: Porte-cartes en cuir, fond neutre
+  - nom: Étiquette de bagage
+    texte: Pour les voyageurs, les clients d’un hôtel ou les invités d’un séjour d’entreprise.
+    forme: etiquette
+    prixMin: 26
+    prixMax: 36
+    quantiteMin: 20
+    delaiSemaines: 3
+    photo:
+      alt: Étiquette de bagage en cuir
+      placeholder: Étiquette de bagage en cuir, fond neutre
+  - nom: Portefeuille
+    texte: Une pièce de caractère pour remercier un partenaire, un client fidèle ou un dirigeant.
+    forme: portefeuille
+    prixMin: 110
+    prixMax: 150
+    quantiteMin: 10
+    delaiSemaines: 5
+    photo:
+      alt: Portefeuille en cuir
+      placeholder: Portefeuille en cuir, fond neutre
+  - nom: Protège-club de golf
+    texte: Pour un trophée, un tournoi d’entreprise ou la boutique d’un golf.
+    forme: golf
+    prixMin: 75
+    prixMax: 98
+    quantiteMin: 10
+    delaiSemaines: 5
+    photo:
+      alt: Protège-club de golf en cuir
+      placeholder: Protège-club de golf en cuir, fond neutre
+  - nom: Trousse de voyage
+    texte: Une trousse souple et généreuse, compagne des déplacements de vos équipes.
+    forme: trousse
+    prixMin: 85
+    prixMax: 120
+    quantiteMin: 10
+    delaiSemaines: 5
+    photo:
+      alt: Trousse de voyage en cuir
+      placeholder: Trousse de voyage en cuir, fond neutre
+  - nom: Sous-main ou set de table
+    texte: Pour les bureaux d’une direction, les chambres d’un hôtel ou les tables d’un restaurant.
+    forme: sous-main
+    prixMin: 65
+    prixMax: 95
+    quantiteMin: 10
+    delaiSemaines: 4
+    photo:
+      alt: Sous-main en cuir
+      placeholder: Sous-main en cuir sur un bureau
+  - nom: Couverture de vinyle
+    texte: Une édition spéciale habillée de cuir, pour un label, un artiste ou un lancement.
+    forme: vinyle
+    prixMin: 120
+    prixMax: 180
+    quantiteMin: 10
+    delaiSemaines: 6
+    photo:
+      alt: Couverture de vinyle en cuir
+      placeholder: Couverture de vinyle en cuir, fond neutre
+# TODO : nuanciers à remplacer par les cuirs réellement disponibles à l’atelier.
+cuirs:
+  - nom: Naturel
+    couleur: '#c8925a'
+    texte: Vachette tannée végétal, qui se patine avec le temps
+    supplement: 0
+  - nom: Cognac
+    couleur: '#8a4a24'
+    texte: Vachette tannée végétal, ton chaud et profond
+    supplement: 0
+  - nom: Ébène
+    couleur: '#1f1a17'
+    texte: Vachette lisse, noir chaud
+    supplement: 0
+  - nom: Bleu reine
+    couleur: '#293860'
+    texte: Vachette teintée, la couleur signature de la maison
+    supplement: 5
+  - nom: Céladon
+    couleur: '#7e9994'
+    texte: Vachette teintée, vert de gris délicat
+    supplement: 5
+  - nom: Bordeaux
+    couleur: '#5a1f26'
+    texte: Vachette teintée, élégant et profond
+    supplement: 5
+fils:
+  - nom: Ton sur ton
+    couleur: ''
+  - nom: Sable
+    couleur: '#e1be80'
+  - nom: Crème
+    couleur: '#f1e6d2'
+  - nom: Noir
+    couleur: '#151311'
+  - nom: Rouge
+    couleur: '#a3322a'
+marquages:
+  - nom: Marquage à sec
+    texte: Le logo est pressé dans le cuir, ton sur ton. Discret et intemporel.
+    rendu: sec
+    supplementUnitaire: 0
+    fraisFixes: 90
+  - nom: Dorure or
+    texte: Feuille d’or appliquée à chaud. La signature la plus précieuse.
+    rendu: or
+    supplementUnitaire: 4
+    fraisFixes: 90
+  - nom: Dorure argent
+    texte: Feuille argentée appliquée à chaud, pour un rendu plus froid et graphique.
+    rendu: argent
+    supplementUnitaire: 4
+    fraisFixes: 90
+  - nom: Rivet gravé
+    texte: Un rivet de laiton gravé à votre logo, fixé dans le cuir.
+    rendu: rivet
+    supplementUnitaire: 6
+    fraisFixes: 60
+paliers:
+  - aPartirDe: 50
+    remise: 8
+  - aPartirDe: 100
+    remise: 15
+  - aPartirDe: 250
+    remise: 22
+estimation:
+  afficher: true
+  titre: Estimation indicative
+  unitaire: Prix par pièce
+  total: Budget total
+  fraisFixes: dont frais de cliché
+  delai: Délai de fabrication
+  semaines: semaines
+  mention: >-
+    Montants hors taxes, donnés à titre indicatif. Le devis définitif est établi après échange, selon le
+    cuir retenu, les finitions et la complexité du logo.
+  alerteDelai: >-
+    Cette date est très proche du délai de fabrication. Écrivez-nous quand même : selon le planning de
+    l’atelier, une solution est souvent possible.
+  alerteQuantite: L’atelier réalise cette pièce à partir de {min} exemplaires.
+champs:
+  logo: Votre logo
+  logoAide: Fichier SVG ou PNG sur fond transparent, de préférence en une seule couleur.
+  initiales: Ou un texte à marquer
+  fil: Couleur du fil
+  quantite: Nombre de pièces
+  date: Date de remise souhaitée
+  occasion: Occasion
+  occasions:
+    - Cadeaux collaborateurs
+    - Cadeaux clients ou partenaires
+    - Séminaire ou événement
+    - Fin d’année
+    - Boutique ou revente
+    - Autre
+  nom: Nom
+  societe: Société
+  email: Email professionnel
+  telephone: Téléphone
+  message: Un mot sur votre projet
+  requis: obligatoire
+  envoyer: Envoyer mon brief à l’atelier
+  envoi: Envoi en cours…
+  partager: Copier le lien de ma composition
+  copie: Lien copié. Partagez-le à votre équipe.
+  imprimer: Imprimer le récapitulatif
+recap:
+  titre: Votre composition
+  logoJoint: >-
+    Votre logo reste sur votre appareil pour l’aperçu. L’atelier vous le demandera en haute définition en
+    réponse à votre brief.
+confirmation: >-
+  Merci, votre brief est bien arrivé à l’atelier. Armonie vous répond sous 48 heures avec ses
+  premières recommandations et une proposition d’échantillons.
+erreur: L’envoi n’a pas abouti. Votre messagerie va s’ouvrir avec le brief déjà rédigé.
+messagerie: >-
+  Votre messagerie s’ouvre avec le brief déjà rédigé : il ne reste qu’à l’envoyer. Pensez à joindre
+  votre logo.
+garanties:
+  titre: Pourquoi les entreprises choisissent l’atelier
+  items:
+    - titre: Fait main en Île-de-France
+      texte: Chaque pièce est coupée, cousue et marquée à la main à l’atelier, de la première à la dernière.
+    - titre: Un prototype avant la série
+      texte: Vous validez un prototype réel, dans votre cuir et avec votre logo, avant tout lancement.
+    - titre: Une interlocutrice unique
+      texte: Vous échangez directement avec l’artisane qui fabrique vos pièces, du brief à la livraison.
+    - titre: Une signature durable
+      texte: Votre logo est marqué dans la matière, jamais imprimé. Il vieillit avec le cuir, sans s’effacer.
+teaser:
+  titre: Voyez votre logo marqué dans le cuir
+  texte: >-
+    Composez votre cadeau d’entreprise en quelques clics : la pièce, le cuir, la dorure. Obtenez une
+    estimation immédiate et envoyez un brief prêt à l’emploi.
+  bouton: Ouvrir le studio cadeaux

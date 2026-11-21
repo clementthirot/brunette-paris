@@ -1,0 +1,55 @@
+---
+/** FAQ générale (/faq) : questions par thème, sommaire d'ancres, données structurées FAQPage. */
+import Base from '../layouts/Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Faq from '../components/page/Faq.astro';
+import { getFaq, getSettings, faqJsonLd, breadcrumbJsonLd } from '../lib/content';
+import { ROUTES } from '../lib/routes';
+
+const [page, settings] = await Promise.all([getFaq(), getSettings()]);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: page.h1 }];
+const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const all = page.groupes.flatMap((g) => g.items);
+---
+<Base title={page.seo.title} description={page.seo.description} hero="light" jsonLd={[...faqJsonLd(all), breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <section class="fq bg-light">
+    <div class="container fq__grid">
+      <aside class="fq__aside">
+        <Breadcrumb items={crumbs} />
+        <h1 class="fq__title" data-reveal>{page.h1}</h1>
+        <p class="fq__intro" data-reveal>{page.intro}</p>
+        <nav aria-label={page.h1} class="fq__toc">
+          <ul role="list">{page.groupes.map((g) => <li><a href={`#${slug(g.title)}`}>{g.title}</a></li>)}</ul>
+        </nav>
+      </aside>
+      <div class="fq__groups">
+        {page.groupes.map((g) => (
+          <section id={slug(g.title)} class="fq__group"><Faq title={g.title} items={g.items} /></section>
+        ))}
+        <div class="fq__contact" data-reveal>
+          <p class="serif">{page.contact.text}</p>
+          <a href={ROUTES.contact} class="btn btn--dark">{page.contact.button}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .fq { padding-block: calc(var(--header-h) + var(--space-7)) var(--section-y); }
+  .fq__grid { display: grid; gap: var(--space-8); }
+  .fq__aside { display: grid; gap: var(--space-5); align-content: start; }
+  .fq__title { font-size: var(--text-display); }
+  .fq__intro { color: var(--fg-on-light-muted); max-width: 40ch; }
+  .fq__toc ul { display: grid; gap: var(--space-2); font-size: var(--text-sm); letter-spacing: var(--tracking-ui); text-transform: uppercase; }
+  .fq__toc a { opacity: 0.7; transition: opacity var(--dur-fast), color var(--dur-fast); }
+  .fq__toc a:hover { opacity: 1; color: var(--accent-on-light); }
+  .fq__groups { display: grid; gap: var(--space-9); }
+  .fq__group { scroll-margin-top: calc(var(--header-h) + var(--space-5)); }
+  .fq__group :global(.section-title) { margin-bottom: var(--space-5); font-size: var(--text-2xl); }
+  .fq__contact { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-5); padding: var(--space-7); background: var(--cream-100, rgb(0 0 0 / 0.03)); }
+  .fq__contact p { font-size: var(--text-xl); }
+  @media (min-width: 56em) {
+    .fq__grid { grid-template-columns: 1fr 2fr; gap: var(--space-10); }
+    .fq__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+  }
+</style>

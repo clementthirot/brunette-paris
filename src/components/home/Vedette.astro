@@ -61,12 +61,10 @@ const info = (p: Piece) => ({
   .vedette__thumb::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px; background: var(--sable-500); transform: scaleX(0); transition: transform var(--dur-base) var(--ease-out); }
   .vedette__thumb:hover, .vedette__thumb.is-active { opacity: 1; }
   .vedette__thumb.is-active::after { transform: scaleX(1); }
-  .vedette__thumb :global(.ph__label span) { display: none; }
   .vedette__cta { margin-top: var(--space-8); text-align: center; }
   @media (min-width: 56em) {
     .vedette__grid { grid-template-columns: 1.3fr 1fr; gap: var(--space-9); }
     .vedette__thumbs { max-width: 40rem; gap: var(--space-4); }
-    .vedette__thumb :global(.ph__label span) { display: inline; font-size: 0.65rem; }
   }
 </style>
 <script>

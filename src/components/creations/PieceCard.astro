@@ -11,7 +11,7 @@ const { piece, labels, cuirLabel } = Astro.props;
 const [p1, p2] = piece.photos ?? [];
 ---
 <article class="piece-card" data-category={piece.category} data-leather={piece.leather}>
-  <a href={pieceUrl(piece.slug)} class="piece-card__link">
+  <a href={pieceUrl(piece.slug)} class="piece-card__link" data-cursor-label="Voir">
     <div class="piece-card__media">
       <Photo photo={p1} ratio="4 / 5" />
       {p2 && <Photo photo={p2} ratio="4 / 5" class="piece-card__alt" />}
@@ -41,7 +41,8 @@ const [p1, p2] = piece.photos ?? [];
   }
   .piece-card__link:hover .piece-card__media :global(.piece-card__alt),
   .piece-card__link:focus-visible .piece-card__media :global(.piece-card__alt) { opacity: 1; }
-  .piece-card__media :global(.piece-card__alt .ph__label) { background-color: var(--ink-300); }
+  /* 2e photo provisoire : une autre peau (cuir naturel) pour rendre le survol lisible */
+  .piece-card__media :global(.piece-card__alt) { --ph-leather-1: var(--sable-200); --ph-leather-2: var(--sable-500); --ph-ink: var(--sable-800); }
   .piece-card__name { font-size: var(--text-xl); }
   .piece-card__meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-2); font-size: var(--text-xs); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-light-muted); }
   .piece-card__status.is-disponible { color: var(--celadon-700); }
