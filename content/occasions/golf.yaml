@@ -1,0 +1,57 @@
+title: Cadeaux golf et tournois
+order: 4
+seo:
+  title: Cadeaux golf en cuir pour tournois et compétitions d’entreprise | Brunette Paris
+  description: >-
+    Protège-clubs, étuis et accessoires de golf en cuir fait main, marqués à votre logo : pour un tournoi
+    d’entreprise, un trophée ou la boutique d’un golf. Estimation en ligne.
+hero:
+  eyebrow: Cadeaux d’entreprise · Golf
+  h1: Le cuir a sa place sur le parcours
+  accroche: >-
+    Pour un tournoi d’entreprise, un trophée ou la boutique d’un club, des accessoires de golf en cuir faits
+    main, à vos couleurs.
+  photo:
+    alt: Protège-club de golf en cuir sur un green
+    placeholder: Protège-club en cuir marqué d’un logo, sur un sac de golf au bord du green
+carte: Pour un tournoi d’entreprise, un trophée ou la boutique d’un club.
+intro:
+  h2: Des accessoires qui jouent avec vous
+  texte: >-
+    Le golf et la maroquinerie partagent le goût des belles matières et des gestes précis. L’atelier
+    fabrique des protège-clubs, des étuis et des accessoires en cuir, marqués au logo de votre entreprise, de
+    votre tournoi ou de votre club. Offerts aux participants d’une compétition ou proposés dans la boutique
+    d’un golf, ils accompagnent les joueurs à chaque partie, et votre marque avec eux.
+arguments:
+  - titre: Pensés pour le jeu
+    texte: Des cuirs résistants, des coutures solides, un ajustement précis.
+  - titre: Aux couleurs du tournoi
+    texte: "Logo, nom de la compétition, année : tout se marque dans le cuir."
+  - titre: Pour la boutique aussi
+    texte: Des séries régulières pour les boutiques de golf, à votre marque.
+suggestions:
+  titre: Les pièces pour le golf
+  items:
+    - piece: Protège-club de golf
+      pourquoi: Le cadeau phare d’un tournoi, ou un trophée original.
+    - piece: Porte-clés
+      pourquoi: Le cadeau d’accueil de tous les participants.
+    - piece: Étiquette de bagage
+      pourquoi: Une étiquette de sac de golf, au nom du joueur ou du club.
+preset:
+  piece: Protège-club de golf
+  cuir: Bleu reine
+  marquage: Dorure or
+  quantite: 40
+  occasion: Séminaire ou événement
+  bouton: Composer mon cadeau de tournoi
+echeance: Saison de golf
+faq:
+  titre: Questions fréquentes
+  items:
+    - question: Le cuir résiste-t-il à la pluie ?
+      reponse: TODO — réponse à valider avec Armonie (traitement, entretien).
+    - question: Travaillez-vous avec les boutiques de golf ?
+      reponse: >-
+        Oui. L’atelier peut fabriquer des séries régulières à la marque de votre club. Parlons-en à partir
+        d’un échantillon.

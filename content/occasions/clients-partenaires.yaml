@@ -1,0 +1,56 @@
+title: Cadeaux clients et partenaires
+order: 3
+seo:
+  title: Cadeaux clients et partenaires haut de gamme en cuir | Brunette Paris
+  description: >-
+    Des cadeaux haut de gamme pour vos clients et partenaires : portefeuilles, trousses, sous-mains en cuir
+    fait main, marqués à votre logo. Fabrication artisanale en Île-de-France.
+hero:
+  eyebrow: Cadeaux d’entreprise · Clients et partenaires
+  h1: Remercier ceux qui comptent
+  accroche: >-
+    Pour un client fidèle, un partenaire de longue date ou la signature d’un contrat, une pièce de
+    maroquinerie faite main dit merci avec justesse.
+  photo:
+    alt: Portefeuille en cuir marqué d’un logo, offert à un client
+    placeholder: Portefeuille en cuir dans son emballage, carte manuscrite posée dessus
+carte: Pour un client fidèle, un partenaire ou une signature importante.
+intro:
+  h2: Le cadeau qui ressemble à votre relation
+  texte: >-
+    Un cadeau client réussi ne se remarque pas par son prix, mais par le soin qu’il porte. Les pièces de
+    l’atelier sont fabriquées une à une, dans des cuirs choisis, et votre logo s’y inscrit discrètement, sans
+    rien imposer. Portefeuille pour un dirigeant, sous-main pour un bureau, trousse pour un partenaire qui
+    voyage : la maroquinerie sur mesure permet d’adapter chaque cadeau à la personne qui le reçoit, même en
+    petite quantité.
+arguments:
+  - titre: Dès dix pièces
+    texte: Des séries courtes, pour un cercle de clients choisis.
+  - titre: Une signature discrète
+    texte: Le logo est marqué ton sur ton ou en dorure, jamais imprimé.
+  - titre: Une pièce qui vieillit bien
+    texte: Le cuir se patine et rappelle votre attention, année après année.
+suggestions:
+  titre: Les pièces pour vos clients et partenaires
+  items:
+    - piece: Portefeuille
+      pourquoi: La pièce de caractère, pour un dirigeant ou un client privilégié.
+    - piece: Sous-main ou set de table
+      pourquoi: Une présence élégante sur le bureau de vos partenaires.
+    - piece: Trousse de voyage
+      pourquoi: Pour ceux qui se déplacent, et pensent à vous à chaque voyage.
+preset:
+  piece: Portefeuille
+  cuir: Ébène
+  marquage: Marquage à sec
+  quantite: 20
+  occasion: Cadeaux clients ou partenaires
+  bouton: Composer mon cadeau client
+echeance: ''
+faq:
+  titre: Questions fréquentes
+  items:
+    - question: Peut-on personnaliser chaque pièce au nom du destinataire ?
+      reponse: TODO — réponse à valider avec Armonie (initiales individuelles, coût, délai).
+    - question: Peut-on commander moins de dix pièces ?
+      reponse: TODO — réponse à valider avec Armonie.
