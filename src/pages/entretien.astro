@@ -1,0 +1,94 @@
+---
+/** Entretien et réparation (/entretien) : conseils par cuir, bons gestes, service de réparation, FAQ. */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/ui/Photo.astro';
+import PageHero from '../components/page/PageHero.astro';
+import Faq from '../components/page/Faq.astro';
+import { getEntretien, getSettings, faqJsonLd, breadcrumbJsonLd } from '../lib/content';
+import { ROUTES } from '../lib/routes';
+
+const [page, settings] = await Promise.all([getEntretien(), getSettings()]);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.creations, href: ROUTES.creations }, { label: settings.nav.entretien }];
+---
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
+  jsonLd={[...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <PageHero hero={page.hero} breadcrumb={crumbs} />
+
+  <section class="en-intro bg-light section">
+    <div class="container container--narrow"><p class="en-intro__text serif" data-reveal>{page.intro}</p></div>
+  </section>
+
+  <section class="en-cuirs bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.cuirs.title}</h2>
+      <ul role="list" class="en-cuirs__grid" data-reveal-group="0.12">
+        {page.cuirs.items.map((c) => (
+          <li class="en-cuir" data-reveal>
+            <Photo photo={c.photo} ratio="4 / 3" />
+            <h3>{c.name}</h3>
+            <ul role="list" class="en-cuir__list">{c.conseils.map((t) => <li>{t}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="en-gestes bg-dark section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.gestes.title}</h2>
+      <div class="en-gestes__grid">
+        <div data-reveal>
+          <p class="eyebrow en-gestes__label">{page.gestes.faireLabel}</p>
+          <ul role="list" class="en-gestes__list is-do">{page.gestes.faire.map((t) => <li>{t}</li>)}</ul>
+        </div>
+        <div data-reveal>
+          <p class="eyebrow en-gestes__label">{page.gestes.eviterLabel}</p>
+          <ul role="list" class="en-gestes__list is-dont">{page.gestes.eviter.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="en-repa bg-light section" id="reparation">
+    <div class="container en-repa__grid">
+      <Photo photo={page.reparation.photo} ratio="4 / 5" />
+      <div class="en-repa__text">
+        <h2 data-reveal>{page.reparation.title}</h2>
+        <p data-reveal>{page.reparation.text}</p>
+        <a href={`${ROUTES.contact}?profil=particulier&objet=reparation`} class="btn btn--dark" data-reveal>{page.reparation.button}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="en-faq bg-light section">
+    <div class="container container--narrow"><Faq title={page.faq.title} items={page.faq.items} /></div>
+  </section>
+</Base>
+<style>
+  .en-intro__text { font-size: var(--text-2xl); line-height: 1.3; }
+  .en-cuirs { padding-top: 0; }
+  .en-cuirs__grid { display: grid; gap: var(--space-8) var(--space-5); }
+  .en-cuir { display: grid; gap: var(--space-4); align-content: start; }
+  .en-cuir h3 { font-size: var(--text-2xl); }
+  .en-cuir__list { display: grid; gap: var(--space-3); color: var(--fg-on-light-muted); }
+  .en-cuir__list li { padding-left: var(--space-5); position: relative; }
+  .en-cuir__list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 0.6rem; border-top: 1px dashed var(--accent-on-light); }
+  .en-gestes__grid { display: grid; gap: var(--space-8); }
+  .en-gestes__label { color: var(--sable-500); margin-bottom: var(--space-4); }
+  .en-gestes__list { display: grid; gap: var(--space-4); font-size: var(--text-lg); }
+  .en-gestes__list li { padding-left: var(--space-6); position: relative; }
+  .en-gestes__list li::before { position: absolute; left: 0; color: var(--sable-500); }
+  .is-do li::before { content: '✓'; }
+  .is-dont li::before { content: '×'; }
+  .en-repa__grid { display: grid; gap: var(--space-8); align-items: center; }
+  .en-repa__text { display: grid; gap: var(--space-5); justify-items: start; }
+  .en-repa__text p { color: var(--fg-on-light-muted); max-width: 52ch; }
+  .en-faq { padding-top: 0; }
+  @media (min-width: 48em) {
+    .en-cuirs__grid { grid-template-columns: repeat(3, 1fr); }
+    .en-gestes__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 56em) {
+    .en-repa__grid { grid-template-columns: 1fr 1.2fr; gap: var(--space-10); }
+  }
+</style>

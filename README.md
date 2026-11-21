@@ -25,7 +25,8 @@ Node 20 ou plus récent.
 | `src/assets/logos/` | Logos principal et secondaire (vectoriels, extraits de la charte). |
 | `src/scripts/hotstamp.ts` | Animation signature (marquage à chaud). |
 | `src/scripts/viewer3d.ts` | Visionneuse 3D réutilisable. |
-| `src/pages/` | Pages (accueil, offres, créations, fiche pièce, atelier, contact, mentions légales, 404). |
+| `src/pages/` | Pages : voir le plan du site dans `docs/ARCHITECTURE.md`. |
+| `src/lib/routes.ts` | Adresses et menus (en-tête, menu mobile, pied de page) : source unique. |
 
 Aucun texte n'est écrit en dur dans les composants : tout passe par Keystatic.
 Tant qu'une photo n'est pas fournie, un placeholder neutre au bon ratio affiche la description de la photo attendue
@@ -43,6 +44,12 @@ Tant qu'une photo n'est pas fournie, un placeholder neutre au bon ratio affiche 
 
 Pour mettre une pièce en avant sur l'accueil : **Pages › Accueil › 5. Pièces en vedette** (4 pièces, la première
 est affichée au chargement).
+
+## Ajouter une réalisation (étude de cas pro) ou un article
+
+**Contenus › Réalisations** ou **Contenus › Journal › Add**, remplir, ajouter les photos, cocher **Publiée**, **Save**.
+Un exemple non publié sert de modèle dans chaque collection. Cocher « Mise en avant » sur une réalisation
+pour l'afficher sur la page `/entreprises`.
 
 ## Remplacer un modèle 3D
 

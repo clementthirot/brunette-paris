@@ -1,0 +1,39 @@
+seo:
+  title: Questions fréquentes | Brunette Paris, maroquinerie artisanale
+  description: Fabrication, délais, sur-mesure, commandes d'entreprise, livraison, entretien et réparation. Toutes les réponses de l'atelier Brunette Paris.
+h1: Questions fréquentes
+intro: Les réponses aux questions que l’on me pose le plus souvent. Pour tout le reste, écrivez-moi.
+groupes:
+  - title: L’atelier et la fabrication
+    items:
+      - question: Où sont fabriquées les pièces ?
+        answer: Toutes les pièces sont fabriquées à la main par Armonie, dans son atelier en Île-de-France.
+      - question: D’où viennent les cuirs ?
+        answer: TODO — origine des peaux et des tanneries à confirmer avec Armonie.
+      - question: Qu’est-ce que la couture sellier ?
+        answer: Une couture réalisée à la main avec deux aiguilles sur un même fil. Si un point casse, la couture tient. C’est la signature de la maroquinerie de qualité.
+  - title: Commandes et sur-mesure
+    items:
+      - question: Puis-je commander une pièce sur mesure ?
+        answer: Oui. Toutes les étapes sont détaillées sur la page Sur-mesure, et le premier échange est sans engagement.
+      - question: Une pièce affichée « vendue » peut-elle être refaite ?
+        answer: Les pièces uniques ne sont pas reproduites à l’identique, mais une pièce proche, dans un autre cuir, peut être imaginée pour vous.
+      - question: Quels moyens de paiement acceptez-vous ?
+        answer: TODO — confirmer (virement, carte via lien de paiement sécurisé…).
+  - title: Entreprises
+    items:
+      - question: Travaillez-vous avec les entreprises ?
+        answer: Oui, pour des cadeaux d’entreprise, des accessoires de marque, l’hôtellerie, le golf et les événements. Voir la page Entreprises.
+      - question: Pouvez-vous marquer notre logo ?
+        answer: Oui, en marquage à chaud, en dorure à chaud ou sur un rivet gravé. Jamais d’impression.
+  - title: Livraison, entretien et retours
+    items:
+      - question: Livrez-vous partout en France ?
+        answer: TODO — zones et délais de livraison à confirmer.
+      - question: Comment entretenir ma pièce ?
+        answer: Tous les conseils par type de cuir sont réunis sur la page Entretien du cuir.
+      - question: Puis-je retourner un achat ?
+        answer: TODO — conditions de retour à aligner sur les CGV (les pièces personnalisées ne sont pas reprises).
+contact:
+  text: Vous ne trouvez pas votre réponse ?
+  button: Écrire à l’atelier

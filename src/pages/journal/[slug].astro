@@ -1,0 +1,94 @@
+---
+/** Article du journal : chapeau, couverture, sections (intertitre, texte, photo, citation), pièces liées. */
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import Photo from '../../components/ui/Photo.astro';
+import PieceCard from '../../components/creations/PieceCard.astro';
+import ArticleCard from '../../components/cards/ArticleCard.astro';
+import {
+  getArticles, getJournalPage, getSettings, getPieces, getCreationsPage,
+  articleUrl, paragraphs, formatDate, breadcrumbJsonLd, type Article,
+} from '../../lib/content';
+import { ROUTES } from '../../lib/routes';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  // Une parution presse avec lien externe n'a pas de page propre.
+  return articles.filter((a) => !a.externalUrl).map((a) => ({ params: { slug: a.slug }, props: { article: a, all: articles } }));
+}
+const { article, all } = Astro.props as { article: Article; all: Article[] };
+const [page, settings, pieces, cPage] = await Promise.all([getJournalPage(), getSettings(), getPieces(), getCreationsPage()]);
+const cats = page.categories as Record<string, string>;
+const linked = article.pieces.map((s) => pieces.find((p) => p.slug === s)).filter((p): p is NonNullable<typeof p> => !!p);
+const others = all.filter((a) => a.slug !== article.slug).slice(0, 3);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.journal, href: ROUTES.journal }, { label: article.title }];
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.excerpt,
+  datePublished: article.date,
+  author: { '@type': 'Person', name: 'Armonie', worksFor: { '@id': new URL('/#atelier', Astro.site).href } },
+  image: article.cover.image ? new URL(article.cover.image, Astro.site).href : undefined,
+  mainEntityOfPage: new URL(articleUrl(article.slug), Astro.site).href,
+};
+---
+<Base title={article.seo.title || `${article.title} | Brunette Paris`} description={article.seo.description || article.excerpt}
+  hero="light" image={article.cover.image} jsonLd={[ld, breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <article class="art bg-light">
+    <header class="container container--narrow art__head">
+      <Breadcrumb items={crumbs} />
+      <p class="eyebrow art__meta"><span>{cats[article.category] ?? article.category}</span><time datetime={article.date ?? undefined}>{formatDate(article.date)}</time></p>
+      <h1 class="art__title" data-reveal>{article.title}</h1>
+      {article.excerpt && <p class="art__excerpt serif" data-reveal>{article.excerpt}</p>}
+    </header>
+    <div class="container art__cover"><Photo photo={article.cover} ratio="16 / 9" loading="eager" /></div>
+    <div class="container container--narrow art__body">
+      {article.sections.map((s) => (
+        <section class="art__section">
+          {s.heading && <h2>{s.heading}</h2>}
+          {paragraphs(s.text).map((p) => <p>{p}</p>)}
+          {s.quote && <blockquote class="serif art__quote"><p>« {s.quote} »</p></blockquote>}
+          {(s.photo?.image || s.photo?.placeholder) && <Photo photo={s.photo} ratio="3 / 2" class="art__photo" />}
+        </section>
+      ))}
+    </div>
+  </article>
+
+  {linked.length > 0 && (
+    <section class="art-pieces bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.piecesTitle}</h2>
+        <div class="art-pieces__grid">
+          {linked.map((p) => <PieceCard piece={p} labels={settings.labels} cuirLabel={(cPage.filtres.cuirs as Record<string, string>)[p.leather] ?? p.leather} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {others.length > 0 && (
+    <section class="art-others bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.autres}</h2>
+        <div class="art-others__grid">
+          {others.map((a) => <ArticleCard item={a} categoryLabel={cats[a.category] ?? a.category} readLabel={page.lire} externalLabel={page.externe} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+<style>
+  .art { padding-top: calc(var(--header-h) + var(--space-7)); }
+  .art__head { display: grid; gap: var(--space-4); margin-bottom: var(--space-7); }
+  .art__meta { display: flex; gap: var(--space-4); color: var(--accent-on-light); margin-top: var(--space-4); }
+  .art__title { font-size: var(--text-4xl); }
+  .art__excerpt { font-size: var(--text-xl); line-height: 1.35; color: var(--fg-on-light-muted); }
+  .art__cover { margin-bottom: var(--space-8); }
+  .art__body { display: grid; gap: var(--space-8); padding-bottom: var(--section-y); }
+  .art__section { display: grid; gap: var(--space-4); }
+  .art__section h2 { font-size: var(--text-2xl); }
+  .art__section p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+  .art__quote { font-size: var(--text-2xl); border-left: 1px solid var(--sable-500); padding-left: var(--space-6); margin-block: var(--space-4); }
+  .art-pieces, .art-others { padding-top: 0; }
+  .art-pieces__grid, .art-others__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+</style>

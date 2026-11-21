@@ -2,6 +2,7 @@ seo:
   title: Mentions légales | Brunette Paris
   description: Mentions légales, hébergement et données personnelles du site Brunette Paris, maroquinerie artisanale en Île-de-France.
 h1: Mentions légales
+updated: 2026-11-21
 sections:
   - title: Éditeur du site
     text: TODO — raison sociale, forme juridique, adresse, SIRET, responsable de la publication, email.
@@ -10,4 +11,4 @@ sections:
   - title: Propriété intellectuelle
     text: L’ensemble des contenus de ce site (textes, photographies, logos, modèles 3D) est la propriété de Brunette Paris, sauf mention contraire. Toute reproduction sans autorisation est interdite.
   - title: Données personnelles
-    text: TODO — finalité du formulaire de contact, durée de conservation, prestataire d’envoi (Formspree ou autre), droits d’accès et de suppression, contact.
+    text: Le détail du traitement des données (formulaire de contact, mesure d’audience) figure dans la politique de confidentialité, accessible en pied de page.
