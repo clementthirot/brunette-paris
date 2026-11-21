@@ -1,6 +1,6 @@
 seo:
   title: L'atelier Brunette Paris — maroquinière artisanale en Île-de-France
-  description: Armonie, fondatrice de Brunette Paris, façonne à la main sacs, ceintures et pièces sur mesure dans son atelier de maroquinerie en Île-de-France.
+  description: 'Rencontrez Armonie, maroquinière fondatrice de Brunette Paris : cuirs choisis à la main, coupe au tranchet, couture sellier et marquage à chaud.'
 hero:
   h1: L'atelier
   photo:
@@ -10,34 +10,41 @@ histoire:
   title: Une histoire de mains
   paragraphs:
     - >-
-      Avant le cuir, il y a eu un autre métier, d’autres rythmes. J’ai toujours eu besoin de fabriquer, de
-      comprendre comment les choses tiennent ensemble. Un jour, j’ai poussé la porte d’un atelier de
-      maroquinerie, et je n’en suis jamais vraiment ressortie. (TODO : parcours d’Armonie à rédiger avec elle.)
+      Je m’appelle Armonie. Avant le cuir, il y a eu un autre métier, d’autres rythmes [À CONFIRMER : parcours
+      et date de création de Brunette Paris]. Mais j’ai toujours eu besoin de fabriquer, de comprendre comment
+      les choses tiennent ensemble. Le jour où j’ai poussé la porte d’un atelier de maroquinerie, je n’en suis
+      jamais vraiment ressortie.
     - >-
-      Ce qui m’a saisie, c’est l’odeur, puis le poids d’une peau dans les mains. Le cuir résiste, il se
-      souvient de chaque geste. J’ai appris la coupe au tranchet, la couture sellier à deux aiguilles, la
-      patience des tranches que l’on lisse encore et encore.
+      Ce qui m’a saisie d’abord, c’est l’odeur, puis le poids d’une peau dans les mains. Le cuir résiste, il
+      répond, il garde la mémoire de chaque geste. J’ai appris à le couper au tranchet, à le coudre au point
+      sellier, deux aiguilles croisées dans le même trou, à lisser ses tranches encore et encore jusqu’à ce
+      qu’elles deviennent douces comme un galet.
     - >-
-      Aujourd’hui, chez Brunette Paris, je fabrique chaque pièce entièrement à la main, en Île-de-France.
-      Je préfère la pièce unique ou la petite série à la production : un objet pensé pour quelqu’un, qui
-      vieillira avec lui et portera, longtemps, la trace de la main qui l’a façonné.
+      Aujourd’hui, chez Brunette Paris, chaque pièce sort de mes mains, en Île-de-France. Je préfère la pièce
+      unique ou la petite série à la production : un sac pensé pour quelqu’un, une ceinture coupée à sa taille,
+      un objet qui vieillira avec la personne qui le porte. Et quand une entreprise me confie ses invités ou son
+      nom, j’y mets le même soin qu’à mes propres créations.
   citation: Le cuir se souvient de chaque geste. C’est pour cela que je ne le presse jamais.
 matieres:
   title: Les matières
   hint: Survolez ou touchez la matière pour en révéler le relief.
   items:
     - name: Vache
-      text: Notre cuir de prédilection. Pleine fleur, tanné végétal, il gagne en caractère au fil des années.
+      text: >-
+        Le cuir de la maison. Pleine fleur, ferme ou souple selon la pièce, il fonce et se patine avec les
+        années, jusqu’à devenir tout à fait le vôtre. [À CONFIRMER : tannage végétal et origine des peaux]
       photo:
         alt: Texture de cuir de vache
         placeholder: Macro texture cuir de vache pleine fleur
     - name: Python
-      text: Un relief d’écailles unique, réservé aux pièces d’exception et aux petites séries.
+      text: Un relief d’écailles qui accroche la lumière. Réservé aux pièces d’exception et aux toutes petites séries.
       photo:
         alt: Texture de cuir de python
         placeholder: Macro écailles de python, lumière rasante
     - name: Crocodile
-      text: Utilisé avec parcimonie, pour quelques pièces rares au toucher incomparable.
+      text: >-
+        Travaillé avec parcimonie, pour quelques pièces rares au toucher incomparable. [À CONFIRMER : provenance
+        et certificats CITES]
       photo:
         alt: Texture de cuir de crocodile
         placeholder: Macro écailles de crocodile
@@ -45,32 +52,32 @@ finitions:
   title: Les finitions
   items:
     - name: Rivet gravé
-      phrase: Un rivet en laiton gravé au monogramme de la maison, qui ferme et signe la pièce.
+      phrase: Un rivet en laiton gravé au monogramme de la maison. Il ferme la pièce, et il la signe.
       photo:
         alt: Rivet gravé en laiton
         placeholder: Macro rivet laiton gravé du logo secondaire
     - name: Dorure à chaud
-      phrase: Une feuille d’or pressée à chaud dans le cuir, pour une signature lumineuse et durable.
+      phrase: Une fine feuille d’or pressée à chaud dans le cuir, pour une signature lumineuse qui ne s’efface pas.
       photo:
         alt: Dorure à chaud sur cuir noir
         placeholder: Macro dorure à chaud du logo sur cuir noir
     - name: Marquage à chaud
-      phrase: Le fer chauffé imprime le logo dans la matière, sans aucune couleur ajoutée.
+      phrase: Le fer chauffé imprime le logo en creux dans la matière, sans aucune couleur ajoutée.
       photo:
         alt: Marquage à chaud sur cuir naturel
         placeholder: Macro marquage à chaud du logo sur cuir naturel
 galerie:
   title: L’atelier en images
   photos:
-    - alt: Outils de maroquinerie
+    - alt: Outils de maroquinerie alignés sur l’établi
       placeholder: Outils alignés (tranchet, alênes, griffes)
-    - alt: Établi
+    - alt: Établi de l’atelier Brunette Paris
       placeholder: Vue d’ensemble de l’établi
-    - alt: Mains au travail
+    - alt: Mains d’Armonie cousant au point sellier
       placeholder: Mains au travail, couture sellier
-    - alt: Peaux de cuir
+    - alt: Peaux de cuir roulées à l’atelier
       placeholder: Peaux suspendues ou roulées
-    - alt: Fil et aiguilles
+    - alt: Fil de lin ciré et aiguilles de sellier
       placeholder: Gros plan fil de lin ciré et aiguilles
-    - alt: Fer à marquer
+    - alt: Fer à marquer le logo Brunette Paris
       placeholder: Fer à marquer et presse

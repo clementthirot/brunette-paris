@@ -1,0 +1,135 @@
+---
+/**
+ * Page d'accueil pro (/entreprises) : point d'entrée unique des acheteurs B2B.
+ * Hero · Introduction · Pourquoi un atelier artisanal · Offres · Méthode · Réalisations · FAQ · CTA.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/ui/Photo.astro';
+import StitchSteps from '../../components/ui/StitchSteps.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import Faq from '../../components/page/Faq.astro';
+import PageCta from '../../components/page/PageCta.astro';
+import RealisationCard from '../../components/cards/RealisationCard.astro';
+import {
+  getEntreprisesPage, getOffres, getRealisations, getRealisationsPage, getSettings,
+  offreUrl, paragraphs, faqJsonLd, breadcrumbJsonLd,
+} from '../../lib/content';
+import { ROUTES } from '../../lib/routes';
+
+const [page, offres, realisations, rPage, settings] = await Promise.all([
+  getEntreprisesPage(), getOffres(), getRealisations(), getRealisationsPage(), getSettings(),
+]);
+const featured = realisations.filter((r) => r.featured).slice(0, 3);
+const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }];
+---
+<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
+  jsonLd={[...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <PageHero hero={page.hero} breadcrumb={crumbs} cta={{ label: settings.nav.devis, href: ROUTES.contactPro }} />
+
+  <section class="e-intro bg-light section">
+    <div class="container e-intro__grid">
+      <h2 data-reveal>{page.intro.h2}</h2>
+      <div class="e-intro__text">
+        {paragraphs(page.intro.text).map((p) => <p data-reveal>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="e-why bg-light section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.pourquoi.title}</h2>
+      <ul role="list" class="e-why__grid" data-reveal-group="0.1">
+        {page.pourquoi.items.map((it, i) => (
+          <li class="e-why__item" data-reveal>
+            <span class="e-why__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{it.title}</h3>
+            <p>{it.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="e-offres bg-dark section">
+    <div class="container">
+      <h2 class="section-title" data-reveal>{page.offresTitle}</h2>
+      <ul role="list" class="e-offres__grid" data-reveal-group="0.12">
+        {offres.map((o) => (
+          <li data-reveal>
+            <a href={offreUrl(o.slug)} class="e-offre">
+              <Photo photo={o.card.photo} ratio="3 / 4" />
+              <h3 class="e-offre__title">{o.title}</h3>
+              <p class="e-offre__text">{o.card.phrase}</p>
+              <span class="link-underline e-offre__more">{settings.labels.learnMore}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="e-steps bg-light section">
+    <div class="container e-steps__grid">
+      <h2 class="section-title" data-reveal>{page.etapes.title}</h2>
+      <StitchSteps steps={page.etapes.items} variant="vertical" />
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="e-real bg-light section">
+      <div class="container">
+        <div class="e-real__head">
+          <h2 class="section-title" data-reveal>{page.realisations.title}</h2>
+          <a href={ROUTES.realisations} class="link-underline" data-reveal>{page.realisations.link}</a>
+        </div>
+        <div class="e-real__grid">
+          {featured.map((r) => <RealisationCard item={r} linkLabel={rPage.labels.voir} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="e-faq bg-light section">
+    <div class="container container--narrow">
+      <Faq title={page.faq.title} items={page.faq.items} />
+    </div>
+  </section>
+
+  <PageCta cta={page.cta} />
+</Base>
+
+<style>
+  .e-intro__grid { display: grid; gap: var(--space-6); }
+  .e-intro__grid h2 { max-width: 16ch; }
+  .e-intro__text { display: grid; gap: var(--space-5); max-width: 62ch; }
+  .e-intro__text p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+
+  .e-why { padding-top: 0; }
+  .e-why__grid { display: grid; gap: var(--space-7) var(--space-6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .e-why__item { display: grid; gap: var(--space-3); align-content: start; border-top: 1px solid var(--ink-200); padding-top: var(--space-5); }
+  .e-why__num { font-size: var(--text-xs); letter-spacing: var(--tracking-ui); color: var(--accent-on-light); }
+  .e-why__item h3 { font-size: var(--text-xl); }
+  .e-why__item p { color: var(--fg-on-light-muted); }
+
+  .e-offres__grid { display: grid; gap: var(--space-7) var(--space-5); }
+  .e-offre { display: grid; gap: var(--space-3); }
+  .e-offre__title { font-size: var(--text-2xl); margin-top: var(--space-3); }
+  .e-offre__text { color: var(--fg-on-dark-muted); max-width: 36ch; }
+  .e-offre__more { justify-self: start; font-size: var(--text-sm); }
+
+  .e-steps__grid { display: grid; gap: var(--space-5); }
+
+  .e-real { padding-top: 0; }
+  .e-real__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+  .e-real__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+
+  .e-faq { padding-top: 0; }
+
+  @media (min-width: 48em) {
+    .e-offres__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 56em) {
+    .e-intro__grid { grid-template-columns: 1fr 1.3fr; gap: var(--space-10); }
+    .e-steps__grid { grid-template-columns: 1fr 1.4fr; gap: var(--space-9); align-items: start; }
+  }
+</style>

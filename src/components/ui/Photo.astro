@@ -1,7 +1,9 @@
 ---
 /**
  * Photo éditable dans Keystatic. Tant que l'image n'est pas fournie, affiche un
- * placeholder neutre au bon ratio, avec le libellé de la photo attendue.
+ * « échantillon de cuir » au bon ratio (peau grainée, monogramme marqué, couture)
+ * avec la légende de la photo attendue : le site reste présentable en l'état et
+ * il suffit de déposer l'image dans Keystatic pour la remplacer.
  */
 import type { Photo as PhotoT } from '../../lib/content';
 interface Props {
@@ -14,12 +16,15 @@ interface Props {
 }
 const { photo, ratio = '4 / 5', class: cls = '', loading = 'lazy', sizes, ...rest } = Astro.props;
 const src = photo?.image || null;
-const label = photo?.placeholder || photo?.alt || 'Photo à fournir';
+const label = photo?.placeholder || photo?.alt || '';
 ---
-<div class:list={['ph', cls]} style={`--ratio:${ratio}`} {...rest}>
+<div class:list={['ph', { 'ph--fill': ratio === 'auto' }, cls]} style={`--ratio:${ratio}`} {...rest}>
   {src ? (
     <img src={src} alt={photo?.alt ?? ''} loading={loading} decoding="async" sizes={sizes} />
   ) : (
-    <div class="ph__label" role="img" aria-label={photo?.alt || label}><span>{label}</span></div>
+    <div class="ph__label" role="img" aria-label={photo?.alt || label || 'Photo à venir'}>
+      <span class="ph__mono" aria-hidden="true"></span>
+      <span class="ph__caption" aria-hidden="true"><b>Photo à venir</b>{label && <span>{label}</span>}</span>
+    </div>
   )}
 </div>

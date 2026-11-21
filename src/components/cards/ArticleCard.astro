@@ -1,0 +1,28 @@
+---
+/** Carte article du journal. Une parution presse avec lien externe ouvre directement le site du média. */
+import Photo from '../ui/Photo.astro';
+import { articleUrl, formatDate, type Article } from '../../lib/content';
+interface Props { item: Article; categoryLabel: string; readLabel: string; externalLabel: string }
+const { item, categoryLabel, readLabel, externalLabel } = Astro.props;
+const external = !!item.externalUrl;
+const href = external ? item.externalUrl! : articleUrl(item.slug);
+---
+<article class="a-card" data-category={item.category} data-reveal>
+  <a href={href} class="a-card__link" {...(external ? { target: '_blank', rel: 'noopener' } : {})}>
+    <Photo photo={item.cover} ratio="3 / 2" />
+    <div class="a-card__body">
+      <p class="eyebrow a-card__meta"><span>{categoryLabel}</span><time datetime={item.date ?? undefined}>{formatDate(item.date)}</time></p>
+      <h2 class="a-card__title">{item.title}</h2>
+      {item.excerpt && <p class="a-card__excerpt">{item.excerpt}</p>}
+      <span class="link-underline a-card__more">{external ? externalLabel : readLabel}</span>
+    </div>
+  </a>
+</article>
+<style>
+  .a-card__link { display: grid; gap: var(--space-4); }
+  .a-card__body { display: grid; gap: var(--space-2); }
+  .a-card__meta { display: flex; gap: var(--space-4); color: var(--accent-on-light); }
+  .a-card__title { font-size: var(--text-xl); }
+  .a-card__excerpt { color: var(--fg-on-light-muted); }
+  .a-card__more { justify-self: start; margin-top: var(--space-2); font-size: var(--text-sm); }
+</style>

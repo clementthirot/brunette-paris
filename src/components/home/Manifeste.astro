@@ -1,11 +1,11 @@
 ---
-/** 11.3 Manifeste — fond sombre. Les mots passent un par un de gris foncé à blanc cassé (scrub). */
+/** 11.3 Manifeste — fond bleu reine (charte « sur fond coloré »). Les mots passent un par un de gris foncé à blanc cassé (scrub). */
 interface Chiffre { value?: number | null; suffix?: string; label: string }
 interface Props { phrase: string; chiffres: readonly Chiffre[] }
 const { phrase, chiffres } = Astro.props;
 const words = phrase.split(/\s+/);
 ---
-<section class="manifeste bg-dark section" data-manifeste>
+<section class="manifeste bg-reine section" data-manifeste>
   <div class="container container--narrow">
     <p class="manifeste__phrase serif" aria-label={phrase}>
       {words.map((w) => <span class="manifeste__word" aria-hidden="true">{w} </span>)}
@@ -23,6 +23,23 @@ const words = phrase.split(/\s+/);
   </div>
 </section>
 <style>
+  .manifeste { overflow: hidden; }
+  /* Monogramme géant, à peine marqué dans le fond (comme un gaufrage à sec) */
+  .manifeste::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -12vw;
+    width: min(70vw, 52rem);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    background: var(--reine-600);
+    -webkit-mask: url('../../assets/logos/logo-secondaire.svg') center / contain no-repeat;
+    mask: url('../../assets/logos/logo-secondaire.svg') center / contain no-repeat;
+    filter: drop-shadow(0 1px 0 rgb(255 255 255 / 0.06));
+    pointer-events: none;
+  }
+  .manifeste > .container { position: relative; }
   .manifeste__phrase {
     font-size: var(--text-4xl);
     line-height: 1.12;
@@ -30,7 +47,7 @@ const words = phrase.split(/\s+/);
     text-wrap: balance;
   }
   .manifeste__word { color: var(--fg-on-dark); }
-  :global(html.js) .manifeste__word { color: var(--ink-700); }
+  :global(html.js) .manifeste__word { color: var(--reine-300); }
   .manifeste__chiffres {
     display: grid;
     gap: var(--space-6);
@@ -50,7 +67,7 @@ const words = phrase.split(/\s+/);
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-ui);
     text-transform: uppercase;
-    color: var(--fg-on-dark-muted);
+    color: var(--reine-100);
   }
   .chiffre__label--big {
     font-size: var(--text-xl);

@@ -1,9 +1,9 @@
 ---
-/** Appel à l'action final (11.8), réutilisé sur les pages d'offre (12.7). Fond sombre. */
+/** Appel à l'action final (11.8), réutilisé sur les pages d'offre (12.7). Fond céladon profond (charte « sur fond coloré »). */
 import { getSettings } from '../../lib/content';
 const { ctaFinal, coordonnees } = await getSettings();
 ---
-<section class="cta bg-dark section">
+<section class="cta bg-celadon section">
   <div class="container container--narrow cta__inner" data-reveal-group="0.12">
     <h2 class="cta__title" data-reveal>{ctaFinal.title}</h2>
     <p class="cta__text" data-reveal>{ctaFinal.text}</p>

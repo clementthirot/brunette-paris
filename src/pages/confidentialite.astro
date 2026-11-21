@@ -1,0 +1,6 @@
+---
+import LegalPage from '../components/page/LegalPage.astro';
+import { getConfidentialite } from '../lib/content';
+const page = await getConfidentialite();
+---
+<LegalPage page={page} />
