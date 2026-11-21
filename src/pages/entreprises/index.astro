@@ -12,7 +12,7 @@ import PageCta from '../../components/page/PageCta.astro';
 import RealisationCard from '../../components/cards/RealisationCard.astro';
 import {
   getEntreprisesPage, getOffres, getRealisations, getRealisationsPage, getSettings,
-  offreUrl, paragraphs, faqJsonLd, breadcrumbJsonLd,
+  offreUrl, paragraphs, faqJsonLd,
 } from '../../lib/content';
 import { ROUTES } from '../../lib/routes';
 
@@ -22,8 +22,8 @@ const [page, offres, realisations, rPage, settings] = await Promise.all([
 const featured = realisations.filter((r) => r.featured).slice(0, 3);
 const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }];
 ---
-<Base title={page.seo.title} description={page.seo.description} hero="dark" image={page.hero.photo.image}
-  jsonLd={[...faqJsonLd(page.faq.items), breadcrumbJsonLd(Astro.site, crumbs)]}>
+<Base seo={page.seo} hero="dark" image={page.hero.photo.image}
+  jsonLd={[...faqJsonLd(page.faq.items)]}>
   <PageHero hero={page.hero} breadcrumb={crumbs} cta={{ label: settings.nav.devis, href: ROUTES.contactPro }} />
 
   <section class="e-intro bg-light section">

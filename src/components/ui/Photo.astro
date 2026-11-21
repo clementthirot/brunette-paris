@@ -19,7 +19,7 @@ const { photo, ratio = '4 / 5', class: cls = '', loading = 'lazy', sizes, ...res
 const src = photo?.image || null;
 // Dimensions réelles de l'image (attributs width/height : pas de décalage de mise en page).
 const size = await imageSize(src);
-const label = photo?.placeholder || photo?.alt || 'Photo à fournir';
+const label = photo?.placeholder || photo?.alt || '';
 ---
 <div class:list={['ph', { 'ph--fill': ratio === 'auto' }, cls]} style={`--ratio:${ratio}`} {...rest}>
   {src ? (
