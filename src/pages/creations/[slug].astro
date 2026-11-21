@@ -99,6 +99,7 @@ const askHref = `/contact?piece=${encodeURIComponent(piece.title)}`;
             <details class="fiche__care">
               <summary>{fiche.entretienTitle}<span aria-hidden="true">+</span></summary>
               <p>{fiche.entretienText}</p>
+              <a href="/entretien" class="link-underline fiche__care-link">{settings.nav.entretien}</a>
             </details>
           </div>
         </div>
@@ -143,6 +144,7 @@ const askHref = `/contact?piece=${encodeURIComponent(piece.title)}`;
   .fiche__care[open] summary span { transform: rotate(45deg); }
   .fiche__care summary span { transition: transform var(--dur-base) var(--ease-out); color: var(--accent-on-light); }
   .fiche__care p { padding-bottom: var(--space-4); color: var(--fg-on-light-muted); font-size: var(--text-sm); }
+  .fiche__care-link { display: inline-block; margin-bottom: var(--space-4); font-size: var(--text-sm); }
   .similar { padding-top: var(--space-6); }
   .similar__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); }
   @media (min-width: 56em) {

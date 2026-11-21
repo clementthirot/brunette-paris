@@ -40,7 +40,7 @@ const faqLd = offre.faq.items.length
       <div class="o-hero__shade"></div>
     </div>
     <div class="container o-hero__content">
-      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises }, { label: offre.title }]} />
+      <Breadcrumb items={[{ label: settings.nav.home, href: '/' }, { label: settings.nav.entreprises, href: '/entreprises' }, { label: offre.title }]} />
       <HotStampText text={offre.hero.h1} class="o-hero__title" />
       <p class="o-hero__accroche">{offre.hero.accroche}</p>
       <a href="/contact" class="btn">{settings.nav.devis}</a>

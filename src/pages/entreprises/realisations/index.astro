@@ -1,0 +1,40 @@
+---
+/** Liste des réalisations (études de cas pro). Affiche un texte d'attente tant qu'aucune n'est publiée. */
+import Base from '../../../layouts/Base.astro';
+import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
+import CtaFinal from '../../../components/ui/CtaFinal.astro';
+import RealisationCard from '../../../components/cards/RealisationCard.astro';
+import { getRealisations, getRealisationsPage, getSettings, breadcrumbJsonLd } from '../../../lib/content';
+import { ROUTES } from '../../../lib/routes';
+
+const [page, items, settings] = await Promise.all([getRealisationsPage(), getRealisations(), getSettings()]);
+const crumbs = [
+  { label: settings.nav.home, href: '/' },
+  { label: settings.nav.entreprises, href: ROUTES.entreprises },
+  { label: settings.nav.realisations },
+];
+---
+<Base title={page.seo.title} description={page.seo.description} hero="light" jsonLd={[breadcrumbJsonLd(Astro.site, crumbs)]}>
+  <section class="r-list bg-light">
+    <div class="container">
+      <Breadcrumb items={crumbs} />
+      <h1 class="r-list__title" data-reveal>{page.h1}</h1>
+      <p class="r-list__phrase" data-reveal>{page.phrase}</p>
+      {items.length > 0 ? (
+        <div class="r-list__grid">
+          {items.map((r) => <RealisationCard item={r} linkLabel={page.labels.voir} />)}
+        </div>
+      ) : (
+        <p class="r-list__empty" data-reveal>{page.vide}</p>
+      )}
+    </div>
+  </section>
+  <CtaFinal />
+</Base>
+<style>
+  .r-list { padding-block: calc(var(--header-h) + var(--space-7)) var(--section-y); }
+  .r-list__title { font-size: var(--text-display); margin-top: var(--space-5); }
+  .r-list__phrase { max-width: 52ch; color: var(--fg-on-light-muted); font-size: var(--text-lg); margin-block: var(--space-4) var(--space-8); }
+  .r-list__grid { display: grid; gap: var(--space-8) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
+  .r-list__empty { padding: var(--space-8); border: 1px dashed var(--ink-300, #bbb); max-width: 60ch; color: var(--fg-on-light-muted); }
+</style>

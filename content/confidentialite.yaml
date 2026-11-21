@@ -1,0 +1,18 @@
+seo:
+  title: Politique de confidentialité | Brunette Paris
+  description: Comment Brunette Paris collecte et protège les données personnelles transmises via le site.
+h1: Politique de confidentialité
+updated: 2026-11-21
+sections:
+  - title: Responsable du traitement
+    text: TODO — nom de l’entreprise, adresse, email de contact pour les données personnelles.
+  - title: Données collectées
+    text: Le formulaire de contact recueille votre nom, votre email, et le cas échéant votre téléphone, votre société et le détail de votre projet. Ces données servent uniquement à répondre à votre demande.
+  - title: Prestataires
+    text: TODO — service d’envoi du formulaire (ex. Formspree), hébergeur (Vercel), outil de mesure d’audience s’il y en a un, outil de lettre d’information s’il y en a un.
+  - title: Durée de conservation
+    text: TODO — ex. 3 ans à compter du dernier contact pour les prospects.
+  - title: Vos droits
+    text: Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à l’adresse indiquée ci-dessus. Vous pouvez aussi saisir la CNIL (cnil.fr).
+  - title: Cookies
+    text: TODO — préciser si le site dépose des cookies de mesure d’audience. Sans cookie non essentiel, aucun bandeau n’est nécessaire.

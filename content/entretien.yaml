@@ -1,0 +1,66 @@
+seo:
+  title: Entretenir un sac en cuir, conseils de maroquinière | Brunette Paris
+  description: Comment nourrir, protéger et ranger un sac ou une ceinture en cuir de vache, python ou crocodile. Les conseils de l'atelier Brunette Paris, et son service de réparation.
+hero:
+  eyebrow: Conseils de l’atelier
+  h1: Prendre soin de votre cuir
+  accroche: Un cuir bien entretenu se patine et s’embellit avec les années. Voici les gestes simples que j’applique à l’atelier.
+  photo:
+    alt: Mains appliquant une crème sur un sac en cuir
+    placeholder: Plein cadre, mains appliquant une crème sur un sac en cuir
+intro: Le cuir est une matière vivante. Il réagit à la lumière, à l’humidité, à la chaleur de la main. Quelques attentions suffisent pour qu’il traverse le temps.
+cuirs:
+  title: Selon votre cuir
+  items:
+    - name: Vache pleine fleur
+      conseils:
+        - Dépoussiérer régulièrement avec un chiffon doux et sec.
+        - Nourrir deux à trois fois par an avec une crème incolore adaptée.
+        - Laisser sécher naturellement après la pluie, loin d’un radiateur.
+      photo:
+        alt: Texture de cuir de vache
+        placeholder: Macro texture cuir de vache patiné
+    - name: Python
+      conseils:
+        - Toujours essuyer dans le sens des écailles.
+        - Utiliser un soin spécifique pour reptiles, jamais de crème grasse.
+        - Éviter l’exposition prolongée au soleil, qui ternit les nuances.
+      photo:
+        alt: Texture de cuir de python
+        placeholder: Macro écailles de python
+    - name: Crocodile
+      conseils:
+        - Dépoussiérer délicatement avec un pinceau doux entre les écailles.
+        - Hydrater une fois par an avec un soin pour reptiles.
+        - Ranger à plat ou rembourré pour préserver la forme.
+      photo:
+        alt: Texture de cuir de crocodile
+        placeholder: Macro écailles de crocodile
+gestes:
+  title: Les bons gestes
+  faireLabel: À faire
+  eviterLabel: À éviter
+  faire:
+    - Ranger la pièce dans sa housse en coton, rembourrée de papier de soie.
+    - Tester tout produit sur une zone cachée.
+    - Laisser le cuir respirer, à l’abri de la lumière directe.
+  eviter:
+    - Les sacs plastiques, qui empêchent le cuir de respirer.
+    - Les sources de chaleur directe pour sécher une pièce mouillée.
+    - Les produits ménagers, l’alcool et les lingettes parfumées.
+reparation:
+  title: Réparation et restauration
+  text: Une couture qui lâche, une tranche abîmée, une anse fatiguée ? L’atelier répare les pièces Brunette Paris, et étudie volontiers la restauration de vos autres maroquineries. TODO — confirmer l’offre (pièces de la maison uniquement ou toutes marques, garantie, tarifs).
+  button: Demander une réparation
+  photo:
+    alt: Reprise d’une couture sellier
+    placeholder: Couture sellier en cours de reprise sur une anse
+faq:
+  title: Questions fréquentes
+  items:
+    - question: Mon sac a pris la pluie, que faire ?
+      answer: Épongez sans frotter avec un chiffon sec, rembourrez-le de papier et laissez-le sécher à température ambiante, loin de toute source de chaleur. Nourrissez-le une fois bien sec.
+    - question: Le cuir a foncé avec le temps, est-ce normal ?
+      answer: Oui. Le cuir tanné végétal se patine à la lumière et au toucher. C’est le signe d’une matière noble qui vit avec vous.
+    - question: Quelle crème utiliser ?
+      answer: TODO — recommandation de produit d’Armonie (marque, ou soin vendu à l’atelier).

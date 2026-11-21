@@ -1,42 +1,52 @@
 ---
 import Logo from '../ui/Logo.astro';
-import { offreUrl, type Offre } from '../../lib/content';
+import { type Offre } from '../../lib/content';
+import { footerNav, legalNav } from '../../lib/routes';
 interface Props {
   settings: Awaited<ReturnType<typeof import('../../lib/content').getSettings>>;
   offres: Offre[];
 }
 const { settings, offres } = Astro.props;
-const { nav, footer, reseaux } = settings;
+const { footer, reseaux } = settings;
+const columns = footerNav(settings, offres);
+const legal = legalNav(settings);
+const newsletter = footer.newsletter;
 ---
 <footer class="site-footer bg-dark">
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <Logo variant="secondaire" class="site-footer__logo" />
       <p class="site-footer__tagline">{footer.tagline}</p>
+      {newsletter?.url && (
+        <div class="site-footer__newsletter">
+          <p class="eyebrow">{newsletter.title}</p>
+          <p>{newsletter.text}</p>
+          <a href={newsletter.url} class="link-underline" target="_blank" rel="noopener">{newsletter.button}</a>
+        </div>
+      )}
     </div>
     <nav aria-label="Pied de page" class="site-footer__nav">
-      <div>
-        <p class="eyebrow">{nav.entreprises}</p>
-        <ul role="list">
-          {offres.map((o) => <li><a href={offreUrl(o.slug)}>{o.title}</a></li>)}
-        </ul>
-      </div>
-      <div>
-        <p class="eyebrow">Brunette Paris</p>
-        <ul role="list">
-          <li><a href="/creations">{nav.creations}</a></li>
-          <li><a href="/atelier">{nav.atelier}</a></li>
-          <li><a href="/contact">{nav.contact}</a></li>
-          {reseaux.instagramUrl && (
-            <li><a href={reseaux.instagramUrl} target="_blank" rel="noopener">Instagram {reseaux.instagramHandle}</a></li>
-          )}
-        </ul>
-      </div>
+      {columns.map((col, i) => (
+        <div>
+          <p class="eyebrow">{col.title}</p>
+          <ul role="list">
+            {col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+            {i === columns.length - 1 && reseaux.instagramUrl && (
+              <li><a href={reseaux.instagramUrl} target="_blank" rel="noopener">Instagram {reseaux.instagramHandle}</a></li>
+            )}
+            {i === columns.length - 1 && reseaux.etsyUrl && (
+              <li><a href={reseaux.etsyUrl} target="_blank" rel="noopener">Etsy</a></li>
+            )}
+          </ul>
+        </div>
+      ))}
     </nav>
   </div>
   <div class="container site-footer__bottom">
     <p>{footer.copyright}</p>
-    <a href="/mentions-legales">{footer.legalLabel}</a>
+    <ul role="list" class="site-footer__legal">
+      {legal.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
   </div>
 </footer>
 
@@ -66,7 +76,7 @@ const { nav, footer, reseaux } = settings;
   }
   .site-footer__nav {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     gap: var(--space-6);
   }
   .site-footer__nav .eyebrow {
@@ -97,9 +107,24 @@ const { nav, footer, reseaux } = settings;
     font-size: var(--text-sm);
     color: var(--ink-400);
   }
+  .site-footer__newsletter {
+    display: grid;
+    gap: var(--space-2);
+    max-width: 30ch;
+    color: var(--fg-on-dark-muted);
+    font-size: var(--text-sm);
+  }
+  .site-footer__newsletter .eyebrow {
+    color: var(--sable-500);
+  }
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
   @media (min-width: 48em) {
     .site-footer__grid {
-      grid-template-columns: 1fr 1.4fr;
+      grid-template-columns: 1fr 2fr;
       align-items: start;
     }
   }
