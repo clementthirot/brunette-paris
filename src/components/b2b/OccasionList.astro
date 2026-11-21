@@ -1,0 +1,56 @@
+---
+/**
+ * Liste des pages « cadeaux par occasion », avec un lien vers les réalisations.
+ * Titres : Keystatic › Studio cadeaux › Liens complémentaires.
+ */
+import { getOccasions, getStudio, occasionUrl } from '../../lib/content';
+interface Props { exclude?: string; theme?: 'dark' | 'light' }
+const { exclude, theme = 'light' } = Astro.props;
+const [occasions, studio] = await Promise.all([getOccasions(), getStudio()]);
+const list = occasions.filter((o) => o.slug !== exclude);
+const { liens } = studio;
+---
+{list.length > 0 && (
+  <section class:list={['occ section', theme === 'dark' ? 'bg-dark' : 'bg-light']}>
+    <div class="container">
+      <h2 class="section-title" data-reveal>{liens.occasionsTitre}</h2>
+      <ul role="list" class="occ__grid" data-reveal-group="0.08">
+        {list.map((o, i) => (
+          <li data-reveal>
+            <a href={occasionUrl(o.slug)} class="occ__card">
+              <span class="occ__num nums">{String(i + 1).padStart(2, '0')}</span>
+              <span class="occ__title">{o.title}</span>
+              <span class="occ__text">{o.carte}</span>
+              <span class="occ__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      {liens.realisations && liens.realisationsUrl && (
+        <p class="occ__more" data-reveal><a href={liens.realisationsUrl} class="link-underline">{liens.realisations}</a></p>
+      )}
+    </div>
+  </section>
+)}
+<style>
+  .occ__grid { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .occ__card {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-5);
+    border: 1px solid var(--ink-200);
+    transition: border-color var(--dur-fast), background-color var(--dur-fast);
+  }
+  .bg-dark .occ__card { border-color: var(--ink-700); }
+  .occ__card:hover { border-color: var(--sable-500); background: rgb(225 190 128 / 0.07); }
+  .occ__num { font-family: var(--font-serif); color: var(--accent-on-light); }
+  .bg-dark .occ__num { color: var(--accent); }
+  .occ__title { font-family: var(--font-serif); font-size: var(--text-xl); padding-right: var(--space-5); }
+  .occ__text { font-size: var(--text-sm); color: var(--fg-on-light-muted); }
+  .bg-dark .occ__text { color: var(--fg-on-dark-muted); }
+  .occ__arrow { position: absolute; top: var(--space-5); right: var(--space-5); transition: transform var(--dur-fast); }
+  .occ__card:hover .occ__arrow { transform: translateX(4px); }
+  .occ__more { margin-top: var(--space-6); font-size: var(--text-sm); }
+</style>

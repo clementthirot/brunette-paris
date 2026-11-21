@@ -1,0 +1,60 @@
+title: Cadeaux de séminaire
+order: 2
+seo:
+  title: Cadeaux de séminaire en cuir, personnalisés à votre logo | Brunette Paris
+  description: >-
+    Des cadeaux de séminaire en cuir faits main : porte-clés, étiquettes de bagage, porte-cartes marqués à
+    votre logo. Estimation en ligne, fabrication en Île-de-France.
+hero:
+  eyebrow: Cadeaux d’entreprise · Séminaires et événements
+  h1: Le souvenir que vos invités rapportent
+  accroche: >-
+    Un séminaire réussi se prolonge dans un objet. Offrez à vos participants une pièce en cuir à vos
+    couleurs, faite main pour l’occasion.
+  photo:
+    alt: Cadeaux de séminaire en cuir posés sur une table de réunion
+    placeholder: Table de séminaire dressée, étiquettes de bagage en cuir marquées au logo devant chaque place
+carte: Pour prolonger un événement dans un objet que l’on garde.
+intro:
+  h2: Un cadeau à l’image de votre événement
+  texte: >-
+    Lors d’un séminaire, d’une convention ou d’un lancement, le cadeau d’accueil donne le ton. Une étiquette
+    de bagage en cuir pour un séminaire à l’étranger, un porte-clés pour une convention, un porte-cartes pour
+    une remise de prix : chaque pièce est coupée et cousue à la main, puis marquée au nom de votre événement
+    ou à votre logo. Les petites séries sont la spécialité de l’atelier, avec un prototype à valider avant la
+    fabrication pour être certain du rendu.
+arguments:
+  - titre: Personnalisé à l’événement
+    texte: "Logo, nom de l’événement, date ou lieu : tout se marque dans le cuir."
+  - titre: Petites et moyennes séries
+    texte: De quelques dizaines à quelques centaines de pièces, à la main.
+  - titre: Pensé pour le voyage
+    texte: Des pièces légères, faciles à transporter et à distribuer sur place.
+suggestions:
+  titre: Les pièces idéales pour un séminaire
+  items:
+    - piece: Étiquette de bagage
+      pourquoi: Parfaite pour un séminaire à l’étranger ou un voyage d’entreprise.
+    - piece: Porte-clés
+      pourquoi: Le cadeau d’accueil simple et durable, pour toutes les tailles de groupe.
+    - piece: Porte-cartes
+      pourquoi: Pour une remise de prix ou un cercle plus restreint.
+preset:
+  piece: Étiquette de bagage
+  cuir: Naturel
+  marquage: Marquage à sec
+  quantite: 80
+  occasion: Séminaire ou événement
+  bouton: Composer le cadeau de mon séminaire
+echeance: ''
+faq:
+  titre: Questions fréquentes
+  items:
+    - question: Peut-on marquer le nom et la date de l’événement ?
+      reponse: Oui. Un texte court peut accompagner ou remplacer votre logo, en marquage à sec ou en dorure.
+    - question: Livrez-vous sur le lieu du séminaire ?
+      reponse: TODO — réponse à valider avec Armonie.
+    - question: Quel délai prévoir ?
+      reponse: >-
+        Comptez le délai affiché dans le studio, plus deux semaines pour le prototype. Le calendrier en haut de
+        page indique les dates limites pour les grandes saisons de séminaires.

@@ -1,0 +1,61 @@
+title: Cadeaux de fin d’année
+order: 1
+seo:
+  title: Cadeaux de fin d’année en cuir pour vos équipes et clients | Brunette Paris
+  description: >-
+    Des cadeaux de fin d’année en cuir, faits main en Île-de-France et marqués à votre logo : porte-cartes,
+    porte-clés, trousses. Composez en ligne et recevez une estimation immédiate.
+hero:
+  eyebrow: Cadeaux d’entreprise · Fin d’année
+  h1: Un cadeau de fin d’année que l’on garde
+  accroche: >-
+    Remerciez vos équipes et vos clients avec une pièce en cuir faite main, marquée à votre logo, qui sera
+    encore là l’hiver prochain.
+  photo:
+    alt: Coffrets de cadeaux de fin d’année en cuir
+    placeholder: Coffrets de fin d’année, papier kraft, pièces en cuir marquées d’un logo doré
+carte: Pour remercier vos équipes et vos clients, avec une pièce qui dure.
+intro:
+  h2: Sortir du coffret gourmand
+  texte: >-
+    En fin d’année, les cadeaux d’entreprise se ressemblent souvent et s’oublient vite. Une pièce de
+    maroquinerie, coupée et cousue à la main, raconte autre chose : le soin que vous portez à ceux qui vous
+    entourent. Votre logo y est marqué à chaud ou en dorure, sans encre, et se patine avec le cuir. Un
+    porte-cartes, une trousse ou un porte-clés devient un objet du quotidien, que l’on utilise et que l’on
+    montre. Fabriqués à l’atelier en Île-de-France, en petite série, vos cadeaux de fin d’année gagnent en
+    sens ce qu’ils perdent en banalité.
+arguments:
+  - titre: Utiles tous les jours
+    texte: Des pièces que l’on emporte partout, et votre marque avec elles.
+  - titre: Faits en France, à la main
+    texte: Un argument fort pour vos équipes et pour votre démarche responsable.
+  - titre: Livrés à temps
+    texte: L’atelier s’engage sur une date de livraison dès la validation du prototype.
+suggestions:
+  titre: Les pièces les plus offertes en fin d’année
+  items:
+    - piece: Porte-cartes
+      pourquoi: Le plus offert aux équipes, glissé dans une poche ou un sac.
+    - piece: Trousse de voyage
+      pourquoi: Un cadeau plus généreux pour vos clients et partenaires.
+    - piece: Porte-clés
+      pourquoi: La petite attention, pour de grandes équipes.
+preset:
+  piece: Porte-cartes
+  cuir: Cognac
+  marquage: Dorure or
+  quantite: 50
+  occasion: Fin d’année
+  bouton: Composer mon cadeau de fin d’année
+echeance: Cadeaux de fin d’année
+faq:
+  titre: Questions fréquentes
+  items:
+    - question: Jusqu’à quand peut-on commander pour Noël ?
+      reponse: >-
+        Le bandeau en haut de page indique la date limite de l’année en cours. Après cette date, écrivez-nous
+        quand même : selon les quantités, une solution est souvent possible.
+    - question: Peut-on livrer chaque cadeau à une adresse différente ?
+      reponse: TODO — réponse à valider avec Armonie.
+    - question: Proposez-vous un emballage cadeau ?
+      reponse: TODO — réponse à valider avec Armonie.
