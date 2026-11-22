@@ -1,7 +1,8 @@
 ---
 /**
- * Fiche collaboration (/collaborations/<slug>) : hero, introduction, les deux savoir-faire (Brunette Paris × artisan),
- * chapitres texte + photo en alternance, pièces, galerie (et modèle 3D optionnel), autres collaborations, CTA.
+ * Fiche collaboration (/collaborations/<slug>) : hero, introduction, pièce en 3D (si un .glb est fourni),
+ * les deux savoir-faire (Brunette Paris × artisan), présentation de l'artisan (portrait, logo),
+ * chapitres texte + photo en alternance, pièces, galerie, autres collaborations, CTA.
  */
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/ui/Photo.astro';
@@ -28,6 +29,8 @@ const crumbs = [
 ];
 const sf = item.savoirFaire;
 const hasSavoirFaire = !!(sf.brunette.title || sf.artisan.title);
+const r = item.rencontre;
+const hasRencontre = !!(r.nom && r.text);
 // Données structurées : une page qui présente la collaboration entre l'atelier et un autre artisan.
 const ld = {
   '@context': 'https://schema.org',
@@ -36,7 +39,13 @@ const ld = {
   description: item.resume,
   about: [
     { '@id': businessId(Astro.site) },
-    { '@type': 'Organization', name: item.artisan, ...(item.artisanUrl ? { url: item.artisanUrl } : {}) },
+    {
+      '@type': 'Organization',
+      name: item.artisan,
+      ...(item.artisanUrl ? { url: item.artisanUrl } : {}),
+      ...(item.artisanLogo ? { logo: new URL(item.artisanLogo, Astro.site).href } : {}),
+      ...(item.rencontre.nom ? { founder: { '@type': 'Person', name: item.rencontre.nom, jobTitle: item.rencontre.role || undefined } } : {}),
+    },
   ],
 };
 ---
@@ -49,6 +58,19 @@ const ld = {
       <div class="container container--narrow cd-intro__inner">
         <h2 data-reveal>{item.intro.h2}</h2>
         {paragraphs(item.intro.text).map((p) => <p data-reveal>{p}</p>)}
+      </div>
+    </section>
+  )}
+
+  {item.model3d && (
+    <section class="cd-3d bg-dark section">
+      <div class="container cd-3d__grid">
+        <div class="cd-3d__viewer"><Viewer3D model={item.model3d} /></div>
+        <div class="cd-3d__text" data-reveal>
+          <p class="eyebrow">{page.labels.objet3d}</p>
+          <h2>{item.objet3d.title || item.title}</h2>
+          {paragraphs(item.objet3d.text).map((p) => <p>{p}</p>)}
+        </div>
       </div>
     </section>
   )}
@@ -68,10 +90,30 @@ const ld = {
             <p class="cd-sf__name">{item.artisan}</p>
             <h3>{sf.artisan.title}</h3>
             {paragraphs(sf.artisan.text).map((p) => <p>{p}</p>)}
-            {item.artisanUrl && (
+            {item.artisanUrl && !hasRencontre && (
               <a href={item.artisanUrl} class="link-underline cd-sf__site" target="_blank" rel="noopener">{page.labels.site}</a>
             )}
           </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {hasRencontre && (
+    <section class="cd-meet bg-light section">
+      <div class="container cd-meet__grid">
+        <Photo photo={r.portrait} ratio="4 / 5" class="cd-meet__photo" sizes="(min-width: 52rem) 40vw, 100vw" />
+        <div class="cd-meet__text" data-reveal>
+          {r.title && <p class="eyebrow cd-meet__eyebrow">{r.title}</p>}
+          {item.artisanLogo && (
+            <span class="cd-meet__logo" role="img" aria-label={`Logo ${item.artisan}`} style={`--logo:url('${item.artisanLogo}')`}></span>
+          )}
+          <h2>{r.nom}</h2>
+          {(r.role || r.lieu) && <p class="cd-meet__role">{[r.role, r.lieu].filter(Boolean).join(' · ')}</p>}
+          {paragraphs(r.text).map((p) => <p>{p}</p>)}
+          {item.artisanUrl && (
+            <a href={item.artisanUrl} class="link-underline cd-meet__site" target="_blank" rel="noopener">{page.labels.site}</a>
+          )}
         </div>
       </div>
     </section>
@@ -94,11 +136,10 @@ const ld = {
     </section>
   )}
 
-  {(item.pieces.length > 0 || item.model3d) && (
+  {item.pieces.length > 0 && (
     <section class="cd-pieces bg-celadon-soft section">
       <div class="container">
         <h2 class="section-title" data-reveal>{page.labels.pieces}</h2>
-        {item.model3d && <div class="cd-pieces__viewer"><Viewer3D model={item.model3d} /></div>}
         <div class="cd-pieces__grid">
           {item.pieces.map((p) => (
             <article class="cd-piece" data-reveal>
@@ -160,7 +201,24 @@ const ld = {
   .cd-chap__text p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
   .cd-chap__num { font-size: var(--text-3xl); color: var(--accent-on-light); line-height: 1; }
 
-  .cd-pieces__viewer { max-width: 40rem; margin: 0 auto var(--space-8); }
+  .cd-3d__grid { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 52rem) { .cd-3d__grid { grid-template-columns: 1.3fr 1fr; gap: var(--space-9); } }
+  .cd-3d__viewer { width: 100%; max-width: 44rem; justify-self: center; }
+  .cd-3d__text { display: grid; gap: var(--space-4); max-width: 44ch; }
+  .cd-3d__text .eyebrow { color: var(--sable-500); }
+  .cd-3d__text p:not(.eyebrow) { color: var(--fg-on-dark-muted); font-size: var(--text-lg); }
+
+  .cd-meet__grid { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 52rem) { .cd-meet__grid { grid-template-columns: 1fr 1.1fr; gap: var(--space-9); } }
+  .cd-meet__text { display: grid; gap: var(--space-4); max-width: 50ch; }
+  .cd-meet__eyebrow { color: var(--accent-on-light); }
+  .cd-meet__logo {
+    display: block; width: min(14rem, 100%); height: 2.25rem; background: var(--reine-500, currentColor);
+    -webkit-mask: var(--logo) no-repeat left center / contain; mask: var(--logo) no-repeat left center / contain;
+  }
+  .cd-meet__role { font-size: var(--text-sm); letter-spacing: var(--tracking-ui); text-transform: uppercase; color: var(--fg-on-light-muted); }
+  .cd-meet__text p:not(.eyebrow):not(.cd-meet__role) { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+  .cd-meet__site { justify-self: start; margin-top: var(--space-2); }
   .cd-pieces__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
   .cd-piece { display: grid; gap: var(--space-3); align-content: start; }
   .cd-piece__name { font-size: var(--text-xl); }
