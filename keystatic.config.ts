@@ -371,6 +371,30 @@ export default config({
         artisan: txt('Nom de l’artisan ou de la maison partenaire'),
         metier: txt('Savoir-faire de l’artisan (ex. « Alliages de métal »)'),
         artisanUrl: fields.url({ label: 'Site de l’artisan (optionnel)' }),
+        artisanLogo: fields.image({
+          label: 'Logo de l’artisan (SVG ou PNG détouré, optionnel)',
+          description: 'Affiché d’une seule couleur (sable ou bleu reine selon le fond) : un logo détouré convient mieux.',
+          directory: 'public/images/collaborations',
+          publicPath: '/images/collaborations/',
+        }),
+        rencontre: fields.object(
+          {
+            title: txt('Titre de section (ex. « Rencontre avec l’artisan »)'),
+            nom: txt('Nom de l’artisan (ex. « Michel Valade »)'),
+            role: txt('Fonction (ex. « Menuisier et métallier, fondateur de Metal Nature »)'),
+            lieu: txt('Atelier (ville, département)'),
+            portrait: photo('Portrait de l’artisan', 'collaborations', 'Portrait de l’artisan dans son atelier'),
+            text: para('Présentation (une ligne vide = nouveau paragraphe)'),
+          },
+          { label: 'Présentation de l’artisan' }
+        ),
+        objet3d: fields.object(
+          {
+            title: txt('Titre de la section 3D'),
+            text: para('Texte à côté du modèle 3D'),
+          },
+          { label: 'Pièce en 3D (texte affiché avec le modèle 3D ci-dessous)' }
+        ),
         accroche: para('Accroche (sous le titre)'),
         resume: para('Résumé (carte de la liste et meta description, 155 caractères environ)'),
         cover: photo('Photo principale', 'collaborations', 'Pièce emblématique de la collaboration, cuir et métal réunis'),
@@ -978,6 +1002,7 @@ export default config({
             savoirFaire: txt('Titre : Les deux savoir-faire'),
             pieces: txt('Titre : Les pièces'),
             galerie: txt('Titre : Galerie'),
+            objet3d: txt('Surtitre de la section 3D (ex. « La pièce en 3D »)'),
             site: txt('Lien : Site de l’artisan'),
             autres: txt('Titre : Autres collaborations'),
           },

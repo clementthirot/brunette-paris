@@ -56,8 +56,8 @@ Toutes les meta descriptions font désormais entre 119 et 154 caractères, et co
 - Références clients : à remplir avec les vrais noms et autorisations.
 
 ### Collaborations (Metal Nature)
-- [ ] Date et histoire de la rencontre entre Brunette Paris et Metal Nature, nombre de pièces.
-- [ ] Nature de l’alliage de métal et techniques employées par Metal Nature.
-- [ ] Noms et descriptions des pièces de la collaboration (3 emplacements prévus).
-- [ ] Site de Metal Nature à afficher (champ « Site de l’artisan », laissé vide).
+- [ ] Date et histoire de la rencontre entre Brunette Paris et Metal Nature.
+- [ ] Sac de la collaboration (modèle 3D) : nom, cuir et alliage utilisés, dimensions.
+- [ ] Textes sur Michel Valade repris de metal-nature.com : relecture par Michel (portrait, logo et photo d’atelier viennent aussi de son site).
+- [ ] Photos du sac, des détails cuir/métal et d’Armonie au travail (3 cadres « Photo à venir » restants + photo principale).
 - [ ] Les pièces se découvrent-elles bien « sur rendez-vous » (texte du bouton de fin de page) ?

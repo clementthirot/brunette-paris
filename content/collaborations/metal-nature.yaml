@@ -2,13 +2,14 @@ title: Brunette Paris × Metal Nature
 published: true
 order: 1
 artisan: Metal Nature
-metier: Alliages de métal
-artisanUrl: null
+metier: Menuiserie et métallerie
+artisanUrl: https://metal-nature.com/
+artisanLogo: /images/collaborations/logo-metal-nature.svg
 accroche: La fusion de la maroquinerie et d’un alliage de métal, pour des pièces au design unique.
-resume: Brunette Paris et Metal Nature réunissent le cuir travaillé à la main et un alliage de métal dans des pièces de maroquinerie au design unique.
+resume: Brunette Paris et Metal Nature, l’atelier de Michel Valade à Sannois, réunissent le cuir travaillé à la main et le métal dans des pièces au design unique.
 cover:
-  alt: Pièce de maroquinerie Brunette Paris × Metal Nature, cuir et métal
-  placeholder: Pièce emblématique de la collaboration, cuir et métal réunis, sur fond sombre
+  alt: Sac Brunette Paris × Metal Nature, cuir et métal
+  placeholder: Le sac de la collaboration, cuir et métal réunis, sur fond sombre
 intro:
   h2: Le cuir rencontre le métal
   text: |-
@@ -16,14 +17,35 @@ intro:
 
     De cette rencontre naissent des pièces au design unique, où chaque élément métallique trouve sa place dans le cuir avec la même exigence que la couture qui l’entoure.
 
-    [À CONFIRMER : date de la collaboration, histoire de la rencontre entre les deux ateliers, nombre de pièces.]
+    [À CONFIRMER : date de la collaboration et histoire de la rencontre entre les deux ateliers.]
+objet3d:
+  title: Le sac de la collaboration
+  text: |-
+    Premier fruit de la rencontre entre les deux ateliers, ce sac réunit le cuir de Brunette Paris et le métal façonné par Metal Nature.
+
+    Faites-le tourner pour en découvrir chaque face, la ligne du cuir et la place que le métal y prend.
+
+    [À CONFIRMER : nom du sac, cuir et alliage utilisés, dimensions.]
 savoirFaire:
   brunette:
     title: La maroquinerie Brunette Paris
     text: Le choix des peaux, la coupe, l’assemblage et la couture. Le cuir est préparé et travaillé à la main pour accueillir le métal sans perdre sa souplesse.
   artisan:
     title: Le métal de Metal Nature
-    text: 'Un alliage de métal façonné par Metal Nature, qui apporte sa matière, son éclat et sa signature aux pièces. [À CONFIRMER : nature de l’alliage et techniques employées.]'
+    text: Metal Nature allie menuiserie et métallerie pour fabriquer des meubles sur mesure à la fois beaux et robustes, au design organique et brut. Pour cette collaboration, son savoir-faire du métal rejoint le cuir.
+rencontre:
+  title: Rencontre avec l’artisan
+  nom: Michel Valade
+  role: Menuisier et métallier, fondateur de Metal Nature
+  lieu: Sannois, Val-d’Oise
+  portrait:
+    image: /images/collaborations/michel-valade-metal-nature.webp
+    alt: Portrait de Michel Valade, menuisier et métallier, fondateur de Metal Nature
+    placeholder: Portrait de Michel Valade dans son atelier
+  text: |-
+    Autrefois exclusivement menuisier, Michel a enrichi son parcours en devenant également métallier. Dans son atelier de Sannois, il crée des meubles sur mesure qui allient le bois et le métal avec délicatesse et précision.
+
+    Ses pièces, comme la Bibliothèque Pont inspirée des grands ponts suspendus, confient à chaque matériau le rôle qu’il tient le mieux. C’est ce même regard qu’il porte aujourd’hui sur le cuir, aux côtés de Brunette Paris.
 chapitres:
   - title: Une fusion de matières
     text: Le métal n’est pas un simple ornement posé sur le cuir. Il fait partie de la pièce, pensé dès le dessin pour s’accorder à ses lignes, à son poids et à son usage.
@@ -35,29 +57,16 @@ chapitres:
     photo:
       alt: Croquis et prototypes de la collaboration
       placeholder: Croquis, gabarits en carton et éléments en métal posés sur l’établi
-pieces:
-  - nom: '[À CONFIRMER : nom de la pièce]'
-    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
-    photo:
-      alt: Pièce de la collaboration Brunette Paris × Metal Nature
-      placeholder: Première pièce de la collaboration, photographiée de face
-  - nom: '[À CONFIRMER : nom de la pièce]'
-    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
-    photo:
-      alt: Pièce de la collaboration Brunette Paris × Metal Nature
-      placeholder: Deuxième pièce de la collaboration, détail du métal
-  - nom: '[À CONFIRMER : nom de la pièce]'
-    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
-    photo:
-      alt: Pièce de la collaboration Brunette Paris × Metal Nature
-      placeholder: Troisième pièce de la collaboration, portée ou en situation
+pieces: []
 galerie:
+  - image: /images/collaborations/atelier-metal-nature-sannois.webp
+    alt: L’atelier de Michel Valade à Sannois, machines, établis et outillage
+    placeholder: L’atelier Metal Nature à Sannois
   - alt: L’atelier Brunette Paris pendant la collaboration
-    placeholder: Armonie au travail sur une pièce de la collaboration
-  - alt: Le travail du métal chez Metal Nature
-    placeholder: Façonnage de l’élément en métal dans l’atelier Metal Nature
+    placeholder: Armonie au travail sur le sac de la collaboration
   - alt: Les deux matières réunies
     placeholder: Cuir et métal côte à côte, avant l’assemblage
+model3d: /models/collaborations/sac-metal-nature.glb
 cta:
   title: Une pièce cuir et métal pour vous
   text: Les pièces de la collaboration se découvrent sur rendez-vous. Écrivez-nous pour en savoir plus ou imaginer une pièce sur mesure.
