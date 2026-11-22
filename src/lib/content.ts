@@ -27,10 +27,12 @@ export const getSurMesure = () => must(reader.singletons.surMesure.read(), 'surM
 export const getEntretien = () => must(reader.singletons.entretien.read(), 'entretien');
 export const getFaq = () => must(reader.singletons.faq.read(), 'faq');
 export const getJournalPage = () => must(reader.singletons.journalPage.read(), 'journalPage');
+export const getCollaborationsPage = () => must(reader.singletons.collaborationsPage.read(), 'collaborationsPage');
 
 export type Piece = Awaited<ReturnType<typeof getPieces>>[number];
 export type Offre = Awaited<ReturnType<typeof getOffres>>[number];
 export type Realisation = Awaited<ReturnType<typeof getRealisations>>[number];
+export type Collaboration = Awaited<ReturnType<typeof getCollaborations>>[number];
 export type Article = Awaited<ReturnType<typeof getArticles>>[number];
 export type Photo = { image: string | null; alt: string; placeholder: string };
 
@@ -58,6 +60,15 @@ export async function getRealisations() {
     .filter(({ entry }) => entry.published)
     .map(({ slug, entry }) => ({ slug, ...entry }))
     .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+}
+
+/** Collaborations publiées, dans l'ordre choisi dans Keystatic. */
+export async function getCollaborations() {
+  const all = await reader.collections.collaborations.all();
+  return all
+    .filter(({ entry }) => entry.published)
+    .map(({ slug, entry }) => ({ slug, ...entry }))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 /** Articles du journal publiés, les plus récents en premier. */
@@ -112,6 +123,7 @@ export async function studioLink(preset: { piece?: string; cuir?: string; marqua
 }
 export const pieceUrl = (slug: string) => `/creations/${slug}`;
 export const realisationUrl = (slug: string) => `/entreprises/realisations/${slug}`;
+export const collaborationUrl = (slug: string) => `/collaborations/${slug}`;
 export const articleUrl = (slug: string) => `/journal/${slug}`;
 
 /** Données structurées FAQPage (Google) à partir d'une liste de questions. */

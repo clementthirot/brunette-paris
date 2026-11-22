@@ -16,6 +16,7 @@ export const ROUTES = {
   creations: '/creations',
   surMesure: '/sur-mesure',
   atelier: '/atelier',
+  collaborations: '/collaborations',
   entretien: '/entretien',
   journal: '/journal',
   faq: '/faq',
@@ -30,7 +31,7 @@ export const ROUTES = {
 export interface NavLink { label: string; href: string }
 export interface NavItem extends NavLink { children?: NavLink[] }
 
-/** Menu principal : Entreprises ▾ · Créations ▾ · L'atelier ▾ · Contact. */
+/** Menu principal : Entreprises ▾ · Créations ▾ · L'atelier ▾ (atelier, collaborations, journal, FAQ) · Contact. */
 export function mainNav(settings: Settings, offres: Offre[]): NavItem[] {
   const { nav } = settings;
   return [
@@ -59,6 +60,7 @@ export function mainNav(settings: Settings, offres: Offre[]): NavItem[] {
       href: ROUTES.atelier,
       children: [
         { label: nav.atelier, href: ROUTES.atelier },
+        { label: nav.collaborations, href: ROUTES.collaborations },
         { label: nav.journal, href: ROUTES.journal },
         { label: nav.faq, href: ROUTES.faq },
       ],
@@ -93,6 +95,7 @@ export function footerNav(settings: Settings, offres: Offre[]): { title: string;
       title: footer.maisonTitle,
       links: [
         { label: nav.atelier, href: ROUTES.atelier },
+        { label: nav.collaborations, href: ROUTES.collaborations },
         { label: nav.journal, href: ROUTES.journal },
         { label: nav.faq, href: ROUTES.faq },
         { label: nav.contact, href: ROUTES.contact },

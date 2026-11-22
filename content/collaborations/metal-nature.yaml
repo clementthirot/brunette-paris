@@ -1,0 +1,65 @@
+title: Brunette Paris × Metal Nature
+published: true
+order: 1
+artisan: Metal Nature
+metier: Alliages de métal
+artisanUrl: null
+accroche: La fusion de la maroquinerie et d’un alliage de métal, pour des pièces au design unique.
+resume: Brunette Paris et Metal Nature réunissent le cuir travaillé à la main et un alliage de métal dans des pièces de maroquinerie au design unique.
+cover:
+  alt: Pièce de maroquinerie Brunette Paris × Metal Nature, cuir et métal
+  placeholder: Pièce emblématique de la collaboration, cuir et métal réunis, sur fond sombre
+intro:
+  h2: Le cuir rencontre le métal
+  text: |-
+    Le cuir est souple, chaleureux, vivant. Le métal est dense, froid, durable. Avec Metal Nature, Brunette Paris a choisi de réunir ces deux matières que tout oppose, en associant la maroquinerie à un alliage de métal.
+
+    De cette rencontre naissent des pièces au design unique, où chaque élément métallique trouve sa place dans le cuir avec la même exigence que la couture qui l’entoure.
+
+    [À CONFIRMER : date de la collaboration, histoire de la rencontre entre les deux ateliers, nombre de pièces.]
+savoirFaire:
+  brunette:
+    title: La maroquinerie Brunette Paris
+    text: Le choix des peaux, la coupe, l’assemblage et la couture. Le cuir est préparé et travaillé à la main pour accueillir le métal sans perdre sa souplesse.
+  artisan:
+    title: Le métal de Metal Nature
+    text: 'Un alliage de métal façonné par Metal Nature, qui apporte sa matière, son éclat et sa signature aux pièces. [À CONFIRMER : nature de l’alliage et techniques employées.]'
+chapitres:
+  - title: Une fusion de matières
+    text: Le métal n’est pas un simple ornement posé sur le cuir. Il fait partie de la pièce, pensé dès le dessin pour s’accorder à ses lignes, à son poids et à son usage.
+    photo:
+      alt: Détail de l’assemblage du cuir et du métal
+      placeholder: Macro de la jonction entre le cuir et l’élément en métal
+  - title: Des designs uniques
+    text: Chaque pièce de la collaboration est dessinée à quatre mains. Le résultat est singulier, loin des modèles de série, et porte la marque des deux ateliers.
+    photo:
+      alt: Croquis et prototypes de la collaboration
+      placeholder: Croquis, gabarits en carton et éléments en métal posés sur l’établi
+pieces:
+  - nom: '[À CONFIRMER : nom de la pièce]'
+    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
+    photo:
+      alt: Pièce de la collaboration Brunette Paris × Metal Nature
+      placeholder: Première pièce de la collaboration, photographiée de face
+  - nom: '[À CONFIRMER : nom de la pièce]'
+    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
+    photo:
+      alt: Pièce de la collaboration Brunette Paris × Metal Nature
+      placeholder: Deuxième pièce de la collaboration, détail du métal
+  - nom: '[À CONFIRMER : nom de la pièce]'
+    description: '[À CONFIRMER : description courte, cuir et alliage utilisés.]'
+    photo:
+      alt: Pièce de la collaboration Brunette Paris × Metal Nature
+      placeholder: Troisième pièce de la collaboration, portée ou en situation
+galerie:
+  - alt: L’atelier Brunette Paris pendant la collaboration
+    placeholder: Armonie au travail sur une pièce de la collaboration
+  - alt: Le travail du métal chez Metal Nature
+    placeholder: Façonnage de l’élément en métal dans l’atelier Metal Nature
+  - alt: Les deux matières réunies
+    placeholder: Cuir et métal côte à côte, avant l’assemblage
+cta:
+  title: Une pièce cuir et métal pour vous
+  text: Les pièces de la collaboration se découvrent sur rendez-vous. Écrivez-nous pour en savoir plus ou imaginer une pièce sur mesure.
+  button: Nous écrire
+  href: /contact

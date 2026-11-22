@@ -22,6 +22,8 @@ Keystatic › Réglages globaux › Navigation / Pied de page.
 │
 ├── L'ATELIER ▾
 │   ├── /atelier                        Histoire, matières, finitions, galerie
+│   ├── /collaborations                 NOUVEAU · collaborations avec d’autres artisans (Keystatic › Collaborations)
+│   ├── /collaborations/<slug>          NOUVEAU · fiche collaboration (deux savoir-faire, chapitres, pièces, galerie). 1re : Metal Nature
 │   ├── /journal                        NOUVEAU · coulisses, savoir-faire, conseils, presse (filtres par rubrique)
 │   ├── /journal/<article>              NOUVEAU · article (sections, pièces liées). Une parution presse peut pointer vers le média.
 │   └── /faq                            NOUVEAU · FAQ générale par thèmes, sommaire d'ancres

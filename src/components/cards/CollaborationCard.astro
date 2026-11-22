@@ -1,0 +1,32 @@
+---
+/** Carte collaboration : grande photo, surtitre (savoir-faire de l’artisan), titre, résumé. Alterne photo à gauche / à droite. */
+import Photo from '../ui/Photo.astro';
+import { collaborationUrl, type Collaboration } from '../../lib/content';
+interface Props { item: Collaboration; linkLabel: string; reverse?: boolean }
+const { item, linkLabel, reverse = false } = Astro.props;
+---
+<article class:list={['co-card', { 'co-card--reverse': reverse }]} data-reveal>
+  <a href={collaborationUrl(item.slug)} class="co-card__link" data-cursor-label="Voir">
+    <Photo photo={item.cover} ratio="4 / 3" class="co-card__photo" />
+    <div class="co-card__body">
+      {item.metier && <p class="eyebrow co-card__metier">{item.metier}</p>}
+      <h3 class="co-card__title">{item.title}</h3>
+      {item.resume && <p class="co-card__resume">{item.resume}</p>}
+      <span class="link-underline co-card__more">{linkLabel}</span>
+    </div>
+  </a>
+</article>
+<style>
+  .co-card__link { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 52rem) {
+    .co-card__link { grid-template-columns: 1.2fr 1fr; gap: var(--space-9); }
+    .co-card--reverse .co-card__link :global(.co-card__photo) { order: 2; }
+  }
+  .co-card__body { display: grid; gap: var(--space-3); }
+  .co-card__metier { color: var(--accent-on-light); }
+  .co-card__title { font-size: var(--text-3xl); line-height: 1.1; }
+  .co-card__resume { color: var(--fg-on-light-muted); font-size: var(--text-lg); max-width: 48ch; }
+  .co-card__more { justify-self: start; margin-top: var(--space-2); font-size: var(--text-sm); }
+  .co-card__link :global(.ph) { transition: transform var(--dur-base) var(--ease-out); }
+  .co-card__link:hover :global(.ph) { transform: scale(0.985); }
+</style>

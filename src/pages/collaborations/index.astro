@@ -1,0 +1,61 @@
+---
+/**
+ * Collaborations avec d'autres artisans (/collaborations) : hero, introduction, liste des collaborations
+ * publiées (ajoutées dans Keystatic › Collaborations), appel aux artisans.
+ */
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import PageCta from '../../components/page/PageCta.astro';
+import CollaborationCard from '../../components/cards/CollaborationCard.astro';
+import { getCollaborationsPage, getCollaborations, getSettings, paragraphs, collaborationUrl } from '../../lib/content';
+import { absolute } from '../../lib/seo';
+import { ROUTES } from '../../lib/routes';
+
+const [page, items, settings] = await Promise.all([getCollaborationsPage(), getCollaborations(), getSettings()]);
+const crumbs = [
+  { label: settings.nav.home, href: '/' },
+  { label: settings.nav.atelier, href: ROUTES.atelier },
+  { label: settings.nav.collaborations },
+];
+const listLd = items.length
+  ? [{
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: page.hero.h1,
+      itemListElement: items.map((c, i) => ({
+        '@type': 'ListItem', position: i + 1, name: c.title, url: absolute(collaborationUrl(c.slug), Astro.site),
+      })),
+    }]
+  : [];
+---
+<Base seo={page.seo} hero="dark" image={page.hero.photo.image} imageAlt={page.hero.photo.alt} jsonLd={listLd}>
+  <PageHero hero={page.hero} breadcrumb={crumbs} />
+
+  <section class="co-intro bg-light section">
+    <div class="container container--narrow co-intro__inner">
+      <h2 data-reveal>{page.intro.h2}</h2>
+      {paragraphs(page.intro.text).map((p) => <p data-reveal>{p}</p>)}
+    </div>
+  </section>
+
+  <section class="co-list bg-light section">
+    <div class="container">
+      {items.length > 0 ? (
+        <div class="co-list__items">
+          {items.map((c, i) => <CollaborationCard item={c} linkLabel={page.labels.voir} reverse={i % 2 === 1} />)}
+        </div>
+      ) : (
+        <p class="co-list__empty" data-reveal>{page.vide}</p>
+      )}
+    </div>
+  </section>
+
+  <PageCta cta={page.cta} />
+</Base>
+<style>
+  .co-intro__inner { display: grid; gap: var(--space-4); text-align: center; justify-items: center; }
+  .co-intro__inner p { color: var(--fg-on-light-muted); font-size: var(--text-lg); max-width: 60ch; }
+  .co-list { padding-top: 0; }
+  .co-list__items { display: grid; gap: var(--space-9); }
+  .co-list__empty { padding: var(--space-8); border: 1px dashed var(--ink-300, #bbb); max-width: 60ch; margin-inline: auto; color: var(--fg-on-light-muted); }
+</style>
