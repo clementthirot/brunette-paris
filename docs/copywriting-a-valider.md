@@ -54,3 +54,10 @@ Toutes les meta descriptions font désormais entre 119 et 154 caractères, et co
 ## Non traité ici
 - Mentions légales : les TODO (SIRET, adresse, RGPD) demandent les informations réelles de l’entreprise.
 - Références clients : à remplir avec les vrais noms et autorisations.
+
+### Collaborations (Metal Nature)
+- [ ] Date et histoire de la rencontre entre Brunette Paris et Metal Nature, nombre de pièces.
+- [ ] Nature de l’alliage de métal et techniques employées par Metal Nature.
+- [ ] Noms et descriptions des pièces de la collaboration (3 emplacements prévus).
+- [ ] Site de Metal Nature à afficher (champ « Site de l’artisan », laissé vide).
+- [ ] Les pièces se découvrent-elles bien « sur rendez-vous » (texte du bouton de fin de page) ?

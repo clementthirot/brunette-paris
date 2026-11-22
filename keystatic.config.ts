@@ -135,11 +135,11 @@ export default config({
   ui: {
     brand: { name: 'Brunette Paris' },
     navigation: {
-      'Pages principales': ['home', 'entreprisesPage', 'realisationsPage', 'creationsPage', 'surMesure', 'atelier', 'contact'],
+      'Pages principales': ['home', 'entreprisesPage', 'realisationsPage', 'creationsPage', 'surMesure', 'atelier', 'collaborationsPage', 'contact'],
       'Entreprises : outils': ['studio', 'echantillons', 'occasions', 'calendrier'],
       'Pages ressources': ['entretien', 'faq', 'journalPage'],
       'Pages légales': ['legal', 'confidentialite', 'cgv'],
-      'Contenus': ['pieces', 'offres', 'realisations', 'articles', 'references'],
+      'Contenus': ['pieces', 'offres', 'realisations', 'collaborations', 'articles', 'references'],
       'Réglages': ['settings'],
     },
   },
@@ -351,6 +351,71 @@ export default config({
     }),
 
     // -----------------------------------------------------------------------
+    collaborations: collection({
+      label: 'Collaborations (avec d’autres artisans)',
+      slugField: 'title',
+      path: 'content/collaborations/*',
+      format: { data: 'yaml' },
+      columns: ['title', 'artisan', 'order'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Titre de la collaboration (ex. « Brunette Paris × Metal Nature »)' },
+          slug: { label: 'Adresse de la page', description: 'Page publiée sous /collaborations/<slug>' },
+        }),
+        published: fields.checkbox({
+          label: 'Publiée',
+          description: 'Décocher pour garder la collaboration en brouillon (elle n’apparaît nulle part sur le site).',
+          defaultValue: false,
+        }),
+        order: fields.integer({ label: 'Ordre d’affichage (1 = en premier)', defaultValue: 1 }),
+        artisan: txt('Nom de l’artisan ou de la maison partenaire'),
+        metier: txt('Savoir-faire de l’artisan (ex. « Alliages de métal »)'),
+        artisanUrl: fields.url({ label: 'Site de l’artisan (optionnel)' }),
+        accroche: para('Accroche (sous le titre)'),
+        resume: para('Résumé (carte de la liste et meta description, 155 caractères environ)'),
+        cover: photo('Photo principale', 'collaborations', 'Pièce emblématique de la collaboration, cuir et métal réunis'),
+        intro: fields.object(
+          { h2: txt('Titre'), text: para('Texte (une ligne vide = nouveau paragraphe)') },
+          { label: 'Introduction' }
+        ),
+        savoirFaire: fields.object(
+          {
+            brunette: fields.object({ title: txt('Titre'), text: para('Texte') }, { label: 'Côté Brunette Paris' }),
+            artisan: fields.object({ title: txt('Titre'), text: para('Texte') }, { label: 'Côté artisan' }),
+          },
+          { label: 'Les deux savoir-faire' }
+        ),
+        chapitres: fields.array(
+          fields.object({
+            title: txt('Titre'),
+            text: para('Texte'),
+            photo: photo('Photo', 'collaborations'),
+          }),
+          { label: 'Chapitres (texte + photo, en alternance)', itemLabel: (p) => p.fields.title.value || 'Chapitre' }
+        ),
+        pieces: fields.array(
+          fields.object({
+            nom: txt('Nom de la pièce'),
+            description: para('Description courte'),
+            photo: photo('Photo', 'collaborations'),
+          }),
+          { label: 'Pièces de la collaboration', itemLabel: (p) => p.fields.nom.value || 'Pièce' }
+        ),
+        galerie: fields.array(photo('Photo', 'collaborations'), {
+          label: 'Galerie (coulisses, détails)',
+          itemLabel: (p) => p.fields.alt.value || p.fields.placeholder.value || 'Photo',
+        }),
+        model3d: fields.file({
+          label: 'Modèle 3D (fichier .glb, optionnel)',
+          directory: 'public/models/collaborations',
+          publicPath: '/models/collaborations/',
+          validation: { isRequired: false },
+        }),
+        cta: pageCta(),
+      },
+    }),
+
+    // -----------------------------------------------------------------------
     articles: collection({
       label: 'Journal (articles, coulisses, presse)',
       slugField: 'title',
@@ -525,6 +590,7 @@ export default config({
             surMesure: txt('Menu : Sur-mesure'),
             entretien: txt('Menu : Entretien'),
             journal: txt('Menu : Journal'),
+            collaborations: txt('Menu : Collaborations'),
             faq: txt('Menu : FAQ'),
             devis: txt('Bouton : Demander un devis'),
             menuOpen: txt('Bouton menu mobile (ouvrir)'),
@@ -893,6 +959,34 @@ export default config({
     }),
 
     // -----------------------------------------------------------------------
+    collaborationsPage: singleton({
+      label: 'Page Collaborations',
+      path: 'content/collaborations-page',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        hero: pageHero('Photo du hero', 'collaborations', 'Mains de deux artisans sur le même établi, cuir et métal'),
+        intro: fields.object(
+          { h2: txt('Titre'), text: para('Texte (une ligne vide = nouveau paragraphe)') },
+          { label: 'Introduction' }
+        ),
+        vide: para('Texte affiché tant qu’aucune collaboration n’est publiée'),
+        labels: fields.object(
+          {
+            collaboration: txt('Surtitre des fiches (ex. « Collaboration »)'),
+            voir: txt('Lien : Découvrir la collaboration'),
+            savoirFaire: txt('Titre : Les deux savoir-faire'),
+            pieces: txt('Titre : Les pièces'),
+            galerie: txt('Titre : Galerie'),
+            site: txt('Lien : Site de l’artisan'),
+            autres: txt('Titre : Autres collaborations'),
+          },
+          { label: 'Libellés' }
+        ),
+        cta: pageCta(),
+      },
+    }),
+
     realisationsPage: singleton({
       label: 'Liste des réalisations',
       path: 'content/realisations-page',

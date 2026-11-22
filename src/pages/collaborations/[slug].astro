@@ -1,0 +1,172 @@
+---
+/**
+ * Fiche collaboration (/collaborations/<slug>) : hero, introduction, les deux savoir-faire (Brunette Paris × artisan),
+ * chapitres texte + photo en alternance, pièces, galerie (et modèle 3D optionnel), autres collaborations, CTA.
+ */
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/ui/Photo.astro';
+import Viewer3D from '../../components/ui/Viewer3D.astro';
+import PageHero from '../../components/page/PageHero.astro';
+import PageCta from '../../components/page/PageCta.astro';
+import CollaborationCard from '../../components/cards/CollaborationCard.astro';
+import { getCollaborations, getCollaborationsPage, getSettings, paragraphs, type Collaboration } from '../../lib/content';
+import { businessId } from '../../lib/seo';
+import { ROUTES } from '../../lib/routes';
+
+export async function getStaticPaths() {
+  const items = await getCollaborations();
+  return items.map((item) => ({ params: { slug: item.slug }, props: { item, all: items } }));
+}
+const { item, all } = Astro.props as { item: Collaboration; all: Collaboration[] };
+const [page, settings] = await Promise.all([getCollaborationsPage(), getSettings()]);
+const others = all.filter((c) => c.slug !== item.slug).slice(0, 2);
+const crumbs = [
+  { label: settings.nav.home, href: '/' },
+  { label: settings.nav.atelier, href: ROUTES.atelier },
+  { label: settings.nav.collaborations, href: ROUTES.collaborations },
+  { label: item.artisan || item.title },
+];
+const sf = item.savoirFaire;
+const hasSavoirFaire = !!(sf.brunette.title || sf.artisan.title);
+// Données structurées : une page qui présente la collaboration entre l'atelier et un autre artisan.
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: item.title,
+  description: item.resume,
+  about: [
+    { '@id': businessId(Astro.site) },
+    { '@type': 'Organization', name: item.artisan, ...(item.artisanUrl ? { url: item.artisanUrl } : {}) },
+  ],
+};
+---
+<Base title={`${item.title} | Collaboration | Brunette Paris`} description={item.resume} hero="dark"
+  image={item.cover.image} imageAlt={item.cover.alt} jsonLd={[ld]}>
+  <PageHero hero={{ eyebrow: [page.labels.collaboration, item.metier].filter(Boolean).join(' · '), h1: item.title, accroche: item.accroche, photo: item.cover }} breadcrumb={crumbs} size="tall" />
+
+  {item.intro.h2 && (
+    <section class="cd-intro bg-light section">
+      <div class="container container--narrow cd-intro__inner">
+        <h2 data-reveal>{item.intro.h2}</h2>
+        {paragraphs(item.intro.text).map((p) => <p data-reveal>{p}</p>)}
+      </div>
+    </section>
+  )}
+
+  {hasSavoirFaire && (
+    <section class="cd-sf bg-reine section">
+      <div class="container">
+        <h2 class="eyebrow cd-sf__eyebrow" data-reveal>{page.labels.savoirFaire}</h2>
+        <div class="cd-sf__grid" data-reveal-group="0.15">
+          <div class="cd-sf__col" data-reveal>
+            <p class="cd-sf__name">Brunette Paris</p>
+            <h3>{sf.brunette.title}</h3>
+            {paragraphs(sf.brunette.text).map((p) => <p>{p}</p>)}
+          </div>
+          <span class="cd-sf__x serif" aria-hidden="true" data-reveal>×</span>
+          <div class="cd-sf__col" data-reveal>
+            <p class="cd-sf__name">{item.artisan}</p>
+            <h3>{sf.artisan.title}</h3>
+            {paragraphs(sf.artisan.text).map((p) => <p>{p}</p>)}
+            {item.artisanUrl && (
+              <a href={item.artisanUrl} class="link-underline cd-sf__site" target="_blank" rel="noopener">{page.labels.site}</a>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {item.chapitres.length > 0 && (
+    <section class="cd-chap bg-light section">
+      <div class="container cd-chap__list">
+        {item.chapitres.map((c, i) => (
+          <div class:list={['cd-chap__row', { 'cd-chap__row--reverse': i % 2 === 1 }]}>
+            <Photo photo={c.photo} ratio="4 / 5" class="cd-chap__photo" />
+            <div class="cd-chap__text" data-reveal>
+              <span class="cd-chap__num serif" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h2>{c.title}</h2>
+              {paragraphs(c.text).map((p) => <p>{p}</p>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {(item.pieces.length > 0 || item.model3d) && (
+    <section class="cd-pieces bg-celadon-soft section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.labels.pieces}</h2>
+        {item.model3d && <div class="cd-pieces__viewer"><Viewer3D model={item.model3d} /></div>}
+        <div class="cd-pieces__grid">
+          {item.pieces.map((p) => (
+            <article class="cd-piece" data-reveal>
+              <Photo photo={p.photo} ratio="1" />
+              <h3 class="cd-piece__name">{p.nom}</h3>
+              {p.description && <p class="cd-piece__desc">{p.description}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {item.galerie.length > 0 && (
+    <section class="cd-gal bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.labels.galerie}</h2>
+        <div class="cd-gal__grid">
+          {item.galerie.map((p, i) => <Photo photo={p} ratio={i % 3 === 0 ? '4 / 5' : '1'} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {others.length > 0 && (
+    <section class="cd-others bg-light section">
+      <div class="container">
+        <h2 class="section-title" data-reveal>{page.labels.autres}</h2>
+        <div class="cd-others__list">
+          {others.map((c, i) => <CollaborationCard item={c} linkLabel={page.labels.voir} reverse={i % 2 === 1} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <PageCta cta={item.cta?.title ? item.cta : page.cta} />
+</Base>
+<style>
+  .cd-intro__inner { display: grid; gap: var(--space-4); }
+  .cd-intro__inner p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+
+  .cd-sf__eyebrow { text-align: center; margin-bottom: var(--space-7); color: var(--fg-on-dark-muted); }
+  .cd-sf__grid { display: grid; gap: var(--space-6); align-items: start; }
+  @media (min-width: 52rem) { .cd-sf__grid { grid-template-columns: 1fr auto 1fr; gap: var(--space-8); } }
+  .cd-sf__col { display: grid; gap: var(--space-3); }
+  .cd-sf__col p { color: var(--fg-on-dark-muted); }
+  .cd-sf__col h3 { font-size: var(--text-2xl); }
+  .cd-sf__name { font-size: var(--text-sm); letter-spacing: var(--tracking-ui); text-transform: uppercase; }
+  .cd-sf__x { font-size: clamp(3rem, 8vw, 6rem); line-height: 1; color: var(--sable-500); justify-self: center; align-self: center; }
+  .cd-sf__site { justify-self: start; margin-top: var(--space-2); }
+
+  .cd-chap__list { display: grid; gap: var(--space-9); }
+  .cd-chap__row { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 52rem) {
+    .cd-chap__row { grid-template-columns: 1fr 1fr; gap: var(--space-9); }
+    .cd-chap__row--reverse :global(.cd-chap__photo) { order: 2; }
+  }
+  .cd-chap__text { display: grid; gap: var(--space-4); max-width: 46ch; }
+  .cd-chap__text p { color: var(--fg-on-light-muted); font-size: var(--text-lg); }
+  .cd-chap__num { font-size: var(--text-3xl); color: var(--accent-on-light); line-height: 1; }
+
+  .cd-pieces__viewer { max-width: 40rem; margin: 0 auto var(--space-8); }
+  .cd-pieces__grid { display: grid; gap: var(--space-7) var(--space-5); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+  .cd-piece { display: grid; gap: var(--space-3); align-content: start; }
+  .cd-piece__name { font-size: var(--text-xl); }
+  .cd-piece__desc { color: var(--fg-on-light-muted); }
+
+  .cd-gal { padding-bottom: var(--space-7); }
+  .cd-gal__grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); align-items: start; }
+  .cd-others__list { display: grid; gap: var(--space-9); }
+</style>

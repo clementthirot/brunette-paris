@@ -1,0 +1,30 @@
+seo:
+  title: Collaborations entre artisans | Brunette Paris
+  description: Brunette Paris s’associe à d’autres artisans pour créer des pièces de maroquinerie uniques. Découvrez les collaborations de l’atelier, dont Metal Nature.
+hero:
+  eyebrow: Collaborations
+  h1: Quand deux mains se rencontrent
+  accroche: Le cuir dialogue avec d’autres matières et d’autres savoir-faire. Chaque collaboration est une rencontre d’ateliers, et donne naissance à des pièces qu’aucun des deux n’aurait imaginées seul.
+  photo:
+    alt: Deux artisans au travail sur le même établi
+    placeholder: Mains de deux artisans sur le même établi, cuir et métal côte à côte
+intro:
+  h2: Croiser les métiers
+  text: |-
+    La maroquinerie est un métier de patience et de précision. Lorsqu’elle rencontre un autre savoir-faire, elle s’ouvre à de nouvelles formes, de nouvelles textures et de nouveaux gestes.
+
+    Ces collaborations naissent d’une estime mutuelle entre artisans. Elles sont pensées à quatre mains, du premier croquis à la dernière couture.
+vide: Les premières collaborations arrivent bientôt. Vous êtes artisan et souhaitez imaginer une pièce avec l’atelier ? Écrivez-nous.
+labels:
+  collaboration: Collaboration
+  voir: Découvrir la collaboration
+  savoirFaire: Deux savoir-faire
+  pieces: Les pièces
+  galerie: Dans les ateliers
+  site: Découvrir l’artisan
+  autres: Autres collaborations
+cta:
+  title: Vous êtes artisan ?
+  text: L’atelier aime croiser les matières et les métiers. Parlons de la pièce que nous pourrions créer ensemble.
+  button: Proposer une collaboration
+  href: /contact
