@@ -12,7 +12,8 @@ hero:
     Pour un client fidèle, un partenaire de longue date ou la signature d’un contrat, une pièce de
     maroquinerie faite main dit merci avec justesse.
   photo:
-    alt: Portefeuille en cuir marqué d’un logo, offert à un client
+    alt: Portefeuille en cuir fauve et empiècement façon python
+    image: /src/assets/images/occasions/clients-partenaires-portefeuille.jpg
     placeholder: Portefeuille en cuir dans son emballage, carte manuscrite posée dessus
 carte: Pour un client fidèle, un partenaire ou une signature importante.
 intro:

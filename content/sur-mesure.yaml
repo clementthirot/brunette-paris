@@ -6,7 +6,8 @@ hero:
   h1: Une pièce pensée pour vous seul
   accroche: Un sac à vos mesures, une ceinture gravée de vos initiales, un cadeau qui n’existe qu’une fois. Racontez-moi votre idée, je la fabrique à la main.
   photo:
-    alt: Échantillons de cuir présentés à une cliente
+    alt: Pièces d’un sac sur mesure découpées sur l’établi, cuir bleu et doré
+    image: /src/assets/images/sur-mesure/hero-pieces-decoupees.jpg
     placeholder: Plein cadre, Armonie présente des échantillons de cuir à une cliente
 intro:
   h2: Le sur-mesure, simplement
@@ -15,7 +16,8 @@ intro:
 
     Le sur-mesure commence toujours par un échange. Ensemble, nous choisissons la forme, le cuir, le fil et les finitions. Je réalise ensuite la pièce entièrement à la main, à l’atelier, et je vous tiens informé à chaque étape.
   photo:
-    alt: Croquis et gabarit papier d’un sac
+    alt: Gabarit papier et pièces de cuir découpées pour un modèle sur mesure
+    image: /src/assets/images/sur-mesure/intro-gabarit.jpg
     placeholder: Vertical, croquis et gabarit papier d’un sac sur l’établi
 projets:
   title: Ce que je peux créer pour vous
@@ -23,22 +25,26 @@ projets:
     - title: Un sac à votre image
       text: Besace, cabas, pochette du soir, aux dimensions et aux couleurs de votre choix.
       photo:
-        alt: Sac sur mesure en cours de fabrication
+        alt: Sac sur mesure en cours d’assemblage, outils à côté
+        image: /src/assets/images/sur-mesure/projet-sac-assemblage.jpg
         placeholder: Carré, sac en cours d’assemblage
     - title: Une pièce existante, réinventée
       text: Une création du catalogue déclinée dans un autre cuir, une autre teinte, une autre taille.
       photo:
-        alt: Variantes de couleurs de cuir
+        alt: Porte-cartes déclinés dans plusieurs cuirs et couleurs
+        image: /src/assets/images/sur-mesure/projet-variantes-cuirs.jpg
         placeholder: Carré, nuancier de cuirs autour d’une pièce
     - title: Un cadeau personnalisé
       text: Initiales en dorure ou marquage à chaud, date gravée, pour un mariage, une naissance, un départ.
       photo:
-        alt: Initiales dorées sur cuir
+        alt: Trousse en cuir rose personnalisée au prénom Jade
+        image: /src/assets/images/sur-mesure/projet-personnalisation-prenom.jpg
         placeholder: Carré, macro d’initiales en dorure à chaud
     - title: Un accessoire de passion
       text: Étui de golf, couverture de vinyle, porte-partition, protège-appareil photo.
       photo:
-        alt: Accessoire de passion en cuir
+        alt: Vase habillé de lanières de cuir orange et noir, pièce unique
+        image: /src/assets/images/sur-mesure/projet-objet-cuir.jpg
         placeholder: Carré, étui de golf ou couverture de vinyle sur mesure
 etapes:
   title: Les étapes de votre commande

@@ -34,7 +34,7 @@ export type Offre = Awaited<ReturnType<typeof getOffres>>[number];
 export type Realisation = Awaited<ReturnType<typeof getRealisations>>[number];
 export type Collaboration = Awaited<ReturnType<typeof getCollaborations>>[number];
 export type Article = Awaited<ReturnType<typeof getArticles>>[number];
-export type Photo = { image: string | null; alt: string; placeholder: string };
+export type Photo = { image: string | null; alt: string; placeholder: string; position?: string };
 
 export async function getPieces() {
   const all = await reader.collections.pieces.all();

@@ -6,7 +6,8 @@ seo:
 card:
   phrase: Bar à ceintures et ateliers de personnalisation, installés au cœur de vos séminaires et de vos soirées.
   photo:
-    alt: Bar à ceintures installé lors d’un séminaire
+    alt: Ceintures en cuir bleu, brun et noir, boucles assorties
+    image: /src/assets/images/offres/evenements-carte-ceintures.jpg
     placeholder: Bar à ceintures en événement, cuirs et boucles présentés sur table (vertical)
 hero:
   h1: Ateliers cuir pour vos événements
@@ -39,12 +40,14 @@ pointsCles:
     - title: Bar à ceintures
       text: Vos invités composent leur ceinture, du cuir à la boucle, et la voient prendre forme en direct, à leur taille.
       photo:
-        alt: Bar à ceintures
+        alt: Ceinture en cuir verni noir et boucle argentée
+        image: /src/assets/images/offres/evenements-bar-ceintures.jpg
         placeholder: Carré, présentoir de ceintures et boucles
     - title: Porte-clés personnalisés
       text: Une petite pièce rapide à personnaliser, idéale pour les grands groupes, les salons et les lancements.
       photo:
-        alt: Porte-clés en cuir personnalisés
+        alt: Porte-clés en cuir colorés et cousus main
+        image: /src/assets/images/offres/evenements-porte-cles.jpg
         placeholder: Carré, porte-clés en cuir alignés avec initiales
     - title: Étiquettes de bagage
       text: Un compagnon de voyage utile et durable, marqué au nom de chaque participant. Parfait pour un incentive.
@@ -54,7 +57,8 @@ pointsCles:
     - title: Marquage de prénoms et initiales
       text: Marquage à chaud ou dorure, réalisé sur place, sur la pièce de votre choix ou sur vos propres cadeaux.
       photo:
-        alt: Marquage d’initiales à chaud
+        alt: Chiffres marqués à chaud dans des médaillons de cuir
+        image: /src/assets/images/offres/evenements-marquage.jpg
         placeholder: Carré, gros plan fer à marquer sur cuir
     - title: Atelier découverte du cuir
       text: "Une initiation en petit groupe aux gestes du maroquinier : coupe, couture sellier, finitions. Chacun repart avec l’objet qu’il a cousu."
@@ -77,17 +81,20 @@ galerie:
   photos:
     - alt: Atelier cuir nomade lors d’une soirée d’entreprise
       placeholder: Atelier nomade en soirée d’entreprise
-    - alt: Boucles de ceinture en laiton
+    - alt: Ceinture réversible bleu marine, boucle argentée
+      image: /src/assets/images/offres/evenements-galerie-boucle.jpg
       placeholder: Gros plan boucles de ceinture laiton
     - alt: Invitée gravant ses initiales sur le cuir
       placeholder: Invitée gravant ses initiales
-    - alt: Ceintures personnalisées terminées
+    - alt: Ceinture en cuir bleu marine et boucle dorée
+      image: /src/assets/images/offres/evenements-galerie-ceinture.jpg
       placeholder: Ceintures terminées alignées sur l’établi
     - alt: Atelier cuir sur un salon professionnel
       placeholder: Stand atelier en salon professionnel
     - alt: Mains et outils sur l’établi nomade
       placeholder: Mains et outils sur l’établi nomade
-    - alt: Porte-clés en cuir gravés
+    - alt: Porte-clés chat en cuir, fabriqués en France
+      image: /src/assets/images/offres/evenements-galerie-porte-cles.jpg
       placeholder: Porte-clés gravés posés dans une coupelle
 faq:
   title: Questions fréquentes

@@ -6,3 +6,6 @@ dist/
 .env.*
 !.env.example
 .DS_Store
+
+# Photos sources et planches contact (non versionnées)
+_sources/

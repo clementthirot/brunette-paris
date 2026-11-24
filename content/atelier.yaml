@@ -4,7 +4,9 @@ seo:
 hero:
   h1: L'atelier
   photo:
-    alt: Portrait d’Armonie à l’atelier
+    alt: Armonie au travail à son établi, dans l’atelier Brunette Paris
+    image: /src/assets/images/atelier/hero-armonie-etabli.jpg
+    position: 15% 35%
     placeholder: Portrait d’Armonie à son établi, lumière de fenêtre
 histoire:
   title: Une histoire de mains
@@ -34,19 +36,22 @@ matieres:
         Le cuir de la maison. Pleine fleur, ferme ou souple selon la pièce, il fonce et se patine avec les
         années, jusqu’à devenir tout à fait le vôtre. [À CONFIRMER : tannage végétal et origine des peaux]
       photo:
-        alt: Texture de cuir de vache
+        alt: Cuir de vache grainé vert d’eau, en gros plan
+        image: /src/assets/images/atelier/matiere-cuir-vache-graine.jpg
         placeholder: Macro texture cuir de vache pleine fleur
     - name: Python
       text: Un relief d’écailles qui accroche la lumière. Réservé aux pièces d’exception et aux toutes petites séries.
       photo:
-        alt: Texture de cuir de python
+        alt: Écailles de cuir façon python aux reflets cuivrés
+        image: /src/assets/images/atelier/matiere-python.jpg
         placeholder: Macro écailles de python, lumière rasante
     - name: Crocodile
       text: >-
         Travaillé avec parcimonie, pour quelques pièces rares au toucher incomparable. [À CONFIRMER : provenance
         et certificats CITES]
       photo:
-        alt: Texture de cuir de crocodile
+        alt: Ceinture en cuir grain crocodile bleu marine et boucle dorée
+        image: /src/assets/images/atelier/matiere-crocodile.jpg
         placeholder: Macro écailles de crocodile
 finitions:
   title: Les finitions
@@ -59,25 +64,34 @@ finitions:
     - name: Dorure à chaud
       phrase: Une fine feuille d’or pressée à chaud dans le cuir, pour une signature lumineuse qui ne s’efface pas.
       photo:
-        alt: Dorure à chaud sur cuir noir
+        alt: Logo doré marqué à chaud sur un portefeuille en cuir noir
+        image: /src/assets/images/atelier/finition-dorure-cuir-noir.jpg
+        position: 30% 50%
         placeholder: Macro dorure à chaud du logo sur cuir noir
     - name: Marquage à chaud
       phrase: Le fer chauffé imprime le logo en creux dans la matière, sans aucune couleur ajoutée.
       photo:
-        alt: Marquage à chaud sur cuir naturel
+        alt: Étiquette Brunette marquée à chaud dans un cuir naturel
+        image: /src/assets/images/atelier/finition-marquage-cuir-naturel.jpg
         placeholder: Macro marquage à chaud du logo sur cuir naturel
 galerie:
   title: L’atelier en images
   photos:
-    - alt: Outils de maroquinerie alignés sur l’établi
+    - alt: Outils de maroquinerie accrochés au mur de l’atelier
+      image: /src/assets/images/atelier/galerie-outils-mur.jpg
       placeholder: Outils alignés (tranchet, alênes, griffes)
-    - alt: Établi de l’atelier Brunette Paris
+    - alt: Sac en cours de fabrication sur l’établi, entouré des outils
+      image: /src/assets/images/atelier/galerie-etabli-sac-en-cours.jpg
       placeholder: Vue d’ensemble de l’établi
-    - alt: Mains d’Armonie cousant au point sellier
+    - alt: Mains d’Armonie assemblant un sac en cuir bleu
+      image: /src/assets/images/atelier/galerie-mains-assemblage.jpg
       placeholder: Mains au travail, couture sellier
-    - alt: Peaux de cuir roulées à l’atelier
+    - alt: Cuir brun découpé pour un portefeuille, avant l’assemblage
+      image: /src/assets/images/atelier/galerie-cuir-decoupe-portefeuille.jpg
       placeholder: Peaux suspendues ou roulées
-    - alt: Fil de lin ciré et aiguilles de sellier
+    - alt: Alêne et lanières de cuir brun sur l’établi
+      image: /src/assets/images/atelier/galerie-alene-lanieres.jpg
       placeholder: Gros plan fil de lin ciré et aiguilles
-    - alt: Fer à marquer le logo Brunette Paris
+    - alt: Armonie à la machine à coudre de l’atelier
+      image: /src/assets/images/atelier/galerie-armonie-machine.jpg
       placeholder: Fer à marquer et presse
