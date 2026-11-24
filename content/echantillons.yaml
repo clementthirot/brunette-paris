@@ -21,7 +21,8 @@ contenu:
     - titre: Une fiche de l’atelier
       texte: Les pièces possibles, les quantités et les délais, pour préparer votre projet en interne.
   photo:
-    alt: Kit d’échantillons de cuir Brunette Paris
+    alt: Échantillons de cuirs et de tissus disposés sur l’établi
+    image: /src/assets/images/echantillons/kit-nuancier.jpg
     placeholder: Kit d’échantillons ouvert sur un bureau, nuancier de cuirs et plaque marquée d’un logo
   # TODO : conditions à valider avec Armonie (gratuité, zone, délai d’envoi).
   condition: >-

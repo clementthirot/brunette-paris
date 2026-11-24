@@ -19,7 +19,8 @@ Node 20 ou plus récent.
 | --- | --- |
 | `keystatic.config.ts` | Modèle de données : pièces, offres, références, pages, réglages. |
 | `content/` | Tous les textes (YAML), modifiés via Keystatic. |
-| `public/images/` | Photos ajoutées depuis Keystatic. |
+| `src/assets/images/` | Photos du site (ajoutées depuis Keystatic ou à la main), optimisées par Astro au build. Choix et justification : `docs/selection-photos.md`. |
+| `public/images/` | Anciennes images servies telles quelles (logos de références, collaborations, images de partage). |
 | `public/models/` | Modèles 3D `.glb` ajoutés depuis Keystatic. |
 | `src/styles/tokens.css` | Tokens de design : nuanciers, typographies, espacements. |
 | `src/assets/logos/` | Logos principal et secondaire (vectoriels, extraits de la charte). |

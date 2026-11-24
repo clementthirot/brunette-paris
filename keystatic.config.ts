@@ -20,10 +20,15 @@ const photo = (label: string, dir: string, placeholder = '') =>
     {
       image: fields.image({
         label: 'Image',
-        directory: `public/images/${dir}`,
-        publicPath: `/images/${dir}/`,
+        // Dans src/assets : Astro optimise l'image au build (WebP, tailles adaptées à l'écran).
+        directory: `src/assets/images/${dir}`,
+        publicPath: `/src/assets/images/${dir}/`,
       }),
       alt: fields.text({ label: 'Texte alternatif (accessibilité et référencement)' }),
+      position: fields.text({
+        label: 'Cadrage (optionnel)',
+        description: 'Point de la photo à garder visible quand elle est recadrée, ex. « 50% 30% » (horizontal, vertical) ou « left top ». Vide : centré.',
+      }),
       placeholder: fields.text({
         label: 'Photo attendue (texte affiché tant que l’image n’est pas fournie)',
         defaultValue: placeholder,

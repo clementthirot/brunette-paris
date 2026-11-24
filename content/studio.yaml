@@ -28,7 +28,8 @@ pieces:
     quantiteMin: 20
     delaiSemaines: 3
     photo:
-      alt: Porte-clés en cuir marqué d’un logo
+      alt: Porte-clés chat en cuir argenté
+      image: /src/assets/images/studio/porte-cles.jpg
       placeholder: Porte-clés en cuir, fond neutre
   - nom: Porte-cartes
     texte: Fin, cousu main, glissé dans une poche de veste. Le cadeau collaborateur par excellence.
@@ -38,7 +39,8 @@ pieces:
     quantiteMin: 15
     delaiSemaines: 4
     photo:
-      alt: Porte-cartes en cuir
+      alt: Porte-cartes en cuir doré et poulain léopard
+      image: /src/assets/images/studio/porte-cartes.jpg
       placeholder: Porte-cartes en cuir, fond neutre
   - nom: Étiquette de bagage
     texte: Pour les voyageurs, les clients d’un hôtel ou les invités d’un séjour d’entreprise.
@@ -58,7 +60,8 @@ pieces:
     quantiteMin: 10
     delaiSemaines: 5
     photo:
-      alt: Portefeuille en cuir
+      alt: Portefeuille en cuir brun, ouvert
+      image: /src/assets/images/studio/portefeuille.jpg
       placeholder: Portefeuille en cuir, fond neutre
   - nom: Protège-club de golf
     texte: Pour un trophée, un tournoi d’entreprise ou la boutique d’un golf.
@@ -78,7 +81,8 @@ pieces:
     quantiteMin: 10
     delaiSemaines: 5
     photo:
-      alt: Trousse de voyage en cuir
+      alt: Pochette en cuir et daim bleu nuit
+      image: /src/assets/images/studio/trousse.jpg
       placeholder: Trousse de voyage en cuir, fond neutre
   - nom: Sous-main ou set de table
     texte: Pour les bureaux d’une direction, les chambres d’un hôtel ou les tables d’un restaurant.

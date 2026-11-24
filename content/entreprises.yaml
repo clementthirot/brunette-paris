@@ -6,7 +6,8 @@ hero:
   h1: Un atelier de maroquinerie au service de votre marque
   accroche: Des pièces en cuir pensées pour vos clients, vos équipes et vos lieux, cousues à la main en Île-de-France, de l’exemplaire unique à la petite série.
   photo:
-    alt: Pièces en cuir marquées au logo d’une marque sur l’établi
+    alt: Porte-clés en cuir noir marqués au logo d’un client
+    image: /src/assets/images/entreprises/hero-porte-cles-logo.jpg
     placeholder: Plein cadre, pièces marquées au logo d’une marque sur l’établi
 intro:
   h2: Un interlocuteur, de l’idée à la livraison

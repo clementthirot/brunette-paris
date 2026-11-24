@@ -4,7 +4,7 @@
  * vérifications Search Console / Bing et données structurées JSON-LD.
  */
 import { SITE_NAME, DEFAULT_OG_IMAGE, isIndexable, absolute, absoluteFile } from '../../lib/seo';
-import { imageSize } from '../../lib/images';
+import { imageSize, resolveAsset, shareImage } from '../../lib/images';
 
 interface Props {
   title: string;
@@ -37,8 +37,12 @@ const canonical = absolute(Astro.url.pathname, Astro.site);
 const robots = noindex || !isIndexable ? 'noindex, follow' : 'index, follow, max-image-preview:large';
 
 const ogSrc = image || defaultImage || DEFAULT_OG_IMAGE.src;
-const ogUrl = absoluteFile(ogSrc, Astro.site);
-const ogSize = ogSrc === DEFAULT_OG_IMAGE.src ? DEFAULT_OG_IMAGE : await imageSize(ogSrc);
+// Photo de src/assets : version JPG 1200 px générée par Astro (le chemin source n'est pas servi tel quel).
+const ogShared = resolveAsset(ogSrc) ? await shareImage(ogSrc) : null;
+const ogUrl = absoluteFile(ogShared?.src ?? ogSrc, Astro.site);
+const ogSize = ogShared?.width
+  ? { width: ogShared.width, height: ogShared.height! }
+  : ogSrc === DEFAULT_OG_IMAGE.src ? DEFAULT_OG_IMAGE : await imageSize(ogSrc);
 // La description de l'image ne suit que l'image de la page ; sinon, celle de l'image par défaut.
 const ogAlt = (image && imageAlt) || (ogSrc === DEFAULT_OG_IMAGE.src ? DEFAULT_OG_IMAGE.alt : title);
 ---

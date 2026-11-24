@@ -5,7 +5,9 @@ hero:
   h1: Maroquinerie artisanale, faite main à Paris
   subtitle: Pièces uniques et ateliers sur mesure pour les entreprises et les particuliers, coupés et cousus à la main par Armonie.
   photo:
-    alt: Mains d’Armonie travaillant le cuir à l’établi
+    alt: L’établi de l’atelier Brunette Paris, cuirs et outils à portée de main
+    image: /src/assets/images/accueil/hero-etabli-atelier.jpg
+    position: 50% 60%
     placeholder: Plein cadre, mains travaillant le cuir à l’établi (photo ou vidéo)
 entree:
   entreprises:
@@ -13,14 +15,16 @@ entree:
     text: Un atelier cuir au cœur de vos séminaires, des cadeaux qui portent votre nom, des pièces dessinées pour votre marque ou votre établissement.
     button: Découvrir nos offres
     photo:
-      alt: Atelier de personnalisation cuir lors d’un séminaire
+      alt: Série de porte-cartes en cuir bleu, fabriqués à l’atelier
+      image: /src/assets/images/accueil/entree-entreprises-serie-porte-cartes.jpg
       placeholder: Atelier de personnalisation en événement, invités autour du poste de travail
   particuliers:
     title: Pour vous
     text: Des pièces uniques ou en très petites séries, pensées puis cousues à la main, faites pour durer et se patiner.
     button: Voir les créations
     photo:
-      alt: Sac en cuir fait main posé sur l’établi
+      alt: Sac à main en cuir fauve et noir, fait main à l’atelier
+      image: /src/assets/images/accueil/entree-particuliers-sac-fauve.jpg
       placeholder: Sac en cuir fini, lumière naturelle, fond d’atelier
 manifeste:
   phrase: Chaque pièce porte la trace de la main qui l’a façonnée.
@@ -52,22 +56,27 @@ savoirFaire:
     - title: Le choix du cuir
       text: Chaque peau est choisie à la main, pour son grain, sa tenue et la manière dont elle vieillira.
       photo:
-        alt: Peaux de cuir sélectionnées
+        alt: Peau de cuir vert sélectionnée, à la lumière de l’atelier
+        image: /src/assets/images/accueil/etape-1-peau-de-cuir.jpg
         placeholder: Peaux de cuir empilées, main qui en éprouve le grain
     - title: La coupe
       text: Tracée sur gabarit, chaque pièce est découpée au tranchet, en suivant le sens de la peau.
       photo:
-        alt: Découpe du cuir au tranchet
+        alt: Pièces de cuir noir découpées sur le tapis de coupe
+        image: /src/assets/images/accueil/etape-2-decoupe.jpg
         placeholder: Gros plan tranchet découpant le cuir sur gabarit
     - title: La couture main
       text: "Le point sellier : deux aiguilles, un fil ciré, une couture qui tient même si un point cède."
       photo:
-        alt: Couture au point sellier
+        alt: Couture sellier à la main sur un cuir bordeaux
+        image: /src/assets/images/accueil/etape-3-couture-sellier.jpg
         placeholder: Gros plan mains + couture sellier
     - title: Le marquage
       text: Rivet gravé, dorure ou marquage à chaud signent la pièce, sans aucune couleur imprimée.
       photo:
-        alt: Marquage à chaud du logo dans le cuir
+        alt: Logo Brunette marqué à chaud en doré sur une pochette
+        image: /src/assets/images/accueil/etape-4-marquage-dore.jpg
+        position: 40% 50%
         placeholder: Macro marquage à chaud du logo dans le cuir
 references:
   label: Ils nous ont fait confiance

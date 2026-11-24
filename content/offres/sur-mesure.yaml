@@ -6,13 +6,15 @@ seo:
 card:
   phrase: Cadeaux d’entreprise et pièces pour maisons de luxe, conçus à quatre mains avec votre marque.
   photo:
-    alt: Pièce en cuir marquée au logo d’une marque
+    alt: Porte-cartes en cuir bleu marine marqué à chaud
+    image: /src/assets/images/offres/marques-carte-porte-cartes-marque.jpg
     placeholder: Pièce en cuir avec logo marqué à chaud, ambiance studio (vertical)
 hero:
   h1: Le cuir à l'image de votre marque
   accroche: Des pièces pensées pour vos équipes, vos clients et vos produits, de la première esquisse à la dernière couture.
   photo:
-    alt: Prototypes en cuir sur l’établi
+    alt: Prototypes en cuir bleu et galon doré sur le tapis de coupe
+    image: /src/assets/images/offres/marques-hero-prototypes.jpg
     placeholder: Plein cadre, prototypes et gabarits sur l’établi
 intro:
   h2: Du prototype à la petite série
@@ -29,7 +31,9 @@ intro:
     vous garantit un interlocuteur unique, un suivi de près à chaque étape et la même exigence de la première
     pièce à la dernière.
   photo:
-    alt: Dorure à chaud d’un logo
+    alt: Portefeuille en cuir bleu et noir marqué d’un blason
+    image: /src/assets/images/offres/marques-intro-logo-marque.jpg
+    position: 65% 50%
     placeholder: Vertical, dorure à chaud d’un logo sur cuir
 pointsCles:
   title: Ce que nous proposons
@@ -37,7 +41,8 @@ pointsCles:
     - title: Cadeaux d'entreprise
       text: Pour vos collaborateurs, vos partenaires ou vos clients, des pièces utiles qui se gardent des années plutôt qu’un objet promotionnel de plus.
       photo:
-        alt: Cadeaux d’entreprise en cuir
+        alt: Pochettes en cuir orange et doré prêtes à offrir
+        image: /src/assets/images/offres/marques-coffret-cadeaux.jpg
         placeholder: Carré, coffret de cadeaux d’entreprise en cuir
     - title: Accessoires pour maisons de luxe
       text: Protège-caméras, étuis, pochettes de présentation… des accessoires discrets et précis, ajustés au millimètre à vos univers.
@@ -57,7 +62,8 @@ pointsCles:
     - title: Marquage de logo
       text: Rivet gravé, dorure ou marquage à chaud, pour signer chaque pièce dans la matière, sans aucune couleur imprimée.
       photo:
-        alt: Marquage de logo dans le cuir
+        alt: Pastilles de cuir marquées au logo, produites en série
+        image: /src/assets/images/offres/marques-logo-marque.jpg
         placeholder: Carré, macro logo marqué dans le cuir
 etapes:
   title: Comment ça se passe
@@ -73,11 +79,13 @@ etapes:
 galerie:
   title: Galerie
   photos:
-    - alt: Prototype en cuir et gabarit sur l’établi
+    - alt: Pièces d’un sac et ceinture assortie en cours de fabrication
+      image: /src/assets/images/offres/marques-galerie-prototype.jpg
       placeholder: Prototype et gabarit papier sur l’établi
     - alt: Logo en dorure à chaud sur cuir
       placeholder: Macro logo en dorure à chaud
-    - alt: Série limitée de pièces en cuir
+    - alt: Série de pièces en cuir bleu et noir découpées
+      image: /src/assets/images/offres/marques-galerie-serie.jpg
       placeholder: Série limitée de pièces alignées
     - alt: Protège-caméra en cuir sur mesure
       placeholder: Protège-caméra en situation

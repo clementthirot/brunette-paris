@@ -1,14 +1,24 @@
 ---
 /** 11.1 Hero — fond sombre, plein écran. */
+import { Image } from 'astro:assets';
 import HotStampLogo from '../ui/HotStampLogo.astro';
+import { resolveAsset, shareImage } from '../../lib/images';
 import type { Photo } from '../../lib/content';
 interface Props { h1: string; subtitle: string; photo: Photo; video?: string | null; scrollLabel: string }
 const { h1, subtitle, photo, video, scrollLabel } = Astro.props;
+// Photo de src/assets : optimisée par Astro ; poster de la vidéo en JPG généré.
+const asset = resolveAsset(photo.image);
+const widths = asset ? [800, 1280, 1600, 2000, 2560].filter((w) => w < asset.width).concat(asset.width) : [];
+const poster = video && photo.image ? (await shareImage(photo.image))?.src : undefined;
+const position = photo.position?.trim() || undefined;
 ---
 <section class="hero bg-dark">
   <div class="hero__media" aria-hidden="true">
     {video ? (
-      <video src={video} autoplay muted loop playsinline poster={photo.image ?? undefined}></video>
+      <video src={video} autoplay muted loop playsinline poster={poster}></video>
+    ) : asset ? (
+      <Image src={asset} alt="" widths={widths} sizes="100vw" loading="eager" fetchpriority="high" quality={78}
+        style={position ? `object-position:${position}` : undefined} />
     ) : photo.image ? (
       <img src={photo.image} alt="" fetchpriority="high" />
     ) : (

@@ -1,4 +1,5 @@
 ---
+import { shareImage } from '../../lib/images';
 /** Article du journal : chapeau, couverture, sections (intertitre, texte, photo, citation), pièces liées. */
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
@@ -22,6 +23,7 @@ const cats = page.categories as Record<string, string>;
 const linked = article.pieces.map((s) => pieces.find((p) => p.slug === s)).filter((p): p is NonNullable<typeof p> => !!p);
 const others = all.filter((a) => a.slug !== article.slug).slice(0, 3);
 const crumbs = [{ label: settings.nav.home, href: '/' }, { label: settings.nav.journal, href: ROUTES.journal }, { label: article.title }];
+const cover = await shareImage(article.cover.image);
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -29,7 +31,7 @@ const ld = {
   description: article.excerpt,
   datePublished: article.date,
   author: { '@type': 'Person', name: 'Armonie', worksFor: { '@id': new URL('/#atelier', Astro.site).href } },
-  image: article.cover.image ? new URL(article.cover.image, Astro.site).href : undefined,
+  image: cover ? new URL(cover.src, Astro.site).href : undefined,
   mainEntityOfPage: new URL(articleUrl(article.slug), Astro.site).href,
 };
 ---

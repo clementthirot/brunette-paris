@@ -1,5 +1,6 @@
 ---
-import { imageSize } from '../../lib/images';
+import { Image } from 'astro:assets';
+import { imageSize, resolveAsset } from '../../lib/images';
 /**
  * Photo éditable dans Keystatic. Tant que l'image n'est pas fournie, affiche un
  * « échantillon de cuir » au bon ratio (peau grainée, monogramme marqué, couture)
@@ -17,14 +18,25 @@ interface Props {
 }
 const { photo, ratio = '4 / 5', class: cls = '', loading = 'lazy', sizes, ...rest } = Astro.props;
 const src = photo?.image || null;
+// Image de src/assets : optimisée par Astro (WebP, plusieurs largeurs). Sinon (public/) : balise img simple.
+const asset = resolveAsset(src);
+const widths = asset ? [480, 800, 1200, 1600, 2000].filter((w) => w < asset.width).concat(asset.width) : undefined;
+const imgSizes = sizes ?? (ratio === 'auto' ? '100vw' : '(min-width: 64rem) 50vw, 100vw');
+// Cadrage (Keystatic › Photo › Cadrage), ex. « 50% 30% » : point de l'image gardé visible quand elle est recadrée.
+const position = photo?.position?.trim() || undefined;
 // Dimensions réelles de l'image (attributs width/height : pas de décalage de mise en page).
 const size = await imageSize(src);
 const label = photo?.placeholder || photo?.alt || '';
 ---
 <div class:list={['ph', { 'ph--fill': ratio === 'auto' }, cls]} style={`--ratio:${ratio}`} {...rest}>
-  {src ? (
+  {asset ? (
+    <Image src={asset} alt={photo?.alt ?? ''} widths={widths} sizes={imgSizes} loading={loading} quality={80}
+      fetchpriority={loading === 'eager' ? 'high' : undefined} decoding={loading === 'eager' ? 'sync' : 'async'}
+      style={position ? `object-position:${position}` : undefined} />
+  ) : src ? (
     <img src={src} alt={photo?.alt ?? ''} width={size?.width} height={size?.height} loading={loading}
-      fetchpriority={loading === 'eager' ? 'high' : undefined} decoding={loading === 'eager' ? 'sync' : 'async'} sizes={sizes} />
+      fetchpriority={loading === 'eager' ? 'high' : undefined} decoding={loading === 'eager' ? 'sync' : 'async'} sizes={sizes}
+      style={position ? `object-position:${position}` : undefined} />
   ) : (
     <div class="ph__label" role="img" aria-label={photo?.alt || label || 'Photo à venir'}>
       <span class="ph__mono" aria-hidden="true"></span>

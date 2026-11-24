@@ -6,7 +6,8 @@ hero:
   h1: Prendre soin de votre cuir
   accroche: Un cuir bien entretenu se patine et s’embellit avec les années. Voici les gestes simples que j’applique à l’atelier.
   photo:
-    alt: Mains appliquant une crème sur un sac en cuir
+    alt: Portefeuille en cuir rouge patiné, à la lumière du soleil
+    image: /src/assets/images/entretien/hero-cuir-patine.jpg
     placeholder: Plein cadre, mains appliquant une crème sur un sac en cuir
 intro: Le cuir est une matière vivante. Il réagit à la lumière, à l’humidité, à la chaleur de la main. Quelques attentions suffisent pour qu’il traverse le temps.
 cuirs:
@@ -18,7 +19,8 @@ cuirs:
         - Nourrir deux à trois fois par an avec une crème incolore adaptée.
         - Laisser sécher naturellement après la pluie, loin d’un radiateur.
       photo:
-        alt: Texture de cuir de vache
+        alt: Cuir de vache naturel et poignée tressée, en gros plan
+        image: /src/assets/images/entretien/cuir-vache-naturel.jpg
         placeholder: Macro texture cuir de vache patiné
     - name: Python
       conseils:
@@ -26,7 +28,8 @@ cuirs:
         - Utiliser un soin spécifique pour reptiles, jamais de crème grasse.
         - Éviter l’exposition prolongée au soleil, qui ternit les nuances.
       photo:
-        alt: Texture de cuir de python
+        alt: Sac en cuir façon python et daim bleu nuit
+        image: /src/assets/images/entretien/cuir-python.jpg
         placeholder: Macro écailles de python
     - name: Crocodile
       conseils:
@@ -34,7 +37,8 @@ cuirs:
         - Hydrater une fois par an avec un soin pour reptiles.
         - Ranger à plat ou rembourré pour préserver la forme.
       photo:
-        alt: Texture de cuir de crocodile
+        alt: Ceinture en cuir grain crocodile vert et boucle dorée
+        image: /src/assets/images/entretien/cuir-crocodile.jpg
         placeholder: Macro écailles de crocodile
 gestes:
   title: Les bons gestes
@@ -53,7 +57,8 @@ reparation:
   text: Une couture qui lâche, une tranche abîmée, une anse fatiguée ? L’atelier répare les pièces Brunette Paris, et étudie volontiers la restauration de vos autres maroquineries. TODO — confirmer l’offre (pièces de la maison uniquement ou toutes marques, garantie, tarifs).
   button: Demander une réparation
   photo:
-    alt: Reprise d’une couture sellier
+    alt: Finition des tranches au pinceau sur une pièce en cuir
+    image: /src/assets/images/entretien/reparation-finition-tranches.jpg
     placeholder: Couture sellier en cours de reprise sur une anse
 faq:
   title: Questions fréquentes

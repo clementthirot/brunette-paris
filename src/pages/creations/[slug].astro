@@ -1,4 +1,5 @@
 ---
+import { shareImage } from '../../lib/images';
 /** 16.1 Fiche pièce. */
 import Base from '../../layouts/Base.astro';
 import Photo from '../../components/ui/Photo.astro';
@@ -29,6 +30,8 @@ const priceFmt = typeof piece.price === 'number'
   : null;
 const firstPhoto = piece.photos?.find((p) => p.image) ?? null;
 const firstImage = firstPhoto?.image ?? null;
+// URLs publiables des photos (les images de src/assets sont générées par Astro au build).
+const ldImages = await Promise.all((piece.photos ?? []).filter((p) => p.image).map(async (p) => absoluteFile((await shareImage(p.image))!.src, Astro.site)));
 // Les marqueurs « [À CONFIRMER : …] » restent visibles sur la page (draft) mais pas dans Google.
 const cleanDescription = piece.description.replace(/\s*\[À CONFIRMER[^\]]*\]/gi, '').trim();
 const metaDescription = piece.seoDescription?.trim() || truncate(cleanDescription, 155);
@@ -42,7 +45,7 @@ const productLd = {
   '@type': priceFmt ? 'Product' : 'CreativeWork',
   name: piece.title,
   description: cleanDescription,
-  ...(firstImage ? { image: (piece.photos ?? []).filter((p) => p.image).map((p) => absoluteFile(p.image!, Astro.site)) } : {}),
+  ...(firstImage ? { image: ldImages } : {}),
   material: `Cuir de ${cuir.toLowerCase()}`,
   ...(priceFmt
     ? { sku: piece.slug, brand: { '@type': 'Brand', name: SITE_NAME }, manufacturer: { '@id': businessId(Astro.site) } }
